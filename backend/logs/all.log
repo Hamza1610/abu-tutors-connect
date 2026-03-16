@@ -1,0 +1,139 @@
+2026-03-12 14:09:56:956 [INFO]: Connected to MongoDB via Mongoose
+2026-03-12 14:09:56:956 [INFO]: Backend server running on port 5000
+2026-03-12 14:10:07:107 [INFO]: Login successful: saminuumar2027@gmail.com
+2026-03-12 14:13:08:138 [INFO]: Login successful: saminuumar2027@gmail.com
+2026-03-12 14:13:58:1358 [INFO]: User registered successfully: hamza.00dev1@gmail.com
+2026-03-12 14:15:09:159 [INFO]: Connected to MongoDB via Mongoose
+2026-03-12 14:15:09:159 [INFO]: Backend server running on port 5000
+2026-03-12 14:17:18:1718 [INFO]: User registered successfully: nodetst1@abu.edu.ng
+2026-03-12 14:17:18:1718 [INFO]: Login successful: nodetst1@abu.edu.ng
+2026-03-13 12:47:55:4755 [INFO]: Connected to MongoDB via Mongoose
+2026-03-13 12:47:55:4755 [INFO]: Backend server running on port 5000
+2026-03-13 12:49:36:4936 [INFO]: Connected to MongoDB via Mongoose
+2026-03-13 12:49:36:4936 [INFO]: Backend server running on port 5000
+2026-03-13 12:49:43:4943 [INFO]: AI Match requested for course: COEN453, topic: React State Management
+2026-03-13 12:49:45:4945 [INFO]: Mock AI Match response sent for COEN453
+2026-03-13 13:14:32:1432 [INFO]: Connected to MongoDB via Mongoose
+2026-03-13 13:14:32:1432 [INFO]: Backend server running on port 5000
+2026-03-13 13:14:41:1441 [INFO]: AI Match requested for course: COEN453, topic: React State Management
+2026-03-13 13:14:42:1442 [INFO]: Mock AI Match response sent for COEN453
+2026-03-13 13:15:26:1526 [INFO]: Connected to MongoDB via Mongoose
+2026-03-13 13:15:26:1526 [INFO]: Backend server running on port 5000
+2026-03-13 13:15:34:1534 [INFO]: AI Match requested for course: COEN453, topic: React State Management
+2026-03-13 13:15:34:1534 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-13 13:15:35:1535 [INFO]: Live AI Match response sent for COEN453
+2026-03-13 14:02:38:238 [INFO]: Connected to MongoDB via Mongoose
+2026-03-13 14:02:38:238 [INFO]: Backend server running on port 5000
+2026-03-13 14:07:57:757 [INFO]: AI Match requested for course: COEN453, topic: React State Management
+2026-03-13 14:07:57:757 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-13 14:07:58:758 [INFO]: Live AI Match response sent for COEN453
+2026-03-13 14:17:15:1715 [INFO]: Login successful: hamza.00dev1@gmail.com
+2026-03-13 14:18:01:181 [INFO]: AI Match requested for course: COEN435, topic: Binary Search
+2026-03-13 14:18:01:181 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-13 14:18:03:183 [INFO]: Live AI Match response sent for COEN435
+2026-03-13 14:18:27:1827 [INFO]: AI Match requested for course: COEN435, topic: Binary Search
+2026-03-13 14:18:27:1827 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-13 14:18:29:1829 [INFO]: Live AI Match response sent for COEN435
+2026-03-13 14:19:07:197 [INFO]: AI Match requested for course: COEN435, topic: Binary Search
+2026-03-13 14:19:07:197 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-13 14:19:08:198 [INFO]: Live AI Match response sent for COEN435
+2026-03-13 18:18:41:1841 [INFO]: Connected to MongoDB via Mongoose
+2026-03-13 18:18:41:1841 [INFO]: Backend server running on port 5000
+2026-03-13 18:22:39:2239 [INFO]: Login successful: hamza.00dev1@gmail.com
+2026-03-13 18:22:59:2259 [INFO]: AI Match requested for course: COEN435, topic: Binary Search
+2026-03-13 18:22:59:2259 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-13 18:23:00:230 [INFO]: Live AI Match response sent for COEN435
+2026-03-16 14:16:22:1622 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 14:16:22:1622 [INFO]: Backend server running on port 5000
+2026-03-16 14:16:23:1623 [INFO]: User registered successfully: tutor1773666983487@example.com
+2026-03-16 14:16:23:1623 [INFO]: Login successful: tutor1773666983487@example.com
+2026-03-16 14:34:19:3419 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 14:34:19:3419 [INFO]: Backend server running on port 5000
+2026-03-16 14:34:22:3422 [INFO]: User registered successfully: tutor1773668061978@abu.edu.ng
+2026-03-16 14:34:22:3422 [INFO]: User registered successfully: tutee1773668061978@abu.edu.ng
+2026-03-16 14:47:05:475 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 14:47:05:475 [INFO]: Backend server running on port 5000
+2026-03-16 14:47:09:479 [INFO]: User registered successfully: tutor1773668829411@abu.edu.ng
+2026-03-16 14:47:09:479 [INFO]: User registered successfully: tutee1773668829411@abu.edu.ng
+2026-03-16 14:55:24:5524 [INFO]: User registered successfully: tutor1773669324687@abu.edu.ng
+2026-03-16 14:55:24:5524 [INFO]: User registered successfully: tutee1773669324687@abu.edu.ng
+2026-03-16 14:56:45:5645 [INFO]: User registered successfully: tutor1773669405389@abu.edu.ng
+2026-03-16 14:56:45:5645 [INFO]: User registered successfully: tutee1773669405389@abu.edu.ng
+2026-03-16 14:56:46:5646 [INFO]: Routes registered: /api/auth, /api/match, /api/users, /api/sessions, /api/wallets
+2026-03-16 14:56:46:5646 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 14:56:46:5646 [INFO]: Backend server running on port 5000
+2026-03-16 14:57:08:578 [INFO]: Routes registered: /api/auth, /api/match, /api/users, /api/sessions, /api/wallets
+2026-03-16 14:57:08:578 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 14:57:08:578 [INFO]: Backend server running on port 5000
+2026-03-16 14:57:11:5711 [INFO]: User registered successfully: tutor1773669431660@abu.edu.ng
+2026-03-16 14:57:12:5712 [INFO]: User registered successfully: tutee1773669431660@abu.edu.ng
+2026-03-16 14:57:12:5712 [INFO]: Wallet funded: User 69b80c38a8f71c2ab0ce7570 +2000
+2026-03-16 14:57:12:5712 [ERROR]: Create Session Error: Transaction numbers are only allowed on a replica set member or mongos
+2026-03-16 14:59:58:5958 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 14:59:58:5958 [INFO]: Backend server running on port 5000
+2026-03-16 14:59:59:5959 [INFO]: User registered successfully: tutor1773669599290@abu.edu.ng
+2026-03-16 14:59:59:5959 [INFO]: User registered successfully: tutee1773669599290@abu.edu.ng
+2026-03-16 14:59:59:5959 [INFO]: Wallet funded: User 69b80cdfa8f71c2ab0ce757e +2000
+2026-03-16 14:59:59:5959 [ERROR]: Create Session Error: Transaction numbers are only allowed on a replica set member or mongos
+2026-03-16 15:02:29:229 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 15:02:29:229 [INFO]: Backend server running on port 5000
+2026-03-16 15:02:30:230 [INFO]: User registered successfully: tutor1773669750099@abu.edu.ng
+2026-03-16 15:02:30:230 [INFO]: User registered successfully: tutee1773669750099@abu.edu.ng
+2026-03-16 15:02:30:230 [INFO]: Wallet funded: User 69b80d76e917b7494dd10e1e +2000
+2026-03-16 15:02:30:230 [INFO]: Session booked: Tutee 69b80d76e917b7494dd10e1e -> Tutor 69b80d76e917b7494dd10e1b
+2026-03-16 15:02:30:230 [INFO]: Session completed: 69b80d76e917b7494dd10e29
+2026-03-16 15:22:11:2211 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 15:22:11:2211 [INFO]: Backend server running on port 5000
+2026-03-16 15:22:21:2221 [INFO]: User registered successfully: tutor_day7@test.com
+2026-03-16 15:22:21:2221 [INFO]: Login successful: tutor_day7@test.com
+2026-03-16 15:22:21:2221 [INFO]: User registered successfully: tutee_day7@test.com
+2026-03-16 15:22:21:2221 [INFO]: Login successful: tutee_day7@test.com
+2026-03-16 17:07:22:722 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 17:07:22:722 [INFO]: Backend server running on port 5000
+2026-03-16 17:13:45:1345 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 17:13:45:1345 [INFO]: Backend server running on port 5000
+2026-03-16 17:13:55:1355 [INFO]: Login successful: tutor_day7@test.com
+2026-03-16 17:13:56:1356 [INFO]: Login successful: tutee_day7@test.com
+2026-03-16 17:14:25:1425 [INFO]: Login successful: tutor_day7@test.com
+2026-03-16 17:14:26:1426 [INFO]: Login successful: tutee_day7@test.com
+2026-03-16 17:14:26:1426 [INFO]: Wallet funded: User 69b8121de917b7494dd10e44 +2000
+2026-03-16 17:14:26:1426 [INFO]: Session booked: Tutee 69b8121de917b7494dd10e44 -> Tutor 69b8121de917b7494dd10e40
+2026-03-16 17:14:26:1426 [INFO]: Session completed: 69b82c6253ca32cc2fcde9e2
+2026-03-16 17:15:35:1535 [INFO]: Connected to MongoDB via Mongoose
+2026-03-16 17:15:35:1535 [INFO]: Backend server running on port 5000
+2026-03-16 17:16:02:162 [ERROR]: Token verification failed
+2026-03-16 17:16:02:162 [ERROR]: Token verification failed
+2026-03-16 17:16:10:1610 [ERROR]: Token verification failed
+2026-03-16 17:16:10:1610 [ERROR]: Token verification failed
+2026-03-16 17:16:11:1611 [ERROR]: Token verification failed
+2026-03-16 17:16:11:1611 [ERROR]: Token verification failed
+2026-03-16 17:16:13:1613 [ERROR]: Token verification failed
+2026-03-16 17:16:13:1613 [ERROR]: Token verification failed
+2026-03-16 17:16:16:1616 [ERROR]: Token verification failed
+2026-03-16 17:16:16:1616 [ERROR]: Token verification failed
+2026-03-16 17:16:23:1623 [ERROR]: Token verification failed
+2026-03-16 17:16:23:1623 [ERROR]: Token verification failed
+2026-03-16 17:16:23:1623 [ERROR]: Token verification failed
+2026-03-16 17:16:23:1623 [ERROR]: Token verification failed
+2026-03-16 17:16:23:1623 [ERROR]: Token verification failed
+2026-03-16 17:16:23:1623 [ERROR]: Token verification failed
+2026-03-16 17:16:31:1631 [ERROR]: Token verification failed
+2026-03-16 17:16:31:1631 [ERROR]: Token verification failed
+2026-03-16 17:16:31:1631 [ERROR]: Token verification failed
+2026-03-16 17:16:31:1631 [ERROR]: Token verification failed
+2026-03-16 17:16:40:1640 [ERROR]: Token verification failed
+2026-03-16 17:16:40:1640 [ERROR]: Token verification failed
+2026-03-16 17:16:45:1645 [ERROR]: Token verification failed
+2026-03-16 17:16:45:1645 [ERROR]: Token verification failed
+2026-03-16 17:16:45:1645 [ERROR]: Token verification failed
+2026-03-16 17:16:45:1645 [ERROR]: Token verification failed
+2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
+2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
+2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
+2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
+2026-03-16 17:16:59:1659 [INFO]: Login successful: hamza.00dev1@gmail.com
+2026-03-16 17:17:59:1759 [INFO]: User registered successfully: saminuumar202237@gmail.com
+2026-03-16 17:18:31:1831 [INFO]: Wallet funded: User 69b82d3753ca32cc2fcdea09 +1000
+2026-03-16 17:20:06:206 [INFO]: AI Match requested for course: COEN435, topic: Binary Search
+2026-03-16 17:20:06:206 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-16 17:20:08:208 [INFO]: Live AI Match response sent for COEN435
