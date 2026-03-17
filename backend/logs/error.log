@@ -30,3 +30,5 @@
 2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
 2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
 2026-03-16 17:16:56:1656 [ERROR]: Token verification failed
+2026-03-17 15:37:16:3716 [ERROR]: Get Tutor Profile Error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+2026-03-17 15:37:16:3716 [ERROR]: Get Tutor Profile Error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"

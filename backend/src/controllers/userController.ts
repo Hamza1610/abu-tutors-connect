@@ -78,6 +78,22 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
     }
 };
 
+// @desc    Get all tutors (for discovery)
+// @route   GET /api/users/tutors
+// @access  Public
+export const getTutors = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const tutors = await User.find({ 
+            role: { $in: ['tutor', 'verified_tutor'] } 
+        }).select('-password').sort({ sessionsCompleted: -1, rating: -1 });
+        
+        res.json(tutors);
+    } catch (error: any) {
+        logger.error(`Get Tutors Error: ${error.message}`, { error });
+        res.status(500).json({ message: "Server error getting tutors", error: error.message });
+    }
+};
+
 // @desc    Get tutor profile by ID
 // @route   GET /api/users/tutors/:id
 // @access  Public

@@ -137,3 +137,23 @@
 2026-03-16 17:20:06:206 [INFO]: AI Match requested for course: COEN435, topic: Binary Search
 2026-03-16 17:20:06:206 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
 2026-03-16 17:20:08:208 [INFO]: Live AI Match response sent for COEN435
+2026-03-17 15:04:36:436 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:04:36:436 [INFO]: Backend server running on port 5000
+2026-03-17 15:12:08:128 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:12:08:128 [INFO]: Backend server running on port 5000
+2026-03-17 15:27:45:2745 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:27:45:2745 [INFO]: Backend server running on port 5000
+2026-03-17 15:29:05:295 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:29:05:295 [INFO]: Backend server running on port 5000
+2026-03-17 15:29:33:2933 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:29:33:2933 [INFO]: Backend server running on port 5000
+2026-03-17 15:33:14:3314 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:33:14:3314 [INFO]: Backend server running on port 5001
+2026-03-17 15:36:43:3643 [INFO]: AI Match requested for course: COEN453, topic: Algorithms
+2026-03-17 15:36:43:3643 [WARN]: GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.
+2026-03-17 15:36:45:3645 [INFO]: Live AI Match response sent for COEN453
+2026-03-17 15:37:16:3716 [ERROR]: Get Tutor Profile Error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+2026-03-17 15:37:16:3716 [ERROR]: Get Tutor Profile Error: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"
+2026-03-17 15:42:07:427 [INFO]: Connected to MongoDB via Mongoose
+2026-03-17 15:42:07:427 [INFO]: Backend server running on port 5001
+2026-03-17 15:43:35:4335 [INFO]: Agentic AI Match requested for: COEN453 - Sorting

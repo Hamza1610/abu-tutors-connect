@@ -34,6 +34,12 @@ app.use("/api/wallets", walletRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/stats", statsRoutes);
 
+// Catch-all 404 for debugging
+app.use((req, res) => {
+    console.log(`404 at ${req.method} ${req.originalUrl}`);
+    res.status(404).send(`Route ${req.originalUrl} not found`);
+});
+
 app.get('/', (req: Request, res: Response) => {
     res.send('ABUTutors Backend API is running');
 });

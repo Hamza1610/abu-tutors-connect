@@ -1,102 +1,153 @@
 import { Request, Response } from 'express';
 import logger from '../utils/logger';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import User from '../models/User';
 
-const MOCK_TUTORS = [
+interface AuthRequest extends Request {
+    user?: any;
+}
+
+// 1. Tool Definitions for the Agentic AI
+const tools = [
     {
-        id: "tutor-001",
-        name: "Abubakar S.",
-        faculty: "Engineering",
-        level: "500L",
-        courses: ["COEN453", "CCSN", "Software Engineering"],
-        rating: 4.8
-    },
-    {
-        id: "tutor-002",
-        name: "Fatima B.",
-        faculty: "Science",
-        level: "400L",
-        courses: ["Math 101", "Data Structures", "Vector Calculus"],
-        rating: 4.5
-    },
-    {
-        id: "tutor-003",
-        name: "David O.",
-        faculty: "Engineering",
-        level: "300L",
-        courses: ["Physics", "Circuit Theory", "Engineering Math"],
-        rating: 4.9
+        functionDeclarations: [
+            {
+                name: "search_tutors",
+                description: "Search for tutors based on course name or specific academic topic.",
+                parameters: {
+                    type: "object",
+                    properties: {
+                        query: {
+                            type: "string",
+                            description: "The course name or topic (e.g., 'Math 101', 'Thermodynamics')."
+                        }
+                    },
+                    required: ["query"]
+                }
+            },
+            {
+                name: "get_tutor_details",
+                description: "Get full profile, reviews, and availability for a specific tutor.",
+                parameters: {
+                    type: "object",
+                    properties: {
+                        tutorId: {
+                            type: "string",
+                            description: "The unique ID of the tutor."
+                        }
+                    },
+                    required: ["tutorId"]
+                }
+            }
+        ]
     }
 ];
 
-export const requestMatch = async (req: Request, res: Response): Promise<void> => {
+// 2. Mocking or Implementing the tool logic
+const toolLogic = {
+    search_tutors: async (args: { query: string }) => {
+        const { query } = args;
+        // Search in User model for tutors who have the query in their courses or department
+        const tutors = await User.find({
+            role: { $in: ['tutor', 'verified_tutor'] },
+            $or: [
+                { courses: { $regex: query, $options: 'i' } },
+                { department: { $regex: query, $options: 'i' } }
+            ]
+        }).limit(5).select('name faculty level courses rating _id');
+        
+        return tutors;
+    },
+    get_tutor_details: async (args: { tutorId: string }) => {
+        const tutor = await User.findById(args.tutorId).select('-password');
+        return tutor;
+    }
+};
+
+export const requestMatch = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const { course, topic, prompt } = req.body;
 
-        // Basic validation
         if (!course || !topic || !prompt) {
             res.status(400).json({ message: "Course, topic, and prompt are required." });
             return;
         }
 
-        logger.info(`AI Match requested for course: ${course}, topic: ${topic}`);
+        logger.info(`Agentic AI Match requested for: ${course} - ${topic}`);
 
-        let matchData;
-
-        // Ensure the API key exists before attempting live inference
         if (!process.env.GEMINI_API_KEY) {
-            logger.warn('GEMINI_API_KEY is missing in backend/.env. Falling back to simulated AI Match.');
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            matchData = {
-                message: "[Simulated Fallback] Our agentic AI found the perfect tutor for your needs!",
-                tutor: MOCK_TUTORS[0]
-            };
-        } else {
-            const ai = new GoogleGenAI({});
+            logger.warn('GEMINI_API_KEY missing. Falling back to simple DB search.');
+            const tutors = await toolLogic.search_tutors({ query: course });
+            if (tutors.length > 0) {
+                res.status(200).json({
+                    message: "I found a few tutors who might be a good fit for you!",
+                    tutor: tutors[0]
+                });
+            } else {
+                res.status(404).json({ message: "No tutors found for this course yet." });
+            }
+            return;
+        }
 
-            const aiPrompt = `
-You are an intelligent tutor-matching agent for ABUTutorsConnect. 
-A student is looking for help with the following problem:
+        // Initialize Gemini with Tools
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash",
+            tools: tools as any,
+        });
+
+        const chat = model.startChat();
+        const initialPrompt = `
+You are ABUTutorsConnect's Agentic AI Matcher. Your goal is to find the BEST tutor for a student.
+A student needs help with:
 Course: ${course}
 Topic: ${topic}
-Problem Description: ${prompt}
+Problem: ${prompt}
 
-Here is a list of available tutors in our system:
-${JSON.stringify(MOCK_TUTORS, null, 2)}
+Use the 'search_tutors' tool to find candidates. If you find candidates, use 'get_tutor_details' for the most promising one to check their full profile.
+Then, provide a helpful recommendation.
 
-Your task is to analyze the student's problem and select the most appropriate tutor from the list above. 
-Provide a brief, encouraging message explaining why this tutor is a good fit.
-
-You MUST respond ONLY with a valid JSON object matching this exact schema:
+Response Format (JSON):
 {
-  "message": "Why this tutor is a good fit",
-  "tutor": {
-    "id": "tutor ID",
-    "name": "tutor name",
-    "faculty": "tutor faculty",
-    "level": "tutor level",
-    "courses": ["course1", "course2"],
-    "rating": 4.8
-  }
+  "message": "Enthusiastic explanation of why this tutor is the best fit.",
+  "tutor": { ...tutor object from DB, MUST include _id and all other fields... }
 }
 `;
 
-            const response = await ai.models.generateContent({
-                model: 'gemini-2.5-flash',
-                contents: aiPrompt,
-                config: {
-                    responseMimeType: "application/json",
-                }
-            });
+        const result = await chat.sendMessage(initialPrompt);
+        let responseText = result.response.text();
 
-            matchData = JSON.parse(response.text || "{}");
+        // Handle Function Calling Loop
+        const candidate = result.response.candidates?.[0];
+        const parts = candidate?.content?.parts;
+        const call = parts?.find(p => p.functionCall);
+        
+        if (call && call.functionCall) {
+            const { name, args } = call.functionCall;
+            logger.info(`AI calling tool: ${name}`);
+            
+            const toolResult = await (toolLogic as any)[name](args);
+            
+            const nextResult = await chat.sendMessage([
+                {
+                    functionResponse: {
+                        name,
+                        response: { content: toolResult }
+                    }
+                }
+            ]);
+            responseText = nextResult.response.text();
         }
 
-        logger.info(`Live AI Match response sent for ${course}`);
+        // Clean up response if it's wrapped in markdown
+        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+        const matchData = jsonMatch ? JSON.parse(jsonMatch[0]) : { message: responseText };
 
+        logger.info(`Agentic AI Match successful for ${course}`);
         res.status(200).json(matchData);
+
     } catch (error: any) {
-        logger.error(`AI Match Error: ${error.message}`, { error });
+        logger.error(`Agentic Match Error: ${error.message}`, { error });
         res.status(500).json({ message: "Server error during matching", error: error.message });
     }
 };
