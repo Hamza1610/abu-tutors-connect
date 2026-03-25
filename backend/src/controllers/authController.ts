@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User, { IUser } from '../models/User';
+import Wallet from '../models/Wallet';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import logger from '../utils/logger';
@@ -10,14 +11,28 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     try {
         const {
             name, email, password, role, faculty, department, // tutee + tutor
-            level, admissionId, courses, about, gender // tutor only
-        } = req.body;
+            level, registrationNumber, admissionId, courses, about, gender, phone, // tutor only
+            acceptedTerms
+        } = req.body || {};
 
-        // Optional: Validate ABU admission ID regex inside here for tutors
+        const finalizedRegNum = registrationNumber || admissionId;
+        
+        // Handle boolean parsing from FormData (sent as strings)
+        const isTermsAccepted = acceptedTerms === 'true' || acceptedTerms === true;
+        
+        if (!isTermsAccepted) {
+            res.status(400).json({ message: "You must accept the Terms and Conditions to register." });
+            return;
+        }
+
+        // Extract profile picture from multer file if provided
+        const profilePicturePath = req.file ? `/uploads/${req.file.filename}` : '';
+
+        // Optional: Validate ABU registration number regex
         if (role === 'tutor' || role === 'verified_tutor') {
-            const admissionIdRegex = /^U\d{2}[A-Z]{2}\d{4}$/; // e.g., U21CO1015
-            if (admissionId && !admissionIdRegex.test(admissionId)) {
-                res.status(400).json({ message: "Invalid ABU Admission ID format. Expected format: U21COxxxx" });
+            const regNumRegex = /^U\d{2}[A-Z]{2}\d{4}$/; // e.g., U21CO1015
+            if (finalizedRegNum && !regNumRegex.test(finalizedRegNum)) {
+                res.status(400).json({ message: "Invalid ABU Registration Number format. Expected format: U21COxxxx" });
                 return;
             }
         }
@@ -32,11 +47,31 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const user: IUser = new User({
-            name, email, password: hashedPassword, role: role || "tutee",
-            faculty, department, level, admissionId, courses, about, gender
+            name, 
+            email, 
+            password: hashedPassword, 
+            role: role || "tutee",
+            registrationNumber: finalizedRegNum,
+            faculty, 
+            department, 
+            level, 
+            courses, 
+            about, 
+            gender,
+            phone,
+            acceptedTerms: isTermsAccepted,
+            profileStep: (role === 'tutee') ? 4 : 0, // Tutees finish immediately, Tutors start at 0
+            isProfileComplete: (role === 'tutee'), // Tutees complete after registration
+            registrationPaymentStatus: (role === 'tutee' || role === 'admin') ? 'free' : 'pending',
+            documents: {
+                profilePicture: profilePicturePath
+            }
         });
 
         await user.save();
+        
+        // Ensure wallet is created immediately
+        await Wallet.create({ userId: user._id, balance: 0, transactions: [] });
 
         // Auto-login upon registration
         const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });

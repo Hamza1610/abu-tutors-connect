@@ -9,6 +9,9 @@ const authMiddleware_1 = require("../middleware/authMiddleware");
 const router = express_1.default.Router();
 router.route('/')
     .get(authMiddleware_1.protect, walletController_1.getWallet);
-router.post('/fund', authMiddleware_1.protect, walletController_1.fundWallet);
+router.post('/withdraw', authMiddleware_1.protect, walletController_1.withdrawFunds);
+router.post('/initialize', authMiddleware_1.protect, walletController_1.initializePayment);
+router.get('/verify', authMiddleware_1.protect, walletController_1.verifyPayment);
+router.post('/webhook', walletController_1.handleWebhook); // Publicly accessible for Paystack
 exports.default = router;
 //# sourceMappingURL=walletRoutes.js.map

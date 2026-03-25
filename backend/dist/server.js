@@ -10,6 +10,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
 const logger_1 = __importDefault(require("./utils/logger"));
+const path_1 = __importDefault(require("path"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const match_1 = __importDefault(require("./routes/match"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
@@ -17,11 +18,14 @@ const sessionRoutes_1 = __importDefault(require("./routes/sessionRoutes"));
 const walletRoutes_1 = __importDefault(require("./routes/walletRoutes"));
 const notificationRoutes_1 = __importDefault(require("./routes/notificationRoutes"));
 const statsRoutes_1 = __importDefault(require("./routes/statsRoutes"));
+const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
+const paymentRoutes_1 = __importDefault(require("./routes/paymentRoutes"));
 const app = (0, express_1.default)();
 const PORT = parseInt(process.env.PORT, 10) || 5000;
 // Middleware
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+app.use('/api/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
 // Request Logging using Morgan and Winston
 app.use((0, morgan_1.default)('combined', {
     stream: { write: (message) => logger_1.default.http(message.trim()) }
@@ -34,6 +38,13 @@ app.use("/api/sessions", sessionRoutes_1.default);
 app.use("/api/wallets", walletRoutes_1.default);
 app.use("/api/notifications", notificationRoutes_1.default);
 app.use("/api/stats", statsRoutes_1.default);
+app.use("/api/admin", adminRoutes_1.default);
+app.use("/api/payment", paymentRoutes_1.default);
+// Catch-all 404 for debugging
+app.use((req, res) => {
+    console.log(`404 at ${req.method} ${req.originalUrl}`);
+    res.status(404).send(`Route ${req.originalUrl} not found`);
+});
 app.get('/', (req, res) => {
     res.send('ABUTutors Backend API is running');
 });

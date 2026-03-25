@@ -102,30 +102,45 @@ function TutorsContent() {
           {filteredTutors.map(tutor => (
             <article key={tutor._id} className="tutor-card">
               <Link href={`/tutors/${tutor._id}`}>
-                <div className="tutor-card__image-wrap">
-                  <img 
-                    src={`https://images.unsplash.com/photo-${tutor.role === 'verified_tutor' ? '1507003211169-0a1dd7228f2d' : '1494790108377-be9c29b29330'}?w=400&h=300&fit=crop`} 
-                    alt={tutor.name} 
-                    className="tutor-card__image" 
-                  />
-                  <span className={`tutor-card__badge ${tutor.role === 'verified_tutor' ? 'tutor-card__badge--orange' : 'tutor-card__badge--green'}`}>
-                    {tutor.role === 'verified_tutor' ? 'Verified Tutor' : 'New Tutor'}
-                  </span>
-                </div>
+                  <div className="tutor-card__image-wrap">
+                    {tutor.documents?.profilePicture ? (
+                      <img 
+                        src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} 
+                        alt={tutor.name} 
+                        className="tutor-card__image" 
+                      />
+                    ) : (
+                      <div style={{ 
+                        width: '100%', height: '100%', 
+                        background: 'var(--color-primary-light)', color: 'var(--color-primary)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '48px', fontWeight: 'bold'
+                      }}>
+                        {tutor.name.charAt(0)}
+                      </div>
+                    )}
+                    <span className={`tutor-card__badge ${tutor.role === 'verified_tutor' ? 'tutor-card__badge--orange' : 'tutor-card__badge--green'}`}>
+                      {tutor.role === 'verified_tutor' ? 'Verified Tutor' : 'New Tutor'}
+                    </span>
+                  </div>
               </Link>
               <div className="tutor-card__content">
                 <Link href={`/tutors/${tutor._id}`}>
                   <h3 className="tutor-card__name">{tutor.name}</h3>
                 </Link>
-                <p className="tutor-card__subject">{tutor.courses?.join(', ') || tutor.department}</p>
+                <p className="tutor-card__subject" style={{ fontSize: '13px', color: '#64748B' }}>{tutor.faculty} · {tutor.department}</p>
+                <p className="tutor-card__subject" style={{ margin: '8px 0', minHeight: '40px' }}>
+                  {tutor.courses?.join(', ') || 'General Studies'}
+                  {tutor.areaOfStrength && <div style={{ fontSize: '12px', color: 'var(--color-primary)', fontStyle: 'italic', marginTop: '4px' }}>Strength: {tutor.areaOfStrength}</div>}
+                </p>
                 <div className="tutor-card__meta">
                   <div className="tutor-card__rating">
-                    <span className="star">★</span> {tutor.rating || 'New'} 
-                    <span className="count">({tutor.sessionsCompleted || 0})</span>
+                    <span className="star" style={{ color: '#FBBF24' }}>★</span> {tutor.averageRating?.toFixed(1) || 'New'} 
+                    <span className="count" style={{ marginLeft: '4px' }}>({tutor.sessionsCompleted || 0})</span>
                   </div>
-                  <span className="tutor-card__price">₦{tutor.role === 'verified_tutor' ? (tutor.hourlyRate || 800) : 500}/hr</span>
+                  <span className="tutor-card__price">₦{tutor.hourlyRate || 500}/hr</span>
                 </div>
-                <Link href={`/book-session?tutor=${tutor._id}`} className="btn btn--outline btn--block">Book Session</Link>
+                <Link href={`/book-session?tutor=${tutor._id}`} className="btn btn--primary btn--block" style={{ marginTop: '12px' }}>Check Availability</Link>
               </div>
             </article>
           ))}

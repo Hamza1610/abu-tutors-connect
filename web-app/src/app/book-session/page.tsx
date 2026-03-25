@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { userApi, sessionApi, walletApi } from '../../services/api';
+import { userApi, sessionApi, walletApi, adminApi } from '../../services/api';
 
 function BookSessionContent() {
   const router = useRouter();
@@ -11,15 +11,18 @@ function BookSessionContent() {
 
   const [tutor, setTutor] = useState<any>(null);
   const [wallet, setWallet] = useState<any>(null);
+  const [venues, setVenues] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
   const [error, setError] = useState('');
-  const [fee, setFee] = useState(800);
+  const [fee, setFee] = useState(500);
 
   // Form State
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
   const [topic, setTopic] = useState('');
+  const [selectedVenue, setSelectedVenue] = useState('');
+  const [lockExpiry, setLockExpiry] = useState<Date | null>(null);
 
   useEffect(() => {
     if (!tutorId) {
@@ -29,20 +32,25 @@ function BookSessionContent() {
 
     const fetchData = async () => {
       try {
-        const [tutorRes, walletRes] = await Promise.all([
+        const [tutorRes, walletRes, venuesRes] = await Promise.all([
           userApi.getTutorProfile(tutorId),
-          walletApi.getWallet()
+          walletApi.getWallet(),
+          adminApi.getVenues()
         ]);
-        const tutorData = tutorRes.data;
-        setTutor(tutorData);
-        setWallet(walletRes.data);
         
-        // Calculate fee based on role
-        const calculatedFee = tutorData.role === 'verified_tutor' ? (tutorData.hourlyRate || 800) : 500;
+        setTutor(tutorRes.data);
+        setWallet(walletRes.data);
+        setVenues(venuesRes.data.filter((v: any) => v.isActive));
+        
+        const calculatedFee = tutorRes.data.hourlyRate || 500;
         setFee(calculatedFee);
+        
+        if (venuesRes.data.length > 0) {
+            setSelectedVenue(venuesRes.data[0].name);
+        }
       } catch (err: any) {
         console.error('Data fetch error', err);
-        setError('Failed to load tutor or wallet information.');
+        setError('Failed to load booking information.');
       } finally {
         setLoading(false);
       }
@@ -51,12 +59,50 @@ function BookSessionContent() {
     fetchData();
   }, [tutorId, router]);
 
+  const handleSlotSelect = async (day: string, slot: string) => {
+      // For simplicity, we assume 'day' maps to a date relative to today
+      // In a real app, this would be more complex date logic
+      const targetDate = new Date();
+      // Logic to find next 'day' (e.g. "Monday")
+      const dayMap: any = { 'Sunday': 0, 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5, 'Saturday': 6 };
+      const targetDay = dayMap[day];
+      const currentDay = targetDate.getDay();
+      let diff = targetDay - currentDay;
+      if (diff <= 0) diff += 7;
+      targetDate.setDate(targetDate.getDate() + diff);
+      
+      const dateStr = targetDate.toISOString().split('T')[0];
+      const timeStr = slot; // e.g. "14:00"
+
+      setSelectedDate(dateStr);
+      setSelectedTime(timeStr);
+      setError('');
+
+      try {
+          const res = await sessionApi.lockSlot({ 
+              tutorId: tutor._id, 
+              slot: `${dateStr}T${timeStr}` 
+          });
+          setLockExpiry(new Date(res.data.expiresAt));
+          alert(`Slot temporarily locked for 5 minutes. Please complete booking.`);
+      } catch (err: any) {
+          setError(err.response?.data?.message || 'Failed to lock slot. It might be taken.');
+          setSelectedDate('');
+          setSelectedTime('');
+      }
+  };
+
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!wallet || wallet.balance < fee) {
-      alert(`Insufficient balance. This session costs ₦${fee}. Please fund your wallet first.`);
+      alert(`Insufficient balance. This session costs ₦${fee}. Current balance: ₦${wallet.balance}`);
       router.push('/wallet');
       return;
+    }
+
+    if (!selectedDate || !selectedTime) {
+        setError('Please select an available slot from the matrix below.');
+        return;
     }
 
     setBooking(true);
@@ -65,11 +111,13 @@ function BookSessionContent() {
     try {
       await sessionApi.bookSession({
         tutorId,
-        date,
-        time,
+        date: selectedDate,
+        time: selectedTime,
         topic,
+        venue: selectedVenue,
         amount: fee
       });
+      alert('Booking confirmed! Payment held in escrow.');
       router.push('/my-sessions');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to book session');
@@ -78,88 +126,122 @@ function BookSessionContent() {
     }
   };
 
-  if (loading) return <main className="container pt-space-8 text-center">Loading...</main>;
-  if (error || !tutor) return <main className="container pt-space-8 text-center text-red">{error || 'Tutor not found'}</main>;
+  if (loading) return <main className="container pt-space-8 text-center">Loading booking environment...</main>;
 
   return (
     <main className="container pb-space-8 pt-space-8">
-      <div style={{ marginTop: 'var(--space-6)', display: 'grid', gap: 'var(--space-6)', maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>
-        <h1 className="page-header__title">Book a Session</h1>
-        <div style={{ display: 'grid', gap: 'var(--space-6)', gridTemplateColumns: '1fr' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <h1 className="page-header__title" style={{ marginBottom: 'var(--space-6)' }}>Schedule Your Session</h1>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 'var(--space-6)' }}>
+          {/* Left: Availability Matrix & Selection */}
           <div className="card">
             <div className="card__body">
-              <div style={{ display: 'flex', gap: 'var(--space-4)', marginBottom: 'var(--space-5)', paddingBottom: 'var(--space-5)', borderBottom: '1px solid var(--color-border)' }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
-                  alt={tutor.name} 
-                  style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} 
-                />
+              <h2 className="section-header__title" style={{ marginBottom: 'var(--space-4)' }}>Select an Available Slot</h2>
+              
+              {!tutor.availability || tutor.availability.length === 0 ? (
+                  <p className="text-muted">Tutor hasn't set their availability matrix yet.</p>
+              ) : (
+                  <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+                      {tutor.availability.map((avail: any, idx: number) => (
+                          <div key={idx} style={{ padding: 'var(--space-3)', backgroundColor: '#F8FAFC', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
+                              <h4 style={{ margin: '0 0 12px 0', color: 'var(--primary-color)' }}>{avail.day}</h4>
+                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                  {avail.slots.map((slot: string) => {
+                                      const isSelected = selectedTime === slot;
+                                      return (
+                                          <button 
+                                              key={slot}
+                                              onClick={() => handleSlotSelect(avail.day, slot)}
+                                              style={{ 
+                                                  padding: '6px 12px', borderRadius: '6px', border: '1px solid #CBD5E1', 
+                                                  backgroundColor: isSelected ? 'var(--primary-color)' : 'white',
+                                                  color: isSelected ? 'white' : '#475569',
+                                                  cursor: 'pointer', fontSize: '14px', transition: 'all 0.2s'
+                                              }}
+                                          >
+                                              {slot}
+                                          </button>
+                                      );
+                                  })}
+                              </div>
+                          </div>
+                      ))}
+                  </div>
+              )}
+
+              {selectedDate && (
+                  <div style={{ marginTop: 'var(--space-6)', padding: 'var(--space-4)', backgroundColor: '#F0FDF4', borderRadius: '12px', border: '1px solid #DCFCE7' }}>
+                      <p style={{ margin: 0, color: '#16A34A', fontWeight: 'bold' }}>SELECTED SLOT</p>
+                      <p style={{ margin: '4px 0 0 0', fontSize: '18px' }}>{new Date(selectedDate).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })} at <strong>{selectedTime}</strong></p>
+                      {lockExpiry && (
+                          <p style={{ margin: '8px 0 0 0', fontSize: '13px', color: '#15803D' }}>
+                              Locked until {lockExpiry.toLocaleTimeString()}
+                          </p>
+                      )}
+                  </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Booking Summary & Details */}
+          <div className="card" style={{ height: 'fit-content' }}>
+            <div className="card__body">
+              <div style={{ display: 'flex', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+                {tutor.documents?.profilePicture ? (
+                  <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} alt={tutor.name} style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover' }} />
+                ) : (
+                  <div style={{ 
+                    width: '64px', height: '64px', borderRadius: '50%', 
+                    background: 'var(--color-primary-light)', color: 'var(--color-primary)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '24px', fontWeight: 'bold'
+                  }}>
+                    {tutor.name.charAt(0)}
+                  </div>
+                )}
                 <div>
-                  <h2 className="section-header__title" style={{ marginBottom: 'var(--space-1)' }}>{tutor.name}</h2>
-                  <p className="tutor-card__subject" style={{ marginBottom: 'var(--space-2)' }}>{tutor.department}</p>
-                  <span className="tutor-card__price">N{fee}/hr</span>
+                  <h3 style={{ margin: 0 }}>{tutor.name}</h3>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#64748B' }}>{tutor.department}</p>
+                  <p style={{ margin: '4px 0 0 0', fontWeight: 'bold', color: 'var(--primary-color)' }}>₦{fee}/hr</p>
                 </div>
               </div>
-              
+
+              {error && <div style={{ padding: 'var(--space-3)', backgroundColor: '#FEF2F2', color: '#DC2626', borderRadius: '8px', marginBottom: 'var(--space-4)', fontSize: '14px' }}>{error}</div>}
+
               <form onSubmit={handleBooking}>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="date">Session Date</label>
-                  <input 
-                    type="date" 
-                    id="date" 
-                    className="form-input" 
-                    required 
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="time">Preferred Time</label>
-                  <select 
-                    id="time" 
-                    className="form-input" 
-                    required
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                  >
-                    <option value="">Select a time slot</option>
-                    <option value="09:00 AM - 10:00 AM">9:00 AM - 10:00 AM</option>
-                    <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
-                    <option value="02:00 PM - 03:00 PM">2:00 PM - 3:00 PM</option>
-                    <option value="04:00 PM - 05:00 PM">4:00 PM - 5:00 PM</option>
+                  <label className="form-label">Teaching Venue</label>
+                  <select className="form-input" value={selectedVenue} onChange={(e) => setSelectedVenue(e.target.value)} required>
+                    {venues.map(v => (
+                        <option key={v._id} value={v.name}>{v.name} ({v.location})</option>
+                    ))}
+                    <option value="Online">Online / Personal Choice</option>
                   </select>
                 </div>
+
                 <div className="form-group">
-                  <label className="form-label" htmlFor="topic">Topic to Cover</label>
-                  <input 
-                    type="text" 
-                    id="topic" 
-                    className="form-input" 
-                    placeholder="e.g. Recursion, Binary Trees"
-                    required
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                  />
+                  <label className="form-label" htmlFor="topic">Main Topic / Problem</label>
+                  <input type="text" id="topic" className="form-input" placeholder="e.g. Data Structures, Exam Prep" required value={topic} onChange={(e) => setTopic(e.target.value)} />
                 </div>
-                
-                <div style={{ background: 'var(--color-bg)', padding: 'var(--space-4)', borderRadius: 'var(--radius-md)', marginBottom: 'var(--space-4)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
-                    <span className="tutor-card__subject">Session fee (1 hr)</span>
-                    <span className="tutor-card__price">N{fee}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'var(--font-weight-bold)' }}>
-                    <span>Total</span>
-                    <span className="tutor-card__price">N{fee}</span>
-                  </div>
+
+                <div style={{ margin: 'var(--space-6) 0', padding: 'var(--space-4)', backgroundColor: '#F8FAFC', borderRadius: '12px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+                        <span style={{ color: '#64748B' }}>Session Fee</span>
+                        <span style={{ fontWeight: 'bold' }}>₦{fee}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', borderTop: '1px solid #E2E8F0' }}>
+                        <span style={{ fontWeight: 'bold' }}>Total To Pay</span>
+                        <span style={{ fontWeight: 'bold', color: 'var(--primary-color)', fontSize: '1.25rem' }}>₦{fee}</span>
+                    </div>
                 </div>
-                
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)' }}>
-                  Payment will be held in escrow and released after session completion via QR code verification.
-                </p>
-                
-                <button type="submit" className="btn btn--primary" style={{ width: '100%' }} disabled={booking}>
-                  {booking ? 'Processing...' : 'Pay & Book Session'}
+
+                <button type="submit" className="btn btn--primary btn--block" disabled={booking || !selectedDate}>
+                  {booking ? 'Processing Payment...' : 'Confirm & Book Session'}
                 </button>
+                <p style={{ textAlign: 'center', fontSize: '12px', color: '#94A3B8', marginTop: 'var(--space-4)' }}>
+                    Funds will be held in escrow and released only after you verify the session.
+                </p>
               </form>
             </div>
           </div>
@@ -171,7 +253,7 @@ function BookSessionContent() {
 
 export default function BookSessionPage() {
   return (
-    <Suspense fallback={<div className="container text-center pt-space-8">Loading booking page...</div>}>
+    <Suspense fallback={<div className="container text-center pt-space-8">Loading booking details...</div>}>
       <BookSessionContent />
     </Suspense>
   );

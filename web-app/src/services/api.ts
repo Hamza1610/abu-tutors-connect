@@ -50,11 +50,63 @@ export const sessionApi = {
     // Get all user sessions
     getSessions: () => api.get('/sessions'),
     
-    // Start session (tutor scans tutee QR)
-    startSession: (id: string, qrData: string) => api.post(`/sessions/${id}/start`, { qrData }),
+    // Lock a slot (Phase 1)
+    lockSlot: (data: { tutorId: string; slot: string }) => api.post('/sessions/lock', data),
 
-    // Complete session (tutee scans tutor QR)
-    completeSession: (id: string, qrData: string) => api.post(`/sessions/${id}/complete`, { qrData }),
+    // Start session (tutor scans tutee QR OR enters PIN)
+    startSession: (id: string, data: { qrData?: string; pin?: string }) => api.post(`/sessions/${id}/start`, data),
+
+    // Complete session (tutor scans tutee QR OR enters PIN)
+    completeSession: (id: string, data: { qrData?: string; pin?: string; rating?: number }) => api.post(`/sessions/${id}/complete`, data),
+
+    // Sync active session (Phase 4)
+    syncSession: (id: string, deviceTime: string) => api.post(`/sessions/${id}/sync`, { deviceTime }),
+
+    // Cancel session
+    cancelSession: (id: string) => api.post(`/sessions/${id}/cancel`),
+
+    // Report no-show
+    reportNoShow: (id: string) => api.post(`/sessions/${id}/no-show`),
+
+    // Reschedule session
+    rescheduleSession: (id: string, data: { date: string, time: string }) => api.post(`/sessions/${id}/reschedule`, data),
+};
+
+export const adminApi = {
+    // Get pending tutors for approval
+    getPendingTutors: () => api.get('/admin/pending-tutors'),
+    
+    // Approve or reject tutor
+    approveTutor: (id: string, status: 'approve' | 'reject') => api.put(`/admin/tutors/${id}/approve`, { status }),
+    
+    // Settings
+    getSettings: () => api.get('/admin/settings'),
+    updateSettings: (data: any) => api.put('/admin/settings', data),
+
+    // Venues
+    getVenues: () => api.get('/admin/venues'),
+    addVenue: (data: { name: string; location: string }) => api.post('/admin/venues', data),
+    updateVenue: (id: string, data: any) => api.put(`/admin/venues/${id}`, data),
+    deleteVenue: (id: string) => api.delete(`/admin/venues/${id}`),
+    
+    // User Management
+    getAllUsers: () => api.get('/admin/users'),
+    updateUserStatus: (id: string, data: { role?: string; isApproved?: boolean }) => api.put(`/admin/users/${id}/status`, data),
+    
+    // Activity History
+    getAdminLogs: () => api.get('/admin/logs'),
+
+    // Session Monitoring
+    getAllSessions: () => api.get('/admin/sessions'),
+    overrideSession: (id: string, data: { status?: string; escrowStatus?: string }) => api.put(`/admin/sessions/${id}/override`, data),
+
+    // Financial Monitoring
+    getFinances: () => api.get('/admin/finances'),
+};
+
+export const paymentApi = {
+    // Mock registration fee payment
+    payRegistrationFee: (txRef: string) => api.post('/payment/register', { txRef }),
 };
 
 export const walletApi = {
@@ -66,6 +118,23 @@ export const walletApi = {
 
     // Verify Paystack payment
     verifyPayment: (reference: string) => api.get(`/wallets/verify?reference=${reference}`),
+
+    // Withdraw funds (Tutors only)
+    withdrawFunds: (data: { amount: number; pin: string }) => api.post('/wallets/withdraw', data),
+    
+    // Set Transaction PIN
+    setTransactionPin: (data: { pin: string; currentPassword?: string }) => api.post('/wallets/set-pin', data),
+
+    // Pay Registration Fee from Wallet
+    payRegistrationFromWallet: () => api.post('/wallets/pay-registration'),
+};
+
+export const bankApi = {
+    // Get list of banks
+    getBanks: () => api.get('/wallets/banks'),
+    
+    // Verify account number
+    verifyAccount: (accountNumber: string, bankCode: string) => api.get(`/wallets/verify-account?accountNumber=${accountNumber}&bankCode=${bankCode}`),
 };
 
 export const statsApi = {
@@ -82,6 +151,17 @@ export const notificationApi = {
     
     // Delete notification
     deleteNotification: (id: string) => api.delete(`/notifications/${id}`),
+};
+
+export const messageApi = {
+    // Send a message
+    sendMessage: (data: { receiverId: string; content: string }) => api.post('/messages', data),
+    
+    // Get chat list (recent conversations)
+    getChatList: () => api.get('/messages/conversations'),
+    
+    // Get messages for a specific conversation
+    getConversation: (otherUserId: string) => api.get(`/messages/${otherUserId}`),
 };
 
 export default api;

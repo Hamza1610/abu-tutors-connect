@@ -51,7 +51,10 @@ export default function ClientHeader() {
           <Link href="/">Home</Link>
           <Link href="/tutors">Find Tutors</Link>
           <Link href="/ai-match">AI Match</Link>
-          {isLoggedIn && user?.role !== 'tutee' && (
+          {isLoggedIn && user?.role === 'admin' && (
+              <Link href="/admin">Admin Panel</Link>
+          )}
+          {isLoggedIn && user?.role !== 'tutee' && user?.role !== 'admin' && (
               <Link href="/tutor-dashboard">Tutor Dash</Link>
           )}
           {isLoggedIn && (
@@ -78,7 +81,17 @@ export default function ClientHeader() {
                 )}
               </Link>
               <Link href="/wallet" className="icon-btn" aria-label="Wallet">💰</Link>
-              <Link href="/profile" className="icon-btn" aria-label="Profile">👤</Link>
+              <Link href="/profile" className="icon-btn" aria-label="Profile" style={{ padding: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {user?.documents?.profilePicture ? (
+                    <img 
+                        src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${user.documents.profilePicture}`} 
+                        alt="Profile" 
+                        style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} 
+                    />
+                ) : (
+                    <span>👤</span>
+                )}
+              </Link>
               <button onClick={handleLogout} className="btn btn--outline btn--sm">Logout</button>
             </>
           ) : (

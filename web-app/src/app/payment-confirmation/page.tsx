@@ -10,7 +10,7 @@ export default function PaymentConfirmationPage() {
         <div className="card" style={{ textAlign: 'center' }}>
           <div className="card__body" style={{ padding: 'var(--space-8)' }}>
             <div style={{ marginBottom: 'var(--space-6)' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', justifyCenter: 'center', width: '80px', height: '80px', background: 'var(--color-accent-green)', borderRadius: '50%', color: 'white', fontSize: '40px', marginBottom: 'var(--space-4)', display: 'flex' }}>✓</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80px', height: '80px', background: 'var(--color-accent-green)', borderRadius: '50%', color: 'white', fontSize: '40px', marginBottom: 'var(--space-4)' }}>✓</div>
             </div>
             <h1 className="page-header__title" style={{ marginBottom: 'var(--space-2)' }}>Payment Successful!</h1>
             <p className="tutor-card__subject" style={{ marginBottom: 'var(--space-6)' }}>Your session has been booked and payment has been held in escrow.</p>

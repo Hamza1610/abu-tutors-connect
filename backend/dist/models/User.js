@@ -38,27 +38,40 @@ const UserSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ["tutee", "tutor", "verified_tutor"], default: "tutee" },
+    role: { type: String, enum: ["tutee", "tutor", "verified_tutor", "admin"], default: "tutee" },
+    registrationNumber: { type: String, unique: true, sparse: true },
     faculty: { type: String },
     department: { type: String },
-    // Tutor fields
+    acceptedTerms: { type: Boolean, required: true, default: false },
+    profileStep: { type: Number, default: 0 },
+    // Tutor specific fields
     level: { type: String },
-    admissionId: { type: String }, // Validated via regex on API side
+    teachingLevel: { type: String },
     courses: [{ type: String }],
+    areaOfStrength: { type: String },
+    phone: { type: String },
+    // Profile verification
+    isProfileComplete: { type: Boolean, default: false },
+    isApproved: { type: Boolean, default: false },
+    registrationPaymentStatus: { type: String, enum: ['pending', 'completed', 'free'], default: 'pending' },
+    documents: {
+        admissionLetter: { type: String },
+        transcript: { type: String },
+        profilePicture: { type: String }
+    },
+    // Rating and session stats
+    sessionsCompleted: { type: Number, default: 0 },
+    hourlyRate: { type: Number, default: 500 },
+    averageRating: { type: Number, default: 0 },
     availability: [{ type: Object }], // e.g. [{ day: "Monday", slots: ["14:00-16:00"] }]
     about: { type: String },
     gender: { type: String },
-    // Day 7 Additions
-    hourlyRate: { type: Number, default: 500 },
     notificationPreferences: {
         sessionReminders: { type: Boolean, default: true },
         newMessages: { type: Boolean, default: true },
         bookingRequests: { type: Boolean, default: true },
         paymentNotifications: { type: Boolean, default: true }
     },
-    // Rating and session stats
-    sessionsCompleted: { type: Number, default: 0 },
-    rating: { type: Number, default: 0 },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('User', UserSchema);
 //# sourceMappingURL=User.js.map

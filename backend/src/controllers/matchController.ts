@@ -90,14 +90,16 @@ export const requestMatch = async (req: AuthRequest, res: Response): Promise<voi
         }
 
         // Initialize Gemini with Tools
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash",
-            tools: tools as any,
-        });
+        let model;
+        try {
+            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+            model = genAI.getGenerativeModel({
+                model: "gemini-2.0-flash",
+                tools: tools as any,
+            });
 
-        const chat = model.startChat();
-        const initialPrompt = `
+            const chat = model.startChat();
+            const initialPrompt = `
 You are ABUTutorsConnect's Agentic AI Matcher. Your goal is to find the BEST tutor for a student.
 A student needs help with:
 Course: ${course}
@@ -114,40 +116,56 @@ Response Format (JSON):
 }
 `;
 
-        const result = await chat.sendMessage(initialPrompt);
-        let responseText = result.response.text();
+            const result = await chat.sendMessage(initialPrompt);
+            let responseText = result.response.text();
 
-        // Handle Function Calling Loop
-        const candidate = result.response.candidates?.[0];
-        const parts = candidate?.content?.parts;
-        const call = parts?.find(p => p.functionCall);
-        
-        if (call && call.functionCall) {
-            const { name, args } = call.functionCall;
-            logger.info(`AI calling tool: ${name}`);
+            // Handle Function Calling Loop
+            const candidate = result.response.candidates?.[0];
+            const parts = candidate?.content?.parts;
+            const call = parts?.find(p => p.functionCall);
             
-            const toolResult = await (toolLogic as any)[name](args);
-            
-            const nextResult = await chat.sendMessage([
-                {
-                    functionResponse: {
-                        name,
-                        response: { content: toolResult }
+            if (call && call.functionCall) {
+                const { name, args } = call.functionCall;
+                logger.info(`AI calling tool: ${name}`);
+                
+                const toolResult = await (toolLogic as any)[name](args);
+                
+                const nextResult = await chat.sendMessage([
+                    {
+                        functionResponse: {
+                            name,
+                            response: { content: toolResult }
+                        }
                     }
-                }
-            ]);
-            responseText = nextResult.response.text();
+                ]);
+                responseText = nextResult.response.text();
+            }
+
+            // Clean up response if it's wrapped in markdown
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            const matchData = jsonMatch ? JSON.parse(jsonMatch[0]) : { message: responseText };
+
+            logger.info(`Agentic AI Match successful for ${course}`);
+            res.status(200).json(matchData);
+            return;
+
+        } catch (aiError: any) {
+            logger.error(`AI Match Error (Falling back to search): ${aiError.message}`);
+            
+            // FALLBACK LOGIC
+            const tutors = await toolLogic.search_tutors({ query: course });
+            if (tutors.length > 0) {
+                res.status(200).json({
+                    message: "The AI matcher is currently unavailable, but I found these tutors who match your course!",
+                    tutor: tutors[0]
+                });
+            } else {
+                res.status(404).json({ message: "No tutors found for this course. Please try a different search term." });
+            }
         }
 
-        // Clean up response if it's wrapped in markdown
-        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-        const matchData = jsonMatch ? JSON.parse(jsonMatch[0]) : { message: responseText };
-
-        logger.info(`Agentic AI Match successful for ${course}`);
-        res.status(200).json(matchData);
-
     } catch (error: any) {
-        logger.error(`Agentic Match Error: ${error.message}`, { error });
+        logger.error(`General Match Controller Error: ${error.message}`, { error });
         res.status(500).json({ message: "Server error during matching", error: error.message });
     }
 };

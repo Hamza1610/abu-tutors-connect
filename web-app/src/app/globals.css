@@ -33,6 +33,7 @@
   --color-accent-orange: #FF8000;
   --color-accent-green: #00CC66;
   --color-accent-gold: #FFBF00;
+  --success-green: #00CC66;
   
   /* Typography - pixel spec */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Open Sans', sans-serif;

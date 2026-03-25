@@ -41,11 +41,22 @@ export default function TutorProfilePage() {
           <section className="card">
             <div className="card__body">
               <div style={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
-                <img 
-                  src={`https://images.unsplash.com/photo-${tutor.role === 'verified_tutor' ? '1507003211169-0a1dd7228f2d' : '1494790108377-be9c29b29330'}?w=200&h=200&fit=crop`} 
-                  alt={tutor.name} 
-                  style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
-                />
+                {tutor.documents?.profilePicture ? (
+                  <img 
+                    src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} 
+                    alt={tutor.name} 
+                    style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
+                  />
+                ) : (
+                  <div style={{ 
+                    width: '150px', height: '150px', borderRadius: '15px',
+                    background: 'var(--color-primary-light)', color: 'var(--color-primary)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '64px', fontWeight: 'bold', border: '2px solid var(--color-primary)'
+                  }}>
+                    {tutor.name.charAt(0)}
+                  </div>
+                )}
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h1 className="tutor-card__name" style={{ fontSize: '32px' }}>{tutor.name}</h1>
@@ -94,6 +105,14 @@ export default function TutorProfilePage() {
               <Link href={`/book-session?tutor=${tutor._id}`} className="btn btn--primary btn--block" style={{ height: '50px' }}>
                 Continue to Booking
               </Link>
+
+              <button 
+                onClick={() => router.push(`/messages?partnerId=${tutor._id}`)} 
+                className="btn btn--secondary btn--block" 
+                style={{ marginTop: '10px', height: '45px' }}
+              >
+                Message {tutor.name.split(' ')[0]}
+              </button>
               
               <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '15px' }}>
                 Payment is held in escrow until session completion.

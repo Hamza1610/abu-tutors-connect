@@ -80,11 +80,22 @@ export default function LandingPage() {
                 tutors.map((tutor) => (
                   <article key={tutor._id} className="tutor-card">
                     <div className="tutor-card__image-wrap">
-                      <img 
-                        src={`https://images.unsplash.com/photo-${tutor.role === 'verified_tutor' ? '1507003211169-0a1dd7228f2d' : '1494790108377-be9c29b29330'}?w=400&h=300&fit=crop`} 
-                        alt={tutor.name} 
-                        className="tutor-card__image" 
-                      />
+                      {tutor.documents?.profilePicture ? (
+                        <img 
+                          src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}${tutor.documents.profilePicture}`} 
+                          alt={tutor.name} 
+                          className="tutor-card__image" 
+                        />
+                      ) : (
+                        <div style={{ 
+                          width: '100%', height: '100%', 
+                          background: 'var(--color-primary-light)', color: 'var(--color-primary)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: '48px', fontWeight: 'bold'
+                        }}>
+                          {tutor.name.charAt(0)}
+                        </div>
+                      )}
                       <span className={`tutor-card__badge ${tutor.role === 'verified_tutor' ? 'tutor-card__badge--orange' : 'tutor-card__badge--green'}`}>
                         {tutor.role === 'verified_tutor' ? 'Verified Tutor' : 'New Tutor'}
                       </span>

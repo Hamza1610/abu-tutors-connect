@@ -5,6 +5,9 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node src/server.ts",
+    "seed": "ts-node src/seed_v2.ts",
+    "seed:admin": "ts-node src/seedAdmin.ts",
+    "reset:system": "ts-node src/resetSystem.ts --confirm-reset",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -15,6 +18,7 @@
   "dependencies": {
     "@google/genai": "^1.45.0",
     "@google/generative-ai": "^0.24.1",
+    "@types/multer": "^2.1.0",
     "axios": "^1.13.6",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
@@ -23,6 +27,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.0",
     "morgan": "^1.10.1",
+    "multer": "^2.1.1",
     "winston": "^3.19.0"
   },
   "devDependencies": {

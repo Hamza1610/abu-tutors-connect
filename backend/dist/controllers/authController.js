@@ -12,13 +12,22 @@ const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_development";
 const register = async (req, res) => {
     try {
         const { name, email, password, role, faculty, department, // tutee + tutor
-        level, admissionId, courses, about, gender // tutor only
-         } = req.body;
-        // Optional: Validate ABU admission ID regex inside here for tutors
+        level, registrationNumber, admissionId, courses, about, gender, phone, // tutor only
+        acceptedTerms } = req.body || {};
+        const finalizedRegNum = registrationNumber || admissionId;
+        // Handle boolean parsing from FormData (sent as strings)
+        const isTermsAccepted = acceptedTerms === 'true' || acceptedTerms === true;
+        if (!isTermsAccepted) {
+            res.status(400).json({ message: "You must accept the Terms and Conditions to register." });
+            return;
+        }
+        // Extract profile picture from multer file if provided
+        const profilePicturePath = req.file ? `/uploads/${req.file.filename}` : '';
+        // Optional: Validate ABU registration number regex
         if (role === 'tutor' || role === 'verified_tutor') {
-            const admissionIdRegex = /^U\d{2}[A-Z]{2}\d{4}$/; // e.g., U21CO1015
-            if (admissionId && !admissionIdRegex.test(admissionId)) {
-                res.status(400).json({ message: "Invalid ABU Admission ID format. Expected format: U21COxxxx" });
+            const regNumRegex = /^U\d{2}[A-Z]{2}\d{4}$/; // e.g., U21CO1015
+            if (finalizedRegNum && !regNumRegex.test(finalizedRegNum)) {
+                res.status(400).json({ message: "Invalid ABU Registration Number format. Expected format: U21COxxxx" });
                 return;
             }
         }
@@ -30,8 +39,25 @@ const register = async (req, res) => {
         const salt = await bcryptjs_1.default.genSalt(10);
         const hashedPassword = await bcryptjs_1.default.hash(password, salt);
         const user = new User_1.default({
-            name, email, password: hashedPassword, role: role || "tutee",
-            faculty, department, level, admissionId, courses, about, gender
+            name,
+            email,
+            password: hashedPassword,
+            role: role || "tutee",
+            registrationNumber: finalizedRegNum,
+            faculty,
+            department,
+            level,
+            courses,
+            about,
+            gender,
+            phone,
+            acceptedTerms: isTermsAccepted,
+            profileStep: (role === 'tutee') ? 4 : 0, // Tutees finish immediately, Tutors start at 0
+            isProfileComplete: (role === 'tutee'), // Tutees complete after registration
+            registrationPaymentStatus: (role === 'tutee' || role === 'admin') ? 'free' : 'pending',
+            documents: {
+                profilePicture: profilePicturePath
+            }
         });
         await user.save();
         // Auto-login upon registration

@@ -5,9 +5,21 @@ export interface ISession extends Document {
     date: Date;
     time: string;
     topic: string;
-    status: 'pending' | 'active' | 'completed' | 'cancelled';
+    status: 'pending' | 'active' | 'completed' | 'cancelled' | 'dispute';
+    escrowStatus: 'none' | 'held' | 'released' | 'refunded';
     amount: number;
-    qrCodeData?: string;
+    venue?: string;
+    tuteeRating?: number;
+    tutorRating?: number;
+    tuteeReview?: string;
+    tutorReview?: string;
+    startQRCodeData?: string;
+    completionQRCodeData?: string;
+    startPIN?: string;
+    completionPIN?: string;
+    actualStartTime?: Date;
+    actualEndTime?: Date;
+    lastSyncTime?: Date;
     meetingLink?: string;
 }
 declare const _default: mongoose.Model<ISession, {}, {}, {}, mongoose.Document<unknown, {}, ISession, {}, mongoose.DefaultSchemaOptions> & ISession & Required<{

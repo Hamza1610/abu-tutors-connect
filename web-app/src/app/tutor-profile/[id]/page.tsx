@@ -60,11 +60,22 @@ export default function TutorProfilePage() {
           <div className="card">
             <div className="card__body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-4)' }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" 
-                  alt={tutor.name} 
-                  style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover' }} 
-                />
+                {tutor.documents?.profilePicture ? (
+                  <img 
+                    src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} 
+                    alt={tutor.name} 
+                    style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover' }} 
+                  />
+                ) : (
+                  <div style={{ 
+                    width: '120px', height: '120px', borderRadius: '50%',
+                    background: 'var(--color-primary-light)', color: 'var(--color-primary)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '48px', fontWeight: 'bold', border: '2px solid var(--color-primary)'
+                  }}>
+                    {tutor.name.charAt(0)}
+                  </div>
+                )}
                 <div style={{ textAlign: 'center' }}>
                   <h1 className="page-header__title" style={{ marginBottom: 'var(--space-2)' }}>{tutor.name}</h1>
                   <span className={`tutor-card__badge ${tutor.role === 'verified_tutor' ? 'tutor-card__badge--green' : 'tutor-card__badge--orange'}`} style={{ display: 'inline-block' }}>
