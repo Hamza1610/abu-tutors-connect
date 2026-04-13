@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Wallet from '../models/Wallet';
 import User from '../models/User';
+import Notification from '../models/Notification';
 import Settings from '../models/Settings';
 import logger from '../utils/logger';
 import axios from 'axios';
@@ -91,8 +92,12 @@ export const initializePayment = async (req: AuthRequest, res: Response): Promis
 
         res.json(response.data.data);
     } catch (error: any) {
-        logger.error(`Paystack Init Error: ${error.message}`);
-        res.status(500).json({ message: 'Failed to initialize payment' });
+        const errorMsg = error.response?.data?.message || error.message;
+        logger.error(`Paystack Init Error: ${errorMsg}`, { 
+            data: error.response?.data,
+            status: error.response?.status 
+        });
+        res.status(500).json({ message: 'Failed to initialize payment', error: errorMsg });
     }
 };
 
@@ -131,6 +136,15 @@ export const verifyPayment = async (req: AuthRequest, res: Response): Promise<vo
                     reference: reference as string
                 });
                 await wallet.save();
+
+                // Notify User
+                await Notification.create({
+                    userId,
+                    title: 'Payment Confirmed',
+                    message: `Your wallet has been credited with ₦${actualAmount}.`,
+                    type: 'payment',
+                    link: '/wallet'
+                });
             }
 
             res.json({ message: 'Payment verified and wallet credited', balance: wallet.balance });
@@ -168,6 +182,16 @@ export const handleWebhook = async (req: Request, res: Response): Promise<void> 
                         reference
                     });
                     await wallet.save();
+                    
+                    // Notify User
+                    await Notification.create({
+                        userId,
+                        title: 'Payment Received (Webhook)',
+                        message: `Your wallet has been credited with ₦${amount/100} via Paystack.`,
+                        type: 'payment',
+                        link: '/wallet'
+                    });
+
                     logger.info(`Webhook: Credited ${userId} with ${amount/100}`);
                 }
             }
@@ -191,54 +215,68 @@ export const payRegistrationFromWallet = async (req: AuthRequest, res: Response)
         }
 
         const settings = await Settings.findOne() || await Settings.create({});
-        const isFree = settings.isRegistrationFree;
+        const isFree = !!settings.isRegistrationFree;
         const fee = isFree ? 0 : (settings.registrationFee || 5000);
 
+        logger.info(`Processing registration payment for user ${req.user.id}. isFree: ${isFree}, Fee: ${fee}`);
+
         const wallet = await Wallet.findOne({ userId: req.user.id });
-        if (!isFree && (!wallet || wallet.balance < fee)) {
-            res.status(400).json({ message: 'Insufficient wallet balance' });
-            return;
-        }
+        
+        if (!isFree) {
+            if (!wallet || wallet.balance < fee) {
+                res.status(400).json({ message: 'Insufficient wallet balance' });
+                return;
+            }
 
-        // 1. Deduct from Tutor if not free
-        if (!isFree && fee > 0 && wallet) {
-            wallet.balance -= fee;
-            wallet.transactions.push({
-                type: 'debit',
-                amount: fee,
-                description: 'Tutor Registration Fee',
-                date: new Date()
-            });
-            await wallet.save();
-        }
+            // 1. Deduct from Tutor
+            if (fee > 0) {
+                wallet.balance -= fee;
+                wallet.transactions.push({
+                    type: 'debit',
+                    amount: fee,
+                    description: 'Tutor Registration Fee',
+                    date: new Date()
+                });
+                await wallet.save();
 
-        // 2. Credit Admin Wallet if not free
-        const admin = await User.findOne({ role: 'admin' });
-        if (!isFree && fee > 0 && admin) {
-            let adminWallet = await Wallet.findOne({ userId: admin._id });
-            if (!adminWallet) adminWallet = await Wallet.create({ userId: admin._id, balance: 0, transactions: [] });
-            
-            adminWallet.balance += fee;
-            adminWallet.transactions.push({
-                type: 'credit',
-                amount: fee,
-                description: `Registration Fee from ${user.name}`,
-                date: new Date(),
-                reference: user._id.toString()
-            });
-            await adminWallet.save();
+                // 2. Credit Admin Wallet
+                const admin = await User.findOne({ role: 'admin' });
+                if (admin) {
+                    let adminWallet = await Wallet.findOne({ userId: admin._id });
+                    if (!adminWallet) adminWallet = await Wallet.create({ userId: admin._id, balance: 0, transactions: [] });
+                    
+                    adminWallet.balance += fee;
+                    adminWallet.transactions.push({
+                        type: 'credit',
+                        amount: fee,
+                        description: `Registration Fee from ${user.name}`,
+                        date: new Date(),
+                        reference: user._id.toString()
+                    });
+                    await adminWallet.save();
+                }
+            }
         }
 
         // 3. Update User Status
         user.registrationPaymentStatus = 'completed';
-        // Advance to step 4/complete if needed
-        if (user.documents?.admissionLetter && user.documents?.transcript) {
-            user.isProfileComplete = true;
-            user.profileStep = 4;
-        }
+        user.isProfileComplete = true;
+        user.profileStep = 4;
         await user.save();
 
-        res.json({ message: 'Registration fee paid successfully', balance: wallet.balance });
+        // Notify User
+        await Notification.create({
+            userId: user._id,
+            title: 'Registration Successful',
+            message: 'Your tutor registration is complete. You can now set your availability and receive bookings.',
+            type: 'session',
+            link: '/tutor-dashboard'
+        });
+
+        res.json({ 
+            message: 'Registration fee paid successfully', 
+            balance: wallet ? wallet.balance : 0 
+        });
     } catch (error: any) {
         logger.error(`Registration Payment Error: ${error.message}`);
         res.status(500).json({ message: 'Server error paying registration fee' });
@@ -332,13 +370,64 @@ export const withdrawFunds = async (req: AuthRequest, res: Response): Promise<vo
                 });
                 await wallet.save();
 
+                // Notify User
+                await Notification.create({
+                    userId: user._id,
+                    title: 'Withdrawal Initiated',
+                    message: `A withdrawal of ₦${amount} to your ${user.bankDetails.bankName} account has been initiated.`,
+                    type: 'payment',
+                    link: '/wallet'
+                });
+
                 res.json({ message: 'Withdrawal initiated successfully', balance: wallet.balance });
             } else {
                 throw new Error('Paystack transfer failed');
             }
         } catch (err: any) {
-            logger.error(`Paystack Transfer Error: ${err.message}`);
-            res.status(500).json({ message: 'Failed to initiate transfer via Paystack' });
+            const errorMsg = err.response?.data?.message || err.message;
+            logger.error(`Paystack Transfer Error: ${errorMsg}`, { 
+                data: err.response?.data,
+                status: err.response?.status 
+            });
+
+            // DEVELOPMENT MOCK FALLBACK
+            // If Paystack fails (especially "starter business" error) during testing, 
+            // we simulate a success so the user can test the UI flow.
+            if (process.env.NODE_ENV !== 'production' || PAYSTACK_SECRET.startsWith('sk_test')) {
+                logger.warn(`[MOCK WITHDRAWAL] Simulating success for dev testing.`);
+                
+                // 3. Update Wallet Balance (Mock)
+                wallet.balance -= amount;
+                wallet.transactions.push({
+                    type: 'debit',
+                    amount,
+                    description: `[MOCK] Withdrawal to ${user.bankDetails.bankName}`,
+                    date: new Date(),
+                    reference: `MOCK_TRX_${Date.now()}`
+                });
+                await wallet.save();
+
+                // Notify User
+                await Notification.create({
+                    userId: user._id,
+                    title: 'Withdrawal Initiated (MOCK)',
+                    message: `[TESTING ONLY] A mock withdrawal of ₦${amount} to your ${user.bankDetails.bankName} account has been recorded.`,
+                    type: 'payment',
+                    link: '/wallet'
+                });
+
+                res.json({ 
+                    message: 'Withdrawal initiated successfully (MOCK MODE ACTIVE)', 
+                    balance: wallet.balance,
+                    isMock: true
+                });
+                return;
+            }
+
+            res.status(500).json({ 
+                message: 'Failed to initiate transfer via Paystack', 
+                error: errorMsg 
+            });
         }
     } catch (error: any) {
         logger.error(`Withdrawal Error: ${error.message}`);

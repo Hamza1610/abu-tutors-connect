@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { messageApi, userApi } from '../../services/api';
+import { getImageUrl } from '../../utils/image';
 import { useRouter } from 'next/navigation';
+import { getSocket } from '../../utils/socket';
 
 export default function MessagesPage() {
     const [conversations, setConversations] = useState<any[]>([]);
@@ -36,7 +38,7 @@ export default function MessagesPage() {
                     } else {
                         // Start new conversation by fetching partner profile
                         try {
-                            const pRes = await userApi.getTutorProfile(partnerId);
+                            const pRes = await userApi.getUserPublicProfile(partnerId);
                             setSelectedPartner(pRes.data);
                         } catch (err) {
                             console.error("Partner not found");
@@ -63,12 +65,54 @@ export default function MessagesPage() {
                 }
             };
             fetchConv();
-            
-            // Poll for new messages every 5 seconds
-            const interval = setInterval(fetchConv, 5000);
-            return () => clearInterval(interval);
         }
     }, [selectedPartner]);
+
+    // NEW: Real-time Socket Listener
+    useEffect(() => {
+        if (!user) return;
+        const socket = getSocket(user._id);
+        if (!socket) return;
+
+        const handleNewMessage = (msg: any) => {
+            // Update conversation list
+            setConversations(prev => {
+                const partnerId = msg.senderId === user._id ? msg.receiverId : msg.senderId;
+                const existing = prev.find(c => c.partner._id === partnerId);
+                if (existing) {
+                    return prev.map(c => c.partner._id === partnerId 
+                        ? { ...c, lastMessage: msg } 
+                        : c
+                    );
+                }
+                return prev; // Or re-fetch if new conversation
+            });
+
+            // Update current message list if msg belongs to selected partner
+            if (selectedPartner && (msg.senderId === selectedPartner._id || msg.receiverId === selectedPartner._id)) {
+                setMessages(prev => {
+                    const alreadyExists = prev.some(m => m._id === msg._id);
+                    return alreadyExists ? prev : [...prev, msg];
+                });
+            }
+        };
+
+        const handleMsgRead = (data: any) => {
+            if (selectedPartner && data.partnerId === selectedPartner._id) {
+                setMessages(prev => prev.map(m => 
+                    m.senderId === user._id ? { ...m, isRead: true } : m
+                ));
+            }
+        };
+
+        socket.on('new_message', handleNewMessage);
+        socket.on('msg_read', handleMsgRead);
+
+        return () => {
+            socket.off('new_message', handleNewMessage);
+            socket.off('msg_read', handleMsgRead);
+        };
+    }, [user, selectedPartner]);
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -124,7 +168,7 @@ export default function MessagesPage() {
                             >
                                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#E2E8F0', overflow: 'hidden' }}>
                                     {conv.partner.documents?.profilePicture ? (
-                                        <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${conv.partner.documents.profilePicture}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <img src={getImageUrl(conv.partner.documents?.profilePicture)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (
                                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold', color: '#64748B' }}>{conv.partner.name.charAt(0)}</div>
                                     )}
@@ -168,8 +212,13 @@ export default function MessagesPage() {
                                         }}
                                     >
                                         {msg.content}
-                                        <div style={{ fontSize: '10px', marginTop: '4px', opacity: 0.7, textAlign: 'right' }}>
+                                        <div style={{ fontSize: '10px', marginTop: '4px', opacity: 0.7, textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
                                             {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            {msg.senderId === user._id && (
+                                                <span style={{ color: msg.isRead ? '#3B82F6' : 'white', fontWeight: 'bold' }}>
+                                                    {msg.isRead ? '✓✓' : '✓'}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

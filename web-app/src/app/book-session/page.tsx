@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { userApi, sessionApi, walletApi, adminApi } from '../../services/api';
+import { getImageUrl } from '../../utils/image';
 
 function BookSessionContent() {
   const router = useRouter();
@@ -10,6 +11,7 @@ function BookSessionContent() {
   const tutorId = searchParams.get('tutor');
 
   const [tutor, setTutor] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [wallet, setWallet] = useState<any>(null);
   const [venues, setVenues] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -32,13 +34,15 @@ function BookSessionContent() {
 
     const fetchData = async () => {
       try {
-        const [tutorRes, walletRes, venuesRes] = await Promise.all([
+        const [tutorRes, profileRes, walletRes, venuesRes] = await Promise.all([
           userApi.getTutorProfile(tutorId),
+          userApi.getProfile(),
           walletApi.getWallet(),
           adminApi.getVenues()
         ]);
         
         setTutor(tutorRes.data);
+        setCurrentUser(profileRes.data);
         setWallet(walletRes.data);
         setVenues(venuesRes.data.filter((v: any) => v.isActive));
         
@@ -189,7 +193,7 @@ function BookSessionContent() {
             <div className="card__body">
               <div style={{ display: 'flex', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
                 {tutor.documents?.profilePicture ? (
-                  <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} alt={tutor.name} style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover' }} />
+                  <img src={getImageUrl(tutor.documents.profilePicture)} alt={tutor.name} style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover' }} />
                 ) : (
                   <div style={{ 
                     width: '64px', height: '64px', borderRadius: '50%', 
@@ -208,8 +212,17 @@ function BookSessionContent() {
               </div>
 
               {error && <div style={{ padding: 'var(--space-3)', backgroundColor: '#FEF2F2', color: '#DC2626', borderRadius: '8px', marginBottom: 'var(--space-4)', fontSize: '14px' }}>{error}</div>}
-
-              <form onSubmit={handleBooking}>
+              
+              {currentUser?.role === 'tutor' || currentUser?.role === 'verified_tutor' ? (
+                <div style={{ padding: 'var(--space-4)', backgroundColor: '#FFF7ED', border: '1px solid #FFEDD5', borderRadius: '12px', textAlign: 'center' }}>
+                  <p style={{ color: '#9A3412', fontWeight: 'bold' }}>Booking Restricted</p>
+                  <p style={{ fontSize: '14px', color: '#C2410C', marginTop: '8px' }}>
+                    Tutor accounts cannot book other tutors. Please log in with a student account to book a session.
+                  </p>
+                  <button onClick={() => router.push('/tutors')} className="btn btn--secondary btn--block" style={{ marginTop: '16px' }}>Back to Discovery</button>
+                </div>
+              ) : (
+                <form onSubmit={handleBooking}>
                 <div className="form-group">
                   <label className="form-label">Teaching Venue</label>
                   <select className="form-input" value={selectedVenue} onChange={(e) => setSelectedVenue(e.target.value)} required>
@@ -243,6 +256,7 @@ function BookSessionContent() {
                     Funds will be held in escrow and released only after you verify the session.
                 </p>
               </form>
+              )}
             </div>
           </div>
         </div>

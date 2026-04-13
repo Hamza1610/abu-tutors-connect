@@ -3,7 +3,7 @@ import axios from 'axios';
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api',
     headers: {
-        'Content-Type': 'application/json',
+        // Axios will automatically set Content-Type to multipart/form-data when sending FormData
     },
 });
 
@@ -24,6 +24,19 @@ api.interceptors.request.use(
     }
 );
 
+// Add response interceptor for global error handling
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (!error.response) {
+            // This is a Network Error (server down, CORS, etc.)
+            console.error('API Network Error - Check if backend is running on port 5001:', error.message);
+            // Optionally, we could trigger a global alert here
+        }
+        return Promise.reject(error);
+    }
+);
+
 export const authApi = {
     login: (data: any) => api.post('/auth/login', data),
     register: (data: any) => api.post('/auth/register', data),
@@ -35,12 +48,18 @@ export const userApi = {
     
     // Update current user profile
     updateProfile: (data: any) => api.put('/users/', data),
+
+    // NEW: Dedicated profile picture update
+    updateProfilePicture: (data: FormData) => api.put('/users/profile-picture', data),
     
     // Get all tutors (public)
     getTutors: () => api.get('/users/tutors'),
 
     // Get public tutor profile
     getTutorProfile: (id: string) => api.get(`/users/tutors/${id}`),
+
+    // Get basic public profile for any user (Private)
+    getUserPublicProfile: (id: string) => api.get(`/users/profile/${id}`),
 };
 
 export const sessionApi = {
@@ -102,6 +121,9 @@ export const adminApi = {
 
     // Financial Monitoring
     getFinances: () => api.get('/admin/finances'),
+
+    // Messaging
+    sendMessageToUser: (receiverId: string, content: string) => api.post('/messages', { receiverId, content }),
 };
 
 export const paymentApi = {

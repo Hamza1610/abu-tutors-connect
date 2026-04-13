@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { userApi } from '../../../services/api';
+import { getImageUrl } from '../../../utils/image';
 
 export default function TutorProfilePage() {
   const { id } = useParams();
@@ -43,7 +44,7 @@ export default function TutorProfilePage() {
               <div style={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
                 {tutor.documents?.profilePicture ? (
                   <img 
-                    src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} 
+                    src={getImageUrl(tutor.documents.profilePicture)} 
                     alt={tutor.name} 
                     style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
                   />
@@ -74,17 +75,33 @@ export default function TutorProfilePage() {
               </div>
 
               <div style={{ marginTop: '40px', borderTop: '1px solid var(--color-border)', paddingTop: '30px' }}>
-                <h2 className="section-header__title" style={{ fontSize: '20px', marginBottom: '15px' }}>About</h2>
-                <p className="hero-card__text" style={{ color: 'var(--color-text)', fontSize: '16px', lineHeight: '1.7' }}>
-                  {tutor.about || "This tutor hasn't added a bio yet, but they are ready to help you excel in their expert courses!"}
-                </p>
-
-                <h2 className="section-header__title" style={{ fontSize: '20px', marginTop: '30px', marginBottom: '15px' }}>Expertise Courses</h2>
-                <div className="course-tags">
-                  {tutor.courses?.map((course: string) => (
-                    <span key={course} className="course-tag course-tag--active">{course}</span>
-                  ))}
+                {/* Profile Summary */}
+                <h2 className="section-header__title" style={{ fontSize: '20px', marginBottom: '12px', color: 'var(--color-primary)' }}>Profile Summary</h2>
+                <div style={{ padding: '20px', backgroundColor: '#F8FAFC', borderRadius: '12px', border: '1px solid #E2E8F0', marginBottom: '28px' }}>
+                  <p style={{ color: 'var(--color-text)', fontSize: '16px', lineHeight: '1.7', margin: 0, fontStyle: 'italic' }}>
+                    "{tutor.matchingBio || 'This tutor has not yet added a profile summary. Book a session to learn more about their teaching style!'}"
+                  </p>
                 </div>
+
+                {/* Courses Taught */}
+                <h2 className="section-header__title" style={{ fontSize: '20px', marginBottom: '12px' }}>Courses I Teach</h2>
+                <div className="course-tags" style={{ marginBottom: '28px' }}>
+                  {tutor.courses && tutor.courses.length > 0 ? (
+                    tutor.courses.map((course: string) => (
+                      <span key={course} className="course-tag course-tag--active">{course}</span>
+                    ))
+                  ) : (
+                    <span style={{ color: '#94A3B8', fontSize: '14px' }}>No courses listed yet.</span>
+                  )}
+                </div>
+
+                {/* Area of Strength */}
+                {tutor.areaOfStrength && (
+                  <div style={{ marginBottom: '10px' }}>
+                    <h2 className="section-header__title" style={{ fontSize: '20px', marginBottom: '8px' }}>Area of Strength</h2>
+                    <p style={{ fontSize: '15px', color: 'var(--color-primary)', fontWeight: '500' }}>{tutor.areaOfStrength}</p>
+                  </div>
+                )}
               </div>
             </div>
           </section>
@@ -123,9 +140,19 @@ export default function TutorProfilePage() {
           <div className="card" style={{ marginTop: '20px' }}>
             <div className="card__body">
               <h3 className="section-header__title" style={{ fontSize: '16px', marginBottom: '10px' }}>Availability</h3>
-              <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
-                {tutor.availability || "Flexible (Mon - Sat, 4pm - 8pm)"}
-              </p>
+              <div style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
+                {!tutor.availability || tutor.availability.length === 0 ? (
+                    <p style={{ margin: 0 }}>Flexible (Mon - Sat, 4pm - 8pm)</p>
+                ) : (
+                    <ul style={{ padding: 0, margin: 0, listStyle: 'none' }}>
+                        {tutor.availability.map((avail: any, idx: number) => (
+                            <li key={idx} style={{ marginBottom: '8px' }}>
+                                <strong>{avail.day}:</strong> {avail.slots.join(', ')}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+              </div>
             </div>
           </div>
         </aside>

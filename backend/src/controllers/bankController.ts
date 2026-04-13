@@ -12,10 +12,17 @@ export const getBanks = async (req: Request, res: Response): Promise<void> => {
         const response = await axios.get('https://api.paystack.co/bank?currency=NGN', {
             headers: { Authorization: `Bearer ${PAYSTACK_SECRET}` }
         });
-        res.json(response.data.data);
+
+        // Filter out duplicate bank codes from Paystack response
+        const uniqueBanks = response.data.data.filter((bank: any, index: number, self: any[]) =>
+            index === self.findIndex((b) => b.code.toString() === bank.code.toString())
+        );
+
+        res.json(uniqueBanks);
     } catch (error: any) {
-        logger.error(`Get Banks Error: ${error.message}`);
-        res.status(500).json({ message: 'Failed to fetch banks' });
+        logger.warn(`Paystack Bank Fetch Warning: ${error.message}. Returning empty bank list.`);
+        // Return empty array instead of 500 to prevent crashing the whole Admin Dashboard
+        res.json([]);
     }
 };
 

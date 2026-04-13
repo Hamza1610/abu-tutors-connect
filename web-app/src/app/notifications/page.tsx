@@ -11,6 +11,8 @@ export default function NotificationsPage() {
 
   useEffect(() => {
     fetchNotifications();
+    const interval = setInterval(fetchNotifications, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchNotifications = async () => {
@@ -44,25 +46,28 @@ export default function NotificationsPage() {
 
   const filteredNotifications = notifications.filter(n => {
     if (filter === 'All') return true;
-    return n.type.toLowerCase() === filter.toLowerCase();
+    const typeMap: Record<string, string> = {
+      'Sessions': 'session',
+      'Messages': 'message',
+      'Payments': 'payment'
+    };
+    return n.type?.toLowerCase() === typeMap[filter];
   });
 
   const getIcon = (type: string) => {
-    switch (type) {
-      case 'session': return '✓';
-      case 'payment': return '💰';
-      case 'message': return '💬';
-      default: return '🔔';
-    }
+    const t = type?.toLowerCase();
+    if (t === 'session') return '📅';
+    if (t === 'payment') return '💰';
+    if (t === 'message') return '💬';
+    return '🔔';
   };
 
   const getBgColor = (type: string) => {
-    switch (type) {
-      case 'session': return 'var(--color-primary-light)';
-      case 'payment': return 'var(--color-accent-green)';
-      case 'message': return 'var(--color-secondary-light)';
-      default: return 'var(--color-bg)';
-    }
+    const t = type?.toLowerCase();
+    if (t === 'session') return '#E0F2FE'; // light blue
+    if (t === 'payment') return '#DCFCE7'; // light green
+    if (t === 'message') return '#F3E8FF'; // light purple
+    return '#F1F5F9';
   };
 
   if (loading) return <main className="container pt-space-8 text-center">Loading notifications...</main>;

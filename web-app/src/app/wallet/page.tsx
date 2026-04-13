@@ -116,7 +116,7 @@ export default function WalletPage() {
         <p className="page-header__subtitle">Manage your balance and transactions</p>
       </div>
 
-      {!user?.transactionPin && user?.role === 'tutor' && (
+      {!user?.transactionPin && (user?.role === 'tutor' || user?.role === 'admin') && (
         <div className="alert alert--warning" style={{ marginBottom: 'var(--space-4)', padding: '15px', background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', color: '#92400e', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <p style={{ margin: 0, fontSize: '14px' }}><strong>Security Action Required:</strong> Please set your transaction PIN in your profile to enable withdrawals.</p>
           <button onClick={() => router.push('/profile')} className="btn btn--secondary" style={{ fontSize: '12px', padding: '6px 12px' }}>Go to Profile</button>
@@ -138,7 +138,7 @@ export default function WalletPage() {
             >
               {funding ? 'Processing...' : 'Fund Wallet'}
             </button>
-            {wallet?.balance > 0 && (
+            {wallet?.balance > 0 && (userRole === 'tutor' || userRole === 'admin' || userRole === 'verified_tutor') && (
               <button 
                 className="btn btn--outline" 
                 style={{ borderColor: 'white', color: 'white', background: 'transparent' }}

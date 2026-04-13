@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { adminApi, userApi } from '../../services/api';
+import { adminApi, userApi, walletApi, bankApi } from '../../services/api';
+import { getImageUrl } from '../../utils/image';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -25,6 +26,31 @@ export default function AdminDashboard() {
   const [isRegistrationFree, setIsRegistrationFree] = useState(false);
   const [platformCommission, setPlatformCommission] = useState(10);
   const [noShowPayout, setNoShowPayout] = useState(30);
+
+  // Admin Profile/Financial Security
+  const [adminUser, setAdminUser] = useState<any>(null);
+  const [withdrawing, setWithdrawing] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [withdrawPin, setWithdrawPin] = useState('');
+  const [formError, setFormError] = useState('');
+
+  // Bank/PIN Setup
+  const [banks, setBanks] = useState<any[]>([]);
+  const [selectedBankCode, setSelectedBankCode] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [verifyingAccount, setVerifyingAccount] = useState(false);
+  const [newPin, setNewPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
+  const [isSettingPin, setIsSettingPin] = useState(false);
+  const [isEditingBank, setIsEditingBank] = useState(false);
+
+  // Messaging
+  const [showMsgModal, setShowMsgModal] = useState(false);
+  const [msgUser, setMsgUser] = useState<any>(null);
+  const [msgContent, setMsgContent] = useState('');
+  const [sendingMsg, setSendingMsg] = useState(false);
 
   // Venue Form
   const [venueName, setVenueName] = useState('');
@@ -51,30 +77,37 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [tutorsRes, settingsRes, venuesRes, usersRes, logsRes, sessionsRes, financesRes] = await Promise.all([
-        adminApi.getPendingTutors(),
-        adminApi.getSettings(),
-        adminApi.getVenues(),
-        adminApi.getAllUsers(),
-        adminApi.getAdminLogs(),
-        adminApi.getAllSessions(),
-        adminApi.getFinances()
+      const [tutorsRes, settingsRes, venuesRes, usersRes, logsRes, sessionsRes, financesRes, profileRes, banksRes] = await Promise.all([
+        adminApi.getPendingTutors().catch(() => ({ data: [] })),
+        adminApi.getSettings().catch(() => ({ data: {} })),
+        adminApi.getVenues().catch(() => ({ data: [] })),
+        adminApi.getAllUsers().catch(() => ({ data: [] })),
+        adminApi.getAdminLogs().catch(() => ({ data: [] })),
+        adminApi.getAllSessions().catch(() => ({ data: [] })),
+        adminApi.getFinances().catch(() => ({ data: {} })),
+        userApi.getProfile().catch(() => ({ data: {} })),
+        bankApi.getBanks().catch(() => ({ data: [] }))
       ]);
-      setPendingTutors(tutorsRes.data);
-      setSettings(settingsRes.data);
-      setVenues(venuesRes.data);
-      setUsers(usersRes.data);
-      setLogs(logsRes.data);
-      setSessions(sessionsRes.data);
-      setFinances(financesRes.data);
+
+      setPendingTutors(tutorsRes.data || []);
+      setSettings(settingsRes.data || {});
+      setVenues(venuesRes.data || []);
+      setUsers(usersRes.data || []);
+      setLogs(logsRes.data || []);
+      setSessions(sessionsRes.data || []);
+      setFinances(financesRes.data || {});
+      setAdminUser(profileRes.data || {});
+      setBanks(banksRes.data || []);
       
-      setMaxHourlyRate(settingsRes.data.maxHourlyRate);
-      setRegistrationFee(settingsRes.data.registrationFee);
-      setMinSessions(settingsRes.data.minSessionsForVerify);
-      setMinRating(settingsRes.data.minRatingForVerify);
-      setIsRegistrationFree(settingsRes.data.isRegistrationFree);
-      setPlatformCommission(settingsRes.data.platformCommissionPercent || 10);
-      setNoShowPayout(settingsRes.data.noShowPayoutPercent || 30);
+      if (settingsRes.data) {
+        setMaxHourlyRate(settingsRes.data.maxHourlyRate || 0);
+        setRegistrationFee(settingsRes.data.registrationFee || 0);
+        setMinSessions(settingsRes.data.minSessionsForVerify || 0);
+        setMinRating(settingsRes.data.minRatingForVerify || 0);
+        setIsRegistrationFree(!!settingsRes.data.isRegistrationFree);
+        setPlatformCommission(settingsRes.data.platformCommissionPercent || 10);
+        setNoShowPayout(settingsRes.data.noShowPayoutPercent || 30);
+      }
       
       setLoading(false);
     } catch (err) {
@@ -135,6 +168,108 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleVerifyAccount = async () => {
+    if (!accountNumber || !selectedBankCode) return;
+    setVerifyingAccount(true);
+    try {
+        const res = await bankApi.verifyAccount(accountNumber, selectedBankCode);
+        setAccountName(res.data.account_name);
+    } catch (err: any) {
+        alert('Could not verify account. Please check details.');
+    } finally {
+        setVerifyingAccount(false);
+    }
+  };
+
+  const handleUpdateAdminBank = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+        const bankName = banks.find(b => b.code === selectedBankCode)?.name || '';
+        await userApi.updateProfile({
+            bankName,
+            bankCode: selectedBankCode,
+            accountNumber,
+            accountName
+        } as any);
+        alert('Bank details updated successfully');
+        fetchData();
+    } catch (err) {
+        alert('Failed to update bank details');
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const handleSetAdminPin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPin !== confirmPin) {
+        alert('PINs do not match');
+        return;
+    }
+    const currentPassword = prompt('Enter your admin password to set your Transaction PIN:');
+    if (!currentPassword) return;
+
+    setIsSettingPin(true);
+    try {
+        await walletApi.setTransactionPin({ pin: newPin, currentPassword });
+        alert('Transaction PIN set successfully!');
+        setNewPin('');
+        setConfirmPin('');
+        fetchData();
+    } catch (err: any) {
+        alert(err.response?.data?.message || 'Failed to set PIN');
+    } finally {
+        setIsSettingPin(false);
+    }
+  };
+
+  const handleWithdrawFunds = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError('');
+    
+    const amount = Number(withdrawAmount);
+    if (!amount || amount <= 0) {
+      setFormError('Please enter a valid amount');
+      return;
+    }
+    
+    if (amount > finances.adminBalance) {
+      setFormError('Insufficient balance in admin wallet');
+      return;
+    }
+
+    setWithdrawing(true);
+    try {
+      await walletApi.withdrawFunds({ amount, pin: withdrawPin });
+      alert('Withdrawal initiated successfully!');
+      setShowWithdrawModal(false);
+      setWithdrawAmount('');
+      setWithdrawPin('');
+      fetchData();
+    } catch (err: any) {
+      setFormError(err.response?.data?.message || 'Withdrawal failed');
+    } finally {
+      setWithdrawing(false);
+    }
+  };
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!msgContent.trim()) return;
+    setSendingMsg(true);
+    try {
+      await adminApi.sendMessageToUser(msgUser._id, msgContent);
+      alert(`Message sent to ${msgUser.name}`);
+      setShowMsgModal(false);
+      setMsgContent('');
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'Failed to send message');
+    } finally {
+      setSendingMsg(false);
+    }
+  };
+
   if (!isAdmin || loading) {
     return <div className="container" style={{ textAlign: 'center', marginTop: '50px' }}>Loading Admin Dashboard...</div>;
   }
@@ -186,8 +321,17 @@ export default function AdminDashboard() {
                           <h3 style={{ margin: 0 }}>{tutor.name}</h3>
                           <p style={{ margin: '4px 0', fontSize: '14px', color: '#64748B' }}>{tutor.registrationNumber} · {tutor.faculty}</p>
                           <div style={{ marginTop: 'var(--space-2)', display: 'flex', gap: 'var(--space-2)' }}>
-                            <a href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents?.admissionLetter}`} target="_blank" className="btn btn--secondary btn--sm" rel="noreferrer">Admission Letter</a>
-                            <a href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents?.transcript}`} target="_blank" className="btn btn--secondary btn--sm" rel="noreferrer">Transcript</a>
+                            {tutor.documents?.admissionLetter ? (
+                              <a href={getImageUrl(tutor.documents.admissionLetter)} target="_blank" className="btn btn--secondary btn--sm" rel="noreferrer">Admission Letter</a>
+                            ) : (
+                              <span style={{ fontSize: '12px', color: '#94A3B8', border: '1px dashed #E2E8F0', padding: '4px 8px', borderRadius: '4px' }}>No Admission Letter</span>
+                            )}
+                            
+                            {tutor.documents?.transcript ? (
+                              <a href={getImageUrl(tutor.documents.transcript)} target="_blank" className="btn btn--secondary btn--sm" rel="noreferrer">Transcript/O-Level</a>
+                            ) : (
+                              <span style={{ fontSize: '12px', color: '#94A3B8', border: '1px dashed #E2E8F0', padding: '4px 8px', borderRadius: '4px' }}>No Result/Transcript</span>
+                            )}
                           </div>
                         </div>
                         <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
@@ -210,8 +354,18 @@ export default function AdminDashboard() {
                   <div key={tutor._id} className="card" style={{ border: '1px solid #E2E8F0' }}>
                     <div className="card__body">
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-                        <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', fontWeight: 'bold' }}>
-                          {tutor.name.charAt(0)}
+                        <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#F1F5F9', border: '1px solid #E2E8F0', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {tutor.documents?.profilePicture ? (
+                            <img 
+                              src={getImageUrl(tutor.documents.profilePicture)} 
+                              alt={tutor.name} 
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                            />
+                          ) : (
+                            <div style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--primary-color)' }}>
+                              {tutor.name.charAt(0)}
+                            </div>
+                          )}
                         </div>
                         <div>
                           <h4 style={{ margin: 0 }}>{tutor.name}</h4>
@@ -260,6 +414,7 @@ export default function AdminDashboard() {
                       <th style={{ padding: 'var(--space-3)' }}>User</th>
                       <th style={{ padding: 'var(--space-3)' }}>Role</th>
                       <th style={{ padding: 'var(--space-3)' }}>Status</th>
+                      <th style={{ padding: 'var(--space-3)' }}>Documents</th>
                       <th style={{ padding: 'var(--space-3)' }}>Actions</th>
                     </tr>
                   </thead>
@@ -279,8 +434,24 @@ export default function AdminDashboard() {
                           {u.isApproved ? (
                             <span style={{ color: 'var(--success-green)', fontSize: '14px' }}>● Active</span>
                           ) : (
-                            <span style={{ color: '#DC2626', fontSize: '14px' }}>● Pending/Offline</span>
+                            <span style={{ color: '#DC2626', fontSize: '14px' }}>● Pending</span>
                           )}
+                        </td>
+                        <td style={{ padding: 'var(--space-3)' }}>
+                          {u.role.includes('tutor') && (
+                            <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                              {u.documents?.admissionLetter && (
+                                <a href={getImageUrl(u.documents.admissionLetter)} target="_blank" style={{ fontSize: '11px', color: 'var(--primary-color)', textDecoration: 'underline' }} rel="noreferrer">Letter</a>
+                              )}
+                              {u.documents?.transcript && (
+                                <a href={getImageUrl(u.documents.transcript)} target="_blank" style={{ fontSize: '11px', color: 'var(--primary-color)', textDecoration: 'underline' }} rel="noreferrer">Result</a>
+                              )}
+                              {!u.documents?.admissionLetter && !u.documents?.transcript && (
+                                <span style={{ fontSize: '11px', color: '#94A3B8' }}>None</span>
+                              )}
+                            </div>
+                          )}
+                          {!u.role.includes('tutor') && <span style={{ color: '#E2E8F0' }}>—</span>}
                         </td>
                         <td style={{ padding: 'var(--space-3)' }}>
                           <div style={{ display: 'flex', gap: '8px' }}>
@@ -310,10 +481,20 @@ export default function AdminDashboard() {
                             >
                               Activate
                             </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            <button 
+                               onClick={() => {
+                                 setMsgUser(u);
+                                 setShowMsgModal(true);
+                               }}
+                               className="btn btn--secondary btn--sm"
+                               style={{ color: 'var(--primary-color)' }}
+                             >
+                               ✉️ Msg
+                             </button>
+                           </div>
+                         </td>
+                       </tr>
+                     ))}
                   </tbody>
                 </table>
               </div>
@@ -395,8 +576,28 @@ export default function AdminDashboard() {
                   <div style={{ fontSize: '24px', fontWeight: 'bold' }}>{finances.recentWalletActivity} txns</div>
                 </div>
                 <div className="card" style={{ border: '1px solid #E2E8F0', padding: '20px', background: '#f8fafc' }}>
-                  <div style={{ color: '#64748B', fontSize: '14px', marginBottom: '8px' }}>Admin Wallet Balance</div>
-                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--primary-color)' }}>₦{finances.adminBalance?.toLocaleString() || '0'}</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <div style={{ color: '#64748B', fontSize: '14px', marginBottom: '8px' }}>Admin Wallet Balance</div>
+                      <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--primary-color)' }}>₦{finances.adminBalance?.toLocaleString() || '0'}</div>
+                    </div>
+                    {finances.adminBalance > 0 && (
+                      <button 
+                        onClick={() => {
+                          if (!adminUser?.bankDetails?.accountNumber) {
+                            alert('Please set your payout bank account first (Step 1 below).');
+                          } else if (!adminUser?.transactionPin) {
+                            alert('Please set your transaction PIN first (Step 2 below).');
+                          } else {
+                            setShowWithdrawModal(true);
+                          }
+                        }}
+                        className="btn btn--primary btn--sm"
+                      >
+                        Withdraw
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="card" style={{ border: '1px solid #E2E8F0', padding: '20px', background: '#f8fafc' }}>
                   <div style={{ color: '#64748B', fontSize: '14px', marginBottom: '8px' }}>Total Platform Revenue</div>
@@ -404,6 +605,117 @@ export default function AdminDashboard() {
                     ₦{finances.platformFees?.toLocaleString() || '0'}
                   </div>
                 </div>
+              </div>
+
+              {/* Security & Bank Setup for Admin Withdrawal */}
+              <div style={{ marginTop: '30px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                {(!adminUser?.bankDetails?.accountNumber || isEditingBank) && (
+                  <div className="card" style={{ border: '1px solid #fee2e2', background: '#fffefc' }}>
+                    <div className="card__body">
+                      <h3 style={{ fontSize: '16px', color: '#b91c1c', marginBottom: '15px' }}>
+                        {adminUser?.bankDetails?.accountNumber ? 'Update Payout Account' : 'Step 1: Set Payout Bank Account'}
+                      </h3>
+                      {adminUser?.bankDetails?.accountNumber && (
+                         <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '10px' }}>
+                            You are currently updating your active bank details.
+                         </div>
+                      )}
+                      <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '15px' }}>Provide a bank account where your platform earnings will be sent.</p>
+                      <form onSubmit={async (e) => {
+                          await handleUpdateAdminBank(e);
+                          setIsEditingBank(false);
+                      }}>
+                        <div className="form-group">
+                          <label className="form-label">Select Bank</label>
+                          <select className="form-input" value={selectedBankCode} onChange={e => setSelectedBankCode(e.target.value)} required>
+                            <option value="">Select Bank</option>
+                            {banks.map((b, index) => (
+                              <option key={`${b.code}-${index}`} value={b.code}>{b.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label">Account Number</label>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <input type="text" className="form-input" value={accountNumber} onChange={e => setAccountNumber(e.target.value)} placeholder="10 digits" maxLength={10} required />
+                            <button type="button" onClick={handleVerifyAccount} className="btn btn--secondary btn--sm" disabled={verifyingAccount || accountNumber.length < 10}>
+                              {verifyingAccount ? '...' : 'Verify'}
+                            </button>
+                          </div>
+                        </div>
+                        {accountName && (
+                          <div style={{ padding: '8px', background: '#f0fdf4', color: '#166534', borderRadius: '4px', fontSize: '13px', marginBottom: '15px' }}>
+                            <strong>Account Name:</strong> {accountName}
+                          </div>
+                        )}
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                           <button type="submit" className="btn btn--primary btn--sm btn--block" disabled={!accountName}>
+                              {adminUser?.bankDetails?.accountNumber ? 'Confirm Update' : 'Save Bank Details'}
+                           </button>
+                           {adminUser?.bankDetails?.accountNumber && (
+                              <button type="button" onClick={() => setIsEditingBank(false)} className="btn btn--secondary btn--sm">Cancel</button>
+                           )}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+
+                {!adminUser?.transactionPin && (
+                  <div className="card" style={{ border: '1px solid #fffbeb', background: '#fffefc' }}>
+                    <div className="card__body">
+                      <h3 style={{ fontSize: '16px', color: '#92400e', marginBottom: '15px' }}>Step 2: Set Transaction PIN</h3>
+                      <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '15px' }}>A secure PIN is required to authorize all withdrawals.</p>
+                      <form onSubmit={handleSetAdminPin}>
+                        <div className="form-group">
+                          <label className="form-label">New PIN (4-6 digits)</label>
+                          <input type="password" className="form-input" value={newPin} onChange={e => setNewPin(e.target.value.replace(/\D/g, ''))} maxLength={6} required />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label">Confirm PIN</label>
+                          <input type="password" className="form-input" value={confirmPin} onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))} maxLength={6} required />
+                        </div>
+                        <button type="submit" className="btn btn--primary btn--sm btn--block" disabled={isSettingPin || !newPin || newPin !== confirmPin}>
+                          {isSettingPin ? 'Setting PIN...' : 'Set Transaction PIN'}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+
+                {adminUser?.bankDetails?.accountNumber && !isEditingBank && (
+                   <div className="card" style={{ border: '1px solid #e2e8f0', background: '#f8fafc' }}>
+                     <div className="card__body" style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '32px', marginBottom: '10px' }}>🏦</div>
+                        <h3 style={{ fontSize: '16px', margin: '0 0 8px' }}>Payout Bank Account</h3>
+                        <div style={{ background: 'white', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'left', marginBottom: '15px' }}>
+                           <p style={{ margin: '0 0 4px', fontSize: '13px', color: '#64748b' }}>Current Active Account:</p>
+                           <p style={{ margin: 0, fontWeight: 'bold' }}>{adminUser.bankDetails.bankName}</p>
+                           <p style={{ margin: 0, fontSize: '14px' }}>{adminUser.bankDetails.accountNumber}</p>
+                           <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>{adminUser.bankDetails.accountName}</p>
+                        </div>
+                        <button onClick={() => {
+                          setAccountNumber(adminUser.bankDetails.accountNumber);
+                          setSelectedBankCode(adminUser.bankDetails.bankCode);
+                          setAccountName(adminUser.bankDetails.accountName);
+                          setIsEditingBank(true);
+                        }} className="btn btn--outline btn--sm btn--block">Update Bank Details</button>
+                     </div>
+                   </div>
+                )}
+
+                {adminUser?.transactionPin && (
+                   <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc' }}>
+                     <div className="card__body" style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '32px', marginBottom: '10px' }}>🔐</div>
+                        <h3 style={{ fontSize: '16px', margin: '0 0 8px' }}>Withdrawal PIN Set</h3>
+                        <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 15px' }}>Your account is secured with a transaction PIN.</p>
+                        <button onClick={() => {
+                          setAdminUser({ ...adminUser, transactionPin: '' });
+                        }} className="btn btn--outline btn--sm btn--block">Change Security PIN</button>
+                     </div>
+                   </div>
+                )}
               </div>
             </div>
           )}
@@ -523,6 +835,124 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+      {/* Withdrawal Modal */}
+      {showWithdrawModal && (
+        <div className="modal-overlay" style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(30, 41, 59, 0.8)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1000, padding: '20px'
+        }}>
+          <div className="card" style={{ maxWidth: '450px', width: '100%', position: 'relative', borderRadius: '16px' }}>
+            <div className="card__body" style={{ padding: 'var(--space-6)' }}>
+              <button 
+                onClick={() => setShowWithdrawModal(false)} 
+                style={{ position: 'absolute', right: '20px', top: '20px', background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#64748B' }}
+              >
+                ×
+              </button>
+              
+              <h2 className="section-header__title" style={{ marginBottom: 'var(--space-6)' }}>Withdraw Admin Funds</h2>
+              
+              <form onSubmit={handleWithdrawFunds} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                <div style={{ padding: '12px', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 4px' }}>Withdrawal Payout to:</p>
+                  <p style={{ fontSize: '14px', fontWeight: 'bold', margin: 0 }}>{adminUser?.bankDetails?.bankName}</p>
+                  <p style={{ fontSize: '14px', margin: 0 }}>{adminUser?.bankDetails?.accountNumber}</p>
+                </div>
+                
+                <div>
+                  <label className="form-label">Amount to Withdraw (₦)</label>
+                  <input 
+                    type="number" 
+                    className="form-input" 
+                    placeholder="Enter amount"
+                    value={withdrawAmount}
+                    onChange={(e) => setWithdrawAmount(e.target.value)}
+                    max={finances.adminBalance}
+                    required
+                  />
+                  <p style={{ fontSize: '12px', color: '#64748B', marginTop: '4px' }}>
+                    Max available: ₦{finances.adminBalance?.toLocaleString()}
+                  </p>
+                </div>
+
+                <div>
+                  <label className="form-label">Transaction PIN</label>
+                  <input 
+                    type="password" 
+                    className="form-input" 
+                    placeholder="Enter PIN"
+                    maxLength={6}
+                    value={withdrawPin}
+                    onChange={(e) => setWithdrawPin(e.target.value.replace(/\D/g, ''))}
+                    required
+                  />
+                </div>
+                
+                {formError && (
+                  <p style={{ color: '#DC2626', fontSize: '14px', margin: 0 }}>{formError}</p>
+                )}
+                
+                <div style={{ marginTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <button 
+                    type="submit" 
+                    className="btn btn--primary btn--block"
+                    disabled={withdrawing}
+                  >
+                    {withdrawing ? 'Processing...' : 'Initiate Payout'}
+                  </button>
+                  <button 
+                    type="button" 
+                    className="btn btn--outline btn--block" 
+                    onClick={() => setShowWithdrawModal(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Message Modal */}
+      {showMsgModal && msgUser && (
+        <div className="modal-overlay" style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(30, 41, 59, 0.8)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1001, padding: '20px'
+        }}>
+          <div className="card" style={{ maxWidth: '500px', width: '100%', borderRadius: '16px', border: '1px solid #E2E8F0' }}>
+            <div className="card__body" style={{ padding: 'var(--space-6)' }}>
+               <h2 className="section-header__title" style={{ marginBottom: 'var(--space-1)', fontSize: '20px' }}>Message {msgUser.name}</h2>
+               <p style={{ fontSize: '13px', color: '#64748B', marginBottom: '20px' }}>This will be sent as an official admin notification.</p>
+               
+               <form onSubmit={handleSendMessage}>
+                  <div className="form-group">
+                     <textarea 
+                        className="form-input" 
+                        rows={6} 
+                        placeholder="Type your message here..."
+                        value={msgContent}
+                        onChange={(e) => setMsgContent(e.target.value)}
+                        required
+                        style={{ width: '100%', borderRadius: '8px', padding: '12px' }}
+                     />
+                  </div>
+                  <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
+                     <button type="submit" className="btn btn--primary" style={{ flex: 1 }} disabled={sendingMsg}>
+                        {sendingMsg ? 'Sending...' : 'Send Message'}
+                     </button>
+                     <button type="button" className="btn btn--outline" style={{ flex: 1 }} onClick={() => setShowMsgModal(false)}>
+                        Cancel
+                     </button>
+                  </div>
+               </form>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

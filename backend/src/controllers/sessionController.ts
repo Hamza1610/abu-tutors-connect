@@ -24,6 +24,12 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
         const { tutorId, date, time, topic, amount, venue } = req.body;
         const tuteeId = req.user.id;
 
+        // NEW: Block Tutors from booking other tutors
+        if (req.user.role === 'tutor' || req.user.role === 'verified_tutor') {
+            res.status(403).json({ message: 'Tutor accounts cannot book sessions. Please use a student account.' });
+            return;
+        }
+
         // 1. Verify Tutor exists
         const tutor = await User.findById(tutorId);
         if (!tutor || (tutor.role !== 'tutor' && tutor.role !== 'verified_tutor')) {
@@ -268,6 +274,15 @@ export const startSession = async (req: Request, res: Response): Promise<void> =
         session.actualStartTime = new Date();
         await session.save();
 
+        // Notify Tutee
+        await NotificationModel.create({
+            userId: session.tuteeId,
+            title: 'Session Started',
+            message: `Your session for "${session.topic}" with ${req.user.name} has started.`,
+            type: 'session',
+            link: '/my-sessions'
+        });
+
         logger.info(`Session ${id} started at ${session.actualStartTime}`);
         res.json({ message: 'Session started successfully', session });
     } catch (error: any) {
@@ -382,6 +397,15 @@ export const completeSession = async (req: Request, res: Response): Promise<void
             link: '/wallet'
         });
 
+        // Notify Tutee
+        await NotificationModel.create({
+            userId: session.tuteeId,
+            title: 'Session Completed',
+            message: `Your session for "${session.topic}" has been finalized. Thank you for learning!`,
+            type: 'session',
+            link: '/my-sessions'
+        });
+
         logger.info(`Session ${id} completed and escrow released`);
         res.json({ message: 'Session completed and payment released', session });
     } catch (error: any) {
@@ -431,6 +455,17 @@ export const cancelSession = async (req: Request, res: Response): Promise<void> 
             escrow.status = 'refunded';
             await escrow.save();
         }
+
+        // Notify both parties
+        const initiatorId = req.user.id;
+        const otherPartyId = session.tutorId.toString() === initiatorId ? session.tuteeId : session.tutorId;
+        await NotificationModel.create({
+            userId: otherPartyId,
+            title: 'Session Cancelled',
+            message: `The session for "${session.topic}" has been cancelled. Any held funds have been refunded.`,
+            type: 'session',
+            link: '/my-sessions'
+        });
 
         logger.info(`Session ${id} cancelled and refunded`);
         res.json({ message: 'Session cancelled and fully refunded', session });

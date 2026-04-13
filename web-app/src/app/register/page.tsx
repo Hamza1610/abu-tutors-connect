@@ -32,6 +32,14 @@ export default function Register() {
             setError('');
         }
     };
+    
+    const validatePassword = (password: string) => {
+        if (password.length < 8) return false;
+        const hasLetter = /[a-zA-Z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        return hasLetter && hasNumber && hasSpecial;
+    };
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -40,6 +48,11 @@ export default function Register() {
 
         if (!acceptedTerms) {
             setError("You must read and accept the Terms and Conditions.");
+            return;
+        }
+
+        if (!validatePassword(formData.password)) {
+            setError("Password must be at least 8 characters and include a letter, a number, and a special character.");
             return;
         }
 
@@ -87,6 +100,9 @@ export default function Register() {
                         <div style={{ textAlign: 'center', marginBottom: 'var(--space-6)' }}>
                             <h1 className="page-header__title" style={{ fontSize: '2rem', marginBottom: 'var(--space-2)' }}>Join ABUTutors</h1>
                             <p style={{ color: '#64748b' }}>Select your role and fill your details</p>
+                            {role === 'tutee' && (
+                                <p style={{ color: '#16a34a', fontSize: '13px', marginTop: '8px', fontWeight: '500' }}>✓ Student accounts are active immediately!</p>
+                            )}
                         </div>
 
                         <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
@@ -130,6 +146,9 @@ export default function Register() {
                             <div className="form-group">
                                 <label className="form-label">Password</label>
                                 <input type="password" id="password" className="form-input" placeholder="••••••••" required value={formData.password} onChange={handleChange} />
+                                <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
+                                    Password must be 8+ characters and contain a letter, number, and special character.
+                                </p>
                             </div>
 
                             {role === 'tutee' && (

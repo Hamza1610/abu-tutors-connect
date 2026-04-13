@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { userApi } from '../../services/api';
+import { getImageUrl } from '../../utils/image';
 
 function TutorsContent() {
   const searchParams = useSearchParams();
@@ -20,6 +21,16 @@ function TutorsContent() {
   useEffect(() => {
     fetchTutors();
   }, []);
+
+  // Sync state with URL changes (for Home page redirections)
+  useEffect(() => {
+      if (queryParam) {
+          setSearchTerm(queryParam);
+          // If queryParam exists in categories, set it as active
+          const matchingCat = categories.find(c => c.toLowerCase() === queryParam.toLowerCase());
+          if (matchingCat) setActiveCategory(matchingCat);
+      }
+  }, [queryParam]);
 
   useEffect(() => {
     filterTutors();
@@ -47,11 +58,13 @@ function TutorsContent() {
     }
 
     if (searchTerm) {
-      const term = searchTerm.toLowerCase();
+      const term = searchTerm.toLowerCase().trim();
       filtered = filtered.filter(t => 
         t.name.toLowerCase().includes(term) || 
         t.courses?.some((c: string) => c.toLowerCase().includes(term)) ||
-        t.department?.toLowerCase().includes(term)
+        t.department?.toLowerCase().includes(term) ||
+        // Check if term is a substring of the course (e.g. "MATH" matches "MATH101")
+        t.courses?.some((c: string) => term.includes(c.toLowerCase()) || c.toLowerCase().includes(term))
       );
     }
 
@@ -105,7 +118,7 @@ function TutorsContent() {
                   <div className="tutor-card__image-wrap">
                     {tutor.documents?.profilePicture ? (
                       <img 
-                        src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} 
+                        src={getImageUrl(tutor.documents.profilePicture)} 
                         alt={tutor.name} 
                         className="tutor-card__image" 
                       />
@@ -129,10 +142,10 @@ function TutorsContent() {
                   <h3 className="tutor-card__name">{tutor.name}</h3>
                 </Link>
                 <p className="tutor-card__subject" style={{ fontSize: '13px', color: '#64748B' }}>{tutor.faculty} · {tutor.department}</p>
-                <p className="tutor-card__subject" style={{ margin: '8px 0', minHeight: '40px' }}>
+                <div className="tutor-card__subject" style={{ margin: '8px 0', minHeight: '40px' }}>
                   {tutor.courses?.join(', ') || 'General Studies'}
                   {tutor.areaOfStrength && <div style={{ fontSize: '12px', color: 'var(--color-primary)', fontStyle: 'italic', marginTop: '4px' }}>Strength: {tutor.areaOfStrength}</div>}
-                </p>
+                </div>
                 <div className="tutor-card__meta">
                   <div className="tutor-card__rating">
                     <span className="star" style={{ color: '#FBBF24' }}>★</span> {tutor.averageRating?.toFixed(1) || 'New'} 

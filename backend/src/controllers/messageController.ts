@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import Message from '../models/Message';
 import User from '../models/User';
+import Notification from '../models/Notification';
 import logger from '../utils/logger';
+import { emitNewMessage, emitMessageRead } from '../utils/socketManager';
 
 interface AuthRequest extends Request {
     user?: any;
@@ -25,6 +27,19 @@ export const sendMessage = async (req: AuthRequest, res: Response): Promise<void
             receiverId,
             content
         });
+
+        // Create notification for receiver
+        const sender = await User.findById(senderId).select('name');
+        await Notification.create({
+            userId: receiverId,
+            title: `New Message from ${sender?.name || 'User'}`,
+            message: content.length > 50 ? content.substring(0, 47) + '...' : content,
+            type: 'message',
+            link: `/messages?partnerId=${senderId}`
+        });
+
+        // Real-time emission to both parties
+        emitNewMessage(senderId as string, receiverId as string, message);
 
         res.status(201).json(message);
     } catch (error: any) {
@@ -53,6 +68,19 @@ export const getConversation = async (req: AuthRequest, res: Response): Promise<
             { senderId: otherUserId as any, receiverId: userId as any, isRead: false },
             { isRead: true }
         );
+
+        // Mark related notifications as read
+        await Notification.updateMany(
+            { 
+                userId: userId as any, 
+                type: 'message', 
+                link: { $regex: otherUserId as string } 
+            },
+            { read: true }
+        );
+
+        // Real-time emission for "Read Receipt" (Blue Tick)
+        emitMessageRead(otherUserId as string, userId as string);
 
         res.json(messages);
     } catch (error: any) {

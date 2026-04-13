@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { statsApi, sessionApi, userApi, adminApi, paymentApi } from '../../services/api';
 import QRModal from '../../components/QRModal';
 import Link from 'next/link';
+import { getImageUrl } from '../../utils/image';
 
 // --- Sub-component for Tutor Onboarding (Phase 1 & 2) ---
 const TutorOnboarding = ({ user, onUpdate }: { user: any, onUpdate: () => void }) => {
@@ -262,7 +263,7 @@ export default function TutorDashboard() {
                                       <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#F1F5F9', overflow: 'hidden' }}>
                                           {s.tuteeId.documents?.profilePicture ? (
                                               <img 
-                                                  src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${s.tuteeId.documents.profilePicture}`} 
+                                                  src={getImageUrl(s.tuteeId.documents.profilePicture)} 
                                                   alt="Student" 
                                                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                                               />

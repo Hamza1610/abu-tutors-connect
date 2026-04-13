@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionApi, userApi } from '../../services/api';
 import QRModal from '../../components/QRModal';
+import { getImageUrl } from '../../utils/image';
 
 // --- Sub-component for Live Timer (Phase 4) ---
 const SessionTimer = ({ session, onSync }: { session: any, onSync: (id: string, data: any) => void }) => {
@@ -264,7 +265,7 @@ export default function MySessionsPage() {
                       <div style={{ width: '56px', height: '56px', borderRadius: '50%', overflow: 'hidden', backgroundColor: '#F1F5F9' }}>
                          {partner.documents?.profilePicture ? (
                              <img 
-                                 src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${partner.documents.profilePicture}`} 
+                                 src={getImageUrl(partner.documents.profilePicture)} 
                                  alt="Partner" 
                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                              />
@@ -302,47 +303,47 @@ export default function MySessionsPage() {
                   )}
                   
                   <div style={{ marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-                    {/* Tutee Actions */}
-                    {s.status === 'pending' && (
-                        <>
-                            <button className="btn btn--primary" onClick={() => openVerifyModal(s, 'start')}>Show Start QR/PIN</button>
-                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)} style={{ marginLeft: 'var(--space-2)' }}>Message</button>
-                        </>
-                    )}
-                    {s.status === 'active' && (
-                        <>
-                            <button className="btn btn--primary" onClick={() => openVerifyModal(s, 'complete')}>Show Finish QR/PIN</button>
-                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)} style={{ marginLeft: 'var(--space-2)' }}>Message</button>
-                        </>
-                    )}
-
-                    {/* Tutor Actions */}
-                    {isTutor && s.status === 'pending' && (
-                        <>
+                    {isTutor ? (
+                      /* Tutor Actions */
+                      <>
+                        {s.status === 'pending' && (
+                          <>
                             <button className="btn btn--primary" onClick={() => openVerifyModal(s, 'start')}>Verify & Start Session</button>
-                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)} style={{ marginLeft: 'var(--space-2)' }}>Message</button>
-                            <button className="btn btn--outline" style={{ color: '#DC2626', borderColor: '#FECACA' }} onClick={() => handleNoShow(s._id)}>Tutee No-Show</button>
-                        </>
-                    )}
-                    {isTutor && s.status === 'active' && (
-                        <>
+                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)}>Message</button>
+                            <button className="btn btn--outline" style={{ color: '#DC2626', borderColor: '#FECACA' }} onClick={() => handleNoShow(s._id)}>Report Student Absence</button>
+                          </>
+                        )}
+                        {s.status === 'active' && (
+                          <>
                             <button className="btn btn--primary" onClick={() => openVerifyModal(s, 'complete')}>Scan to Complete</button>
-                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)} style={{ marginLeft: 'var(--space-2)' }}>Message</button>
-                        </>
-                    )}
-
-                    {/* Common Actions */}
-                    {s.status === 'pending' && (
-                        <>
+                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)}>Message</button>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      /* Tutee Actions */
+                      <>
+                        {s.status === 'pending' && (
+                          <>
+                            <button className="btn btn--primary" onClick={() => openVerifyModal(s, 'start')}>Show Start QR/PIN</button>
+                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)}>Message</button>
                             <button className="btn btn--outline" onClick={() => handleCancel(s._id)}>Cancel Session</button>
                             <button className="btn btn--outline" onClick={() => setRescheduleModal({ 
-                                isOpen: true, 
-                                sessionId: s._id, 
-                                date: s.date.split('T')[0], 
-                                time: s.time,
-                                submitting: false 
+                              isOpen: true, 
+                              sessionId: s._id, 
+                              date: s.date.split('T')[0], 
+                              time: s.time,
+                              submitting: false 
                             })}>Reschedule</button>
-                        </>
+                          </>
+                        )}
+                        {s.status === 'active' && (
+                          <>
+                            <button className="btn btn--primary" onClick={() => openVerifyModal(s, 'complete')}>Show Finish QR/PIN</button>
+                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)}>Message</button>
+                          </>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

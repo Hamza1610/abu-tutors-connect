@@ -426,3 +426,404 @@ Please retry in 9.414660252s. [{"@type":"type.googleapis.com/google.rpc.Help","l
 2026-03-25 14:11:13:1113 [INFO]: Connected to MongoDB via Mongoose
 2026-03-25 14:11:13:1113 [INFO]: Backend server running on port 5001
 2026-03-25 14:15:50:1550 [INFO]: Login successful: admin@abututors.com
+2026-03-25 14:41:41:4141 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-25 14:44:42:4442 [INFO]: User registered successfully: salihu@gmail.com
+2026-03-25 14:45:57:4557 [INFO]: User registered successfully: dragon@gmail.com
+2026-03-25 15:02:35:235 [INFO]: Login successful: dragon@gmail.com
+2026-03-25 15:03:14:314 [INFO]: Login successful: admin@abututors.com
+2026-03-25 15:04:57:457 [INFO]: Login successful: salihu@gmail.com
+2026-03-25 15:24:23:2423 [INFO]: Connected to MongoDB via Mongoose
+2026-03-25 15:24:23:2423 [INFO]: Backend server running on port 5001
+2026-03-25 15:25:22:2522 [INFO]: Login successful: admin@abututors.com
+2026-03-25 15:28:15:2815 [INFO]: Login successful: dragon@gmail.com
+2026-03-25 15:30:53:3053 [INFO]: Removed slot Saturday 09:00 from Tutor 69c3e71587ef733b45e2ba5b availability
+2026-03-25 15:30:53:3053 [INFO]: Session booked: Tutee 69c3e71587ef733b45e2ba5b -> Tutor 69c3e71587ef733b45e2ba5b
+2026-03-25 15:32:13:3213 [INFO]: Login successful: salihu@gmail.com
+2026-03-25 15:33:24:3324 [INFO]: Removed slot Monday 09:00 from Tutor 69c3e71587ef733b45e2ba5b availability
+2026-03-25 15:33:24:3324 [INFO]: Session booked: Tutee 69c3e6ca87ef733b45e2ba51 -> Tutor 69c3e71587ef733b45e2ba5b
+2026-03-25 15:35:38:3538 [ERROR]: Token verification failed
+2026-03-25 15:35:38:3538 [ERROR]: Token verification failed
+2026-03-25 15:35:45:3545 [ERROR]: Token verification failed
+2026-03-25 15:35:45:3545 [ERROR]: Token verification failed
+2026-03-25 15:35:45:3545 [ERROR]: Token verification failed
+2026-03-25 15:35:45:3545 [ERROR]: Token verification failed
+2026-03-25 15:35:45:3545 [ERROR]: Token verification failed
+2026-03-25 15:35:45:3545 [ERROR]: Token verification failed
+2026-03-25 15:36:16:3616 [INFO]: Login successful: dragon@gmail.com
+2026-03-25 15:37:58:3758 [INFO]: Processing registration payment for user 69c3e71587ef733b45e2ba5b. isFree: true, Fee: 0
+2026-03-25 15:38:56:3856 [INFO]: Session 69c3f234cfb1989db906690c started at Wed Mar 25 2026 15:38:56 GMT+0100 (West Africa Standard Time)
+2026-03-25 15:39:37:3937 [INFO]: Session 69c3f234cfb1989db906690c completed and escrow released
+2026-03-25 15:40:38:4038 [INFO]: Processing registration payment for user 69c3e71587ef733b45e2ba5b. isFree: true, Fee: 0
+2026-03-25 15:41:30:4130 [INFO]: Login successful: admin@abututors.com
+2026-03-25 15:41:59:4159 [INFO]: Login successful: dragon@gmail.com
+2026-03-26 22:55:34:5534 [ERROR]: Token verification failed
+2026-03-26 22:55:34:5534 [ERROR]: Token verification failed
+2026-03-26 22:55:34:5534 [ERROR]: Token verification failed
+2026-03-26 22:55:36:5536 [ERROR]: Token verification failed
+2026-03-26 22:55:36:5536 [ERROR]: Token verification failed
+2026-03-27 01:35:47:3547 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 01:35:48:3548 [INFO]: Backend server running on port 5001
+2026-03-27 01:35:48:3548 [ERROR]: Token verification failed
+2026-03-27 01:35:49:3549 [ERROR]: Token verification failed
+2026-03-27 01:35:54:3554 [INFO]: Login successful: admin@abututors.com
+2026-03-27 01:38:38:3838 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 01:46:11:4611 [INFO]: Processing registration payment for user 69c3e71587ef733b45e2ba5b. isFree: true, Fee: 0
+2026-03-27 01:56:52:5652 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 01:58:16:5816 [INFO]: Removed slot Friday 09:00 from Tutor 69c3e71587ef733b45e2ba5b availability
+2026-03-27 01:58:16:5816 [INFO]: Session booked: Tutee 69c3e6ca87ef733b45e2ba51 -> Tutor 69c3e71587ef733b45e2ba5b
+2026-03-27 01:59:12:5912 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 02:09:19:919 [INFO]: Login successful: admin@abututors.com
+2026-03-27 02:11:20:1120 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 02:12:00:120 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 02:13:37:1337 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 02:14:45:1445 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 02:29:43:2943 [ERROR]: Register Error: E11000 duplicate key error collection: abututors.users index: registrationNumber_1 dup key: { registrationNumber: "U21CO1061" }
+2026-03-27 02:32:10:3210 [ERROR]: Register Error: E11000 duplicate key error collection: abututors.users index: registrationNumber_1 dup key: { registrationNumber: "U21CO1061" }
+2026-03-27 02:33:02:332 [INFO]: User registered successfully: umar@gmail.com
+2026-03-27 02:37:33:3733 [INFO]: Processing registration payment for user 69c5de4ed90f29d84efbee88. isFree: true, Fee: 0
+2026-03-27 02:38:16:3816 [INFO]: Login successful: admin@abututors.com
+2026-03-27 02:39:17:3917 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 14:40:08:408 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 14:40:08:408 [INFO]: Backend server running on port 5001
+2026-03-27 14:44:58:4458 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 14:44:58:4458 [INFO]: Backend server running on port 5001
+2026-03-27 14:45:05:455 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 14:46:40:4640 [INFO]: User registered successfully: szaria@gmail.com
+2026-03-27 14:50:19:5019 [INFO]: Processing registration payment for user 69c68a40a7cca9a26a48430f. isFree: true, Fee: 0
+2026-03-27 14:52:15:5215 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 14:53:22:5322 [INFO]: Login successful: admin@abututors.com
+2026-03-27 15:08:21:821 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 15:10:05:105 [INFO]: Login successful: sugokaru@gmail.com
+2026-03-27 15:11:01:111 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 15:25:21:2521 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-27 15:25:37:2537 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 15:26:58:2658 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 15:26:58:2658 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 15:30:05:305 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 15:34:08:348 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 15:40:13:4013 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 15:40:13:4013 [INFO]: Backend server running on port 5001
+2026-03-27 15:44:01:441 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 15:44:01:441 [INFO]: Backend server running on port 5001
+2026-03-27 15:59:56:5956 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 15:59:56:5956 [INFO]: Backend server running on port 5001
+2026-03-27 15:59:58:5958 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 16:00:40:040 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 16:35:53:3553 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 16:36:26:3626 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 16:36:53:3653 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 16:37:52:3752 [INFO]: Agentic AI Match requested for: MATH341 - DIFFERENTIAL EQUATIONS
+2026-03-27 16:37:53:3753 [ERROR]: AI Match Error (Falling back to search): [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 6.954470765s. [{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count","quotaId":"GenerateContentInputTokensPerModelPerMinute-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"6s"}]
+2026-03-27 16:39:20:3920 [INFO]: Agentic AI Match requested for: COEN435 - COEN335
+2026-03-27 16:39:21:3921 [ERROR]: AI Match Error (Falling back to search): [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 39.817135007s. [{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count","quotaId":"GenerateContentInputTokensPerModelPerMinute-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"39s"}]
+2026-03-27 16:47:58:4758 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 16:47:58:4758 [INFO]: Backend server running on port 5001
+2026-03-27 16:48:24:4824 [INFO]: [AI MATCH] Starting match for: coen335
+2026-03-27 16:48:25:4825 [ERROR]: AI Final Rebuild Crash: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-27 16:49:45:4945 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 16:49:45:4945 [INFO]: Backend server running on port 5001
+2026-03-27 16:51:22:5122 [INFO]: [AI MATCH] Starting match for: coen335
+2026-03-27 16:51:22:5122 [ERROR]: AI Final Rebuild Crash: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-27 16:51:59:5159 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 16:51:59:5159 [INFO]: Backend server running on port 5001
+2026-03-27 16:52:25:5225 [INFO]: [AI MATCH] Starting match for: coen335
+2026-03-27 16:52:26:5226 [ERROR]: AI Final Rebuild Crash: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 34.187821144s. [{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count","quotaId":"GenerateContentInputTokensPerModelPerMinute-FreeTier","quotaDimensions":{"model":"gemini-2.0-flash","location":"global"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-2.0-flash","location":"global"}}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"34s"}]
+2026-03-27 16:57:46:5746 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 16:57:46:5746 [INFO]: Backend server running on port 5001
+2026-03-27 16:58:17:5817 [INFO]: [HYBRID AI] Matching for course: coe335
+2026-03-27 17:00:19:019 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 17:00:33:033 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 17:23:38:2338 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 17:23:46:2346 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 17:30:43:3043 [INFO]: Login successful: dragon@gmail.com
+2026-03-27 17:50:24:5024 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 17:50:24:5024 [INFO]: Backend server running on port 5001
+2026-03-27 17:51:23:5123 [INFO]: Login successful: salihu@gmail.com
+2026-03-27 17:51:55:5155 [INFO]: [HYBRID AI] Matching for course: math101
+2026-03-27 17:51:56:5156 [ERROR]: Hybrid Match Crash: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-27 20:10:24:1024 [INFO]: Connected to MongoDB via Mongoose
+2026-03-27 20:10:24:1024 [INFO]: Backend server running on port 5001
+2026-03-27 23:25:13:2513 [INFO]: User registered successfully: sumar@gmail.com
+2026-03-27 23:39:14:3914 [INFO]: User registered successfully: saminu@gmail.com
+2026-03-28 11:13:08:138 [INFO]: Connected to MongoDB via Mongoose
+2026-03-28 11:13:08:138 [INFO]: Backend server running on port 5001
+2026-03-28 11:24:01:241 [INFO]: Login successful: admin@abututors.com
+2026-03-28 11:40:14:4014 [INFO]: User registered successfully: hamza@gmail.com
+2026-03-28 11:40:43:4043 [INFO]: Login successful: hamza@gmail.com
+2026-03-28 17:18:52:1852 [INFO]: Login successful: salihu@gmail.com
+2026-03-28 17:51:23:5123 [INFO]: Login successful: sugokaru@gmail.com
+2026-03-28 17:51:26:5126 [INFO]: User registered successfully: weak1774716685787@test.com
+2026-03-28 17:51:26:5126 [INFO]: User registered successfully: strong1774716686117@test.com
+2026-03-28 17:52:22:5222 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-28 17:55:20:5520 [INFO]: Connected to MongoDB via Mongoose
+2026-03-28 17:55:20:5520 [INFO]: Backend server running on port 5001
+2026-03-28 17:55:34:5534 [INFO]: User registered successfully: weak1774716934613@test.com
+2026-03-28 17:55:34:5534 [INFO]: User registered successfully: strong1774716934845@test.com
+2026-03-28 17:56:22:5622 [INFO]: Connected to MongoDB via Mongoose
+2026-03-28 17:56:22:5622 [INFO]: Backend server running on port 5001
+2026-03-28 17:56:42:5642 [INFO]: User registered successfully: weak1774717002173@test.com
+2026-03-28 17:56:42:5642 [INFO]: User registered successfully: strong1774717002562@test.com
+2026-03-28 17:58:33:5833 [INFO]: Connected to MongoDB via Mongoose
+2026-03-28 17:58:33:5833 [INFO]: Backend server running on port 5001
+2026-03-28 17:58:48:5848 [INFO]: User registered successfully: strong1774717128010@test.com
+2026-03-28 17:58:49:5849 [ERROR]: Error sending email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-487271be661sm36817065e9.35 - gsmtp
+2026-03-28 18:01:46:146 [INFO]: User registered successfully: dahiru@gmail.com
+2026-03-28 18:09:11:911 [INFO]: Processing registration payment for user 69c8097a51ad223633c4d1c1. isFree: true, Fee: 0
+2026-03-28 19:16:47:1647 [INFO]: Login successful: admin@abututors.com
+2026-03-28 19:17:18:1718 [INFO]: Tutor dahiru@gmail.com approved by admin
+2026-03-28 19:24:49:2449 [INFO]: Login successful: admin@abututors.com
+2026-03-28 20:12:13:1213 [ERROR]: Get Banks Error: getaddrinfo ENOTFOUND api.paystack.co
+2026-03-28 20:13:21:1321 [INFO]: Connected to MongoDB via Mongoose
+2026-03-28 20:13:21:1321 [INFO]: Backend server running on port 5001
+2026-03-28 20:14:01:141 [INFO]: Connected to MongoDB via Mongoose
+2026-03-28 20:14:01:141 [INFO]: Backend server running on port 5001
+2026-03-28 20:16:12:1612 [ERROR]: Verify Account Error: Request failed with status code 429
+2026-03-28 20:17:45:1745 [INFO]: [HYBRID AI] Matching for course: COEN431
+2026-03-28 20:18:36:1836 [INFO]: [HYBRID AI] Matching for course: COEN431
+2026-03-28 20:19:08:198 [INFO]: [HYBRID AI] Matching for course: COEN431
+2026-03-28 20:20:05:205 [ERROR]: Get Banks Error: getaddrinfo ENOTFOUND api.paystack.co
+2026-03-28 20:30:12:3012 [INFO]: Login successful: salihu@gmail.com
+2026-03-28 20:57:23:5723 [ERROR]: Token verification failed
+2026-03-28 20:57:23:5723 [ERROR]: Token verification failed
+2026-03-28 20:57:32:5732 [ERROR]: Token verification failed
+2026-03-28 20:57:32:5732 [ERROR]: Token verification failed
+2026-03-28 20:57:32:5732 [ERROR]: Token verification failed
+2026-03-28 20:57:33:5733 [ERROR]: Token verification failed
+2026-03-28 20:57:33:5733 [ERROR]: Token verification failed
+2026-03-28 21:07:55:755 [INFO]: Login successful: admin@abututors.com
+2026-03-28 21:10:53:1053 [ERROR]: Error sending email: connect ENETUNREACH 2607:f8b0:4002:c09::6d:587
+2026-03-30 00:03:10:310 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 00:03:10:310 [INFO]: Backend server running on port 5001
+2026-03-30 00:03:51:351 [ERROR]: Token verification failed
+2026-03-30 00:03:51:351 [ERROR]: Token verification failed
+2026-03-30 00:04:16:416 [ERROR]: Error sending email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-43cf21e2a7asm15744982f8f.7 - gsmtp
+2026-03-30 00:57:26:5726 [INFO]: Login successful: admin@abututors.com
+2026-03-30 00:58:33:5833 [ERROR]: Error sending email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-43cf2471ee2sm13384245f8f.29 - gsmtp
+2026-03-30 01:00:09:09 [INFO]: User registered successfully: ibnumar448@gmail.com
+2026-03-30 01:00:37:037 [ERROR]: Error sending email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4873cd7d039sm27251575e9.15 - gsmtp
+2026-03-30 01:04:13:413 [INFO]: Password reset successful for user: ibnumar448@gmail.com
+2026-03-30 01:04:27:427 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 01:28:57:2857 [ERROR]: Error sending email: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-48730629033sm135115845e9.6 - gsmtp
+2026-03-30 01:31:19:3119 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 01:31:19:3119 [INFO]: Backend server running on port 5001
+2026-03-30 01:32:03:323 [INFO]: Email sent: <c1e3a87a-57f5-e9c8-756a-f12e8c0bafa6@gmail.com>
+2026-03-30 01:33:29:3329 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 01:33:59:3359 [INFO]: Removed slot Friday 09:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-03-30 01:33:59:3359 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-03-30 01:35:14:3514 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 01:35:55:3555 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 01:36:27:3627 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 01:39:46:3946 [INFO]: Login successful: admin@abututors.com
+2026-03-30 01:39:53:3953 [INFO]: Tutor szaria@gmail.com approved by admin
+2026-03-30 01:40:00:400 [INFO]: Tutor dahiru@gmail.com approved by admin
+2026-03-30 01:48:13:4813 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 01:49:14:4914 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 01:49:38:4938 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 01:50:14:5014 [INFO]: [HYBRID AI] Matching request received for course: MATH241
+2026-03-30 01:50:15:5015 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 01:51:25:5125 [INFO]: Login successful: szaria@gmail.com
+2026-03-30 01:52:40:5240 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 01:52:48:5248 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 01:53:13:5313 [INFO]: [HYBRID AI] Matching request received for course: MATH241
+2026-03-30 01:53:14:5314 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 01:54:04:544 [INFO]: [HYBRID AI] Matching request received for course: MATH243
+2026-03-30 01:54:05:545 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 01:54:37:5437 [INFO]: [HYBRID AI] Matching request received for course: CVEN201
+2026-03-30 01:54:38:5438 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 01:54:51:5451 [INFO]: [HYBRID AI] Matching request received for course: CVEN203
+2026-03-30 01:54:51:5451 [INFO]: [HYBRID AI] No candidates found in database for CVEN203.
+2026-03-30 01:59:13:5913 [INFO]: Login successful: admin@abututors.com
+2026-03-30 02:08:19:819 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 02:08:19:819 [INFO]: Backend server running on port 5001
+2026-03-30 02:11:03:113 [ERROR]: Paystack Transfer Error: Request failed with status code 400
+2026-03-30 02:12:31:1231 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 02:12:32:1232 [INFO]: Backend server running on port 5001
+2026-03-30 02:13:00:130 [ERROR]: Paystack Transfer Error: You cannot initiate third party payouts as a starter business
+2026-03-30 02:14:38:1438 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 02:14:38:1438 [INFO]: Backend server running on port 5001
+2026-03-30 02:14:48:1448 [ERROR]: Paystack Transfer Error: You cannot initiate third party payouts as a starter business
+2026-03-30 02:14:48:1448 [WARN]: [MOCK WITHDRAWAL] Simulating success for dev testing.
+2026-03-30 02:19:23:1923 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 02:19:49:1949 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 02:19:59:1959 [INFO]: Session 69c9c4f7f5446904f5a558e4 started at Mon Mar 30 2026 02:19:59 GMT+0100 (West Africa Standard Time)
+2026-03-30 02:20:53:2053 [INFO]: Session 69c9c4f7f5446904f5a558e4 completed and escrow released
+2026-03-30 02:47:05:475 [INFO]: Login successful: admin@abututors.com
+2026-03-30 02:48:54:4854 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 02:54:23:5423 [ERROR]: Create Session Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "Session"
+2026-03-30 02:56:16:5616 [INFO]: [HYBRID AI] Matching request received for course: CVEN201
+2026-03-30 02:56:18:5618 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 02:58:05:585 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 03:13:48:1348 [INFO]: Login successful: admin@abututors.com
+2026-03-30 09:33:06:336 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 09:33:06:336 [INFO]: Backend server running on port 5001
+2026-03-30 09:34:59:3459 [INFO]: Login successful: admin@abututors.com
+2026-03-30 09:36:00:360 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 09:37:55:3755 [INFO]: Removed slot Sunday 09:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-03-30 09:37:55:3755 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-03-30 09:41:02:412 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 09:41:02:412 [INFO]: Backend server running on port 5001
+2026-03-30 09:41:20:4120 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 09:51:32:5132 [INFO]: User registered successfully: yunusa@gmail..com
+2026-03-30 09:57:49:5749 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 09:57:50:5750 [INFO]: Backend server running on port 5001
+2026-03-30 10:04:47:447 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 10:04:47:447 [INFO]: Backend server running on port 5001
+2026-03-30 10:05:10:510 [ERROR]: Paystack Init Error: Request failed with status code 400
+2026-03-30 10:08:05:85 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 10:11:51:1151 [INFO]: Login successful: admin@abututors.com
+2026-03-30 10:33:36:3336 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 10:33:36:3336 [INFO]: Backend server running on port 5001
+2026-03-30 10:44:13:4413 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [Lheo9RsGdiRHmx-uAAAB]
+2026-03-30 10:44:45:4445 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 10:47:11:4711 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 10:47:11:4711 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [G_FXNR-3OqbgWtoqAAAD]
+2026-03-30 10:47:42:4742 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 10:48:23:4823 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 10:48:24:4824 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [SN7ruE6sLM1aWdbGAAAF]
+2026-03-30 10:54:39:5439 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 11:00:38:038 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [lfkJqq1aT31c59SgAAAH]
+2026-03-30 11:00:41:041 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 11:00:50:050 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [NIYRKE-w_3Gfi9gVAAAJ]
+2026-03-30 11:15:42:1542 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 11:15:42:1542 [INFO]: Backend server running on port 5001
+2026-03-30 11:15:43:1543 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [IpWkED9THWH6fo4BAAAB]
+2026-03-30 11:16:47:1647 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 11:17:59:1759 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [Ydm13cAsc_Tj50xhAAAD]
+2026-03-30 11:18:14:1814 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 11:18:56:1856 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [fgZquF16aqWwG2ipAAAF]
+2026-03-30 11:19:00:190 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 11:20:44:2044 [INFO]: User registered successfully: ulawalhassan@gmail.com
+2026-03-30 11:20:46:2046 [INFO]: User 69ca4e7c2746c756bff34ce6 connected to Socket [0ywbs0wMJuvjSQYaAAAH]
+2026-03-30 11:21:25:2125 [INFO]: User 69ca4e7c2746c756bff34ce6 disconnected from Socket
+2026-03-30 11:22:04:224 [INFO]: User 69ca4e7c2746c756bff34ce6 connected to Socket [hUtBNmQWGQY63mkrAAAJ]
+2026-03-30 11:23:31:2331 [INFO]: User 69ca4e7c2746c756bff34ce6 disconnected from Socket
+2026-03-30 11:25:01:251 [INFO]: User registered successfully: asmanabdulrahman18@gmail.com
+2026-03-30 11:25:03:253 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [6a7oYtTK3O36QvdVAAAL]
+2026-03-30 11:26:17:2617 [ERROR]: Verify Account Error: read ECONNRESET
+2026-03-30 11:32:29:3229 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-03-30 11:32:38:3238 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [5bgkYXLs98z8rIY9AAAN]
+2026-03-30 11:33:00:330 [INFO]: Processing registration payment for user 69ca4f7d2746c756bff34d8c. isFree: false, Fee: 1500
+2026-03-30 11:33:44:3344 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-03-30 11:33:57:3357 [INFO]: Login successful: admin@abututors.com
+2026-03-30 11:33:59:3359 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [-lvczRkLxrxCEBNwAAAP]
+2026-03-30 11:35:10:3510 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 11:35:10:3510 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [cvKXezffeAH5CFw7AAAR]
+2026-03-30 11:35:11:3511 [ERROR]: Get Banks Error: getaddrinfo ENOTFOUND api.paystack.co
+2026-03-30 11:35:11:3511 [ERROR]: Get Banks Error: getaddrinfo ENOTFOUND api.paystack.co
+2026-03-30 11:35:13:3513 [ERROR]: Get Banks Error: read ECONNRESET
+2026-03-30 11:35:22:3522 [ERROR]: Get Banks Error: getaddrinfo ENOTFOUND api.paystack.co
+2026-03-30 11:43:12:4312 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 11:43:13:4313 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [3Zc39gpU4qVw9otRAAAT]
+2026-03-30 11:43:23:4323 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 11:43:50:4350 [INFO]: Login successful: admin@abututors.com
+2026-03-30 11:43:50:4350 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [tePvDIPxTR_Y5qIkAAAV]
+2026-03-30 11:44:44:4444 [INFO]: Tutor asmanabdulrahman18@gmail.com approved by admin
+2026-03-30 11:44:51:4451 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 11:44:52:4452 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [fAhk5vgeu2zyr9aFAAAX]
+2026-03-30 11:46:05:465 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 11:46:43:4643 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 11:47:15:4715 [INFO]: Email sent: <18f07348-6716-f88b-aa81-877edbf8ce52@gmail.com>
+2026-03-30 11:51:50:5150 [INFO]: User registered successfully: aadalhat00@gmail.com
+2026-03-30 11:51:51:5151 [INFO]: User 69ca55c62746c756bff35038 connected to Socket [ic5FiMdU8-jSCwwPAAAZ]
+2026-03-30 12:03:30:330 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 12:03:30:330 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [fX6td8PBWo7tWSqkAAAb]
+2026-03-30 12:03:42:342 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 12:03:57:357 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 12:03:58:358 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [WD4TaVswp8tPAiuYAAAd]
+2026-03-30 12:09:35:935 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 12:10:04:104 [INFO]: User 69ca55c62746c756bff35038 disconnected from Socket
+2026-03-30 12:10:14:1014 [INFO]: User 69ca55c62746c756bff35038 connected to Socket [qX8TTS6CNyqEAaWHAAAf]
+2026-03-30 12:10:18:1018 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [m4Jg5S7IUmQ47DTCAAAh]
+2026-03-30 12:12:19:1219 [INFO]: User 69ca55c62746c756bff35038 disconnected from Socket
+2026-03-30 12:17:17:1717 [INFO]: User 69ca55c62746c756bff35038 connected to Socket [Tr_O6wMdCj28eiYjAAAj]
+2026-03-30 12:18:32:1832 [INFO]: User 69ca55c62746c756bff35038 disconnected from Socket
+2026-03-30 12:40:14:4014 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 12:53:38:5338 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [pyMh9TREKhF0kD-_AAAl]
+2026-03-30 19:20:14:2014 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 19:20:14:2014 [INFO]: Backend server running on port 5001
+2026-03-30 19:21:58:2158 [INFO]: Connected to MongoDB via Mongoose
+2026-03-30 19:21:58:2158 [INFO]: Backend server running on port 5001
+2026-03-30 19:25:24:2524 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [LpSuGnYmhjI5ddfgAAAB]
+2026-03-30 19:25:47:2547 [INFO]: User 69ca55c62746c756bff35038 connected to Socket [AKdxKAP5hVdhHbWKAAAD]
+2026-03-30 19:26:00:260 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 19:26:04:264 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 19:26:05:265 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [EO4Sh576Es0cbu_gAAAF]
+2026-03-30 19:26:05:265 [INFO]: User 69ca55c62746c756bff35038 disconnected from Socket
+2026-03-30 19:26:09:269 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 19:26:19:2619 [INFO]: Login successful: admin@abututors.com
+2026-03-30 19:26:20:2620 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [-J1Mq9b92Ygc6SnLAAAH]
+2026-03-30 19:27:38:2738 [INFO]: Login successful: ibnumar448@gmail.com
+2026-03-30 19:27:38:2738 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [XvObSPKMRr0LUrKgAAAJ]
+2026-03-30 19:33:28:3328 [INFO]: [HYBRID AI] Matching request received for course: MATH105
+2026-03-30 19:33:29:3329 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 19:34:23:3423 [INFO]: Removed slot Wednesday 09:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-03-30 19:34:23:3423 [INFO]: Session booked: Tutee 69ba921329fd8fbf6fd6066e -> Tutor 69c27157721d60f066767ce6
+2026-03-30 19:38:41:3841 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-03-30 19:38:41:3841 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [T1f7C5dWsHeerIeiAAAL]
+2026-03-30 19:39:02:392 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 19:39:23:3923 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [t96MHEdo0wUbwneSAAAN]
+2026-03-30 19:40:52:4052 [INFO]: Session 69ca3663807dfb664cc76098 started at Mon Mar 30 2026 19:40:52 GMT+0100 (West Africa Standard Time)
+2026-03-30 19:42:12:4212 [INFO]: Session 69ca3663807dfb664cc76098 completed and escrow released
+2026-03-30 19:43:44:4344 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-03-30 19:48:05:485 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-03-30 19:49:36:4936 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 19:55:52:5552 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 19:55:53:5553 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [RMpMiFDNmotfU0OkAAAP]
+2026-03-30 19:57:27:5727 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 20:09:34:934 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [RdPLManFgVtex2IjAAAR]
+2026-03-30 20:10:53:1053 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [IQifUxIX7dIOHuYDAAAT]
+2026-03-30 20:12:10:1210 [INFO]: [HYBRID AI] Matching request received for course: MATH105
+2026-03-30 20:12:11:1211 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 20:12:46:1246 [INFO]: [HYBRID AI] Matching request received for course: MATH341
+2026-03-30 20:12:46:1246 [INFO]: [HYBRID AI] No candidates found in database for MATH341.
+2026-03-30 20:13:20:1320 [INFO]: [HYBRID AI] Matching request received for course: MATH341
+2026-03-30 20:13:20:1320 [INFO]: [HYBRID AI] No candidates found in database for MATH341.
+2026-03-30 20:13:29:1329 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 20:13:44:1344 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [jyOGqQW19uG2P7_lAAAV]
+2026-03-30 20:14:02:142 [INFO]: [HYBRID AI] Matching request received for course: MATH341
+2026-03-30 20:14:02:142 [INFO]: [HYBRID AI] No candidates found in database for MATH341.
+2026-03-30 20:14:02:142 [INFO]: [HYBRID AI] Matching request received for course: MATH341
+2026-03-30 20:14:02:142 [INFO]: [HYBRID AI] No candidates found in database for MATH341.
+2026-03-30 20:14:22:1422 [INFO]: [HYBRID AI] Matching request received for course: MATH105
+2026-03-30 20:14:23:1423 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 20:15:19:1519 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-03-30 20:15:47:1547 [INFO]: [HYBRID AI] Matching request received for course: MATH241
+2026-03-30 20:15:48:1548 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 20:18:15:1815 [INFO]: [HYBRID AI] Matching request received for course: MATH241
+2026-03-30 20:18:16:1816 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 20:18:44:1844 [INFO]: [HYBRID AI] Matching request received for course: MATH241
+2026-03-30 20:18:45:1845 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-30 20:19:00:190 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 20:19:14:1914 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [JvBA_Z6Vw_UolSuqAAAX]
+2026-03-30 20:19:24:1924 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-03-30 20:20:41:2041 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [KbQVrbfSCdjjq5YPAAAZ]
+2026-03-30 20:20:51:2051 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-13 00:58:19:5819 [INFO]: Connected to MongoDB via Mongoose
+2026-04-13 00:58:19:5819 [INFO]: Backend server running on port 5001
+2026-04-13 00:59:31:5931 [ERROR]: Token verification failed
+2026-04-13 00:59:32:5932 [ERROR]: Token verification failed
+2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-13 00:59:41:5941 [INFO]: Login successful: admin@abututors.com
+2026-04-13 00:59:43:5943 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [QAyYhduadk_EKpnhAAAB]

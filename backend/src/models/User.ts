@@ -15,6 +15,7 @@ export interface IUser extends Document {
     teachingLevel?: string; // Level they can teach
     courses?: string[]; // Course Titles/Codes
     areaOfStrength?: string;
+    matchingBio?: string; // Bio specifically for AI matching
     phone?: string;
     // Profile verification
     isProfileComplete: boolean;
@@ -46,6 +47,8 @@ export interface IUser extends Document {
         recipientCode?: string;
     };
     transactionPin?: string; // Hashed 4-6 digit PIN
+    resetPasswordToken?: string | undefined;
+    resetPasswordExpire?: Date | undefined;
 }
 
 const UserSchema: Schema = new Schema({
@@ -63,6 +66,7 @@ const UserSchema: Schema = new Schema({
     teachingLevel: { type: String },
     courses: [{ type: String }],
     areaOfStrength: { type: String },
+    matchingBio: { type: String, default: "" },
     phone: { type: String },
     // Profile verification
     isProfileComplete: { type: Boolean, default: false },
@@ -93,7 +97,9 @@ const UserSchema: Schema = new Schema({
         accountName: { type: String },
         recipientCode: { type: String }
     },
-    transactionPin: { type: String }
+    transactionPin: { type: String },
+    resetPasswordToken: { type: String },
+    resetPasswordExpire: { type: Date }
 }, { timestamps: true });
 
 export default mongoose.model<IUser>('User', UserSchema);

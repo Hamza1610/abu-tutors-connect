@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { userApi } from '../services/api';
+import { getImageUrl } from '../utils/image';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -82,7 +83,7 @@ export default function LandingPage() {
                     <div className="tutor-card__image-wrap">
                       {tutor.documents?.profilePicture ? (
                         <img 
-                          src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}${tutor.documents.profilePicture}`} 
+                          src={getImageUrl(tutor.documents.profilePicture)} 
                           alt={tutor.name} 
                           className="tutor-card__image" 
                         />
@@ -124,7 +125,7 @@ export default function LandingPage() {
           <section className="popular-courses-section">
             <h2 className="section-header__title section-header__title--sm">Popular Courses</h2>
             <div className="course-tags">
-              {['COEN453', 'MATHS', 'PHYSICS', 'CHEMISTRY', 'CCSN'].map(course => (
+              {['COEN453', 'MATH', 'PHYSICS', 'CHEMISTRY', 'CCSN'].map(course => (
                 <Link key={course} href={`/tutors?q=${course}`} className="course-tag">{course}</Link>
               ))}
             </div>

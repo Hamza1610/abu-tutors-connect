@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { userApi, bankApi, walletApi, adminApi } from '../../services/api';
+import { universityData } from '../../data/universityData';
+import { getImageUrl } from '../../utils/image';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -35,6 +37,7 @@ export default function ProfilePage() {
   const [teachingLevel, setTeachingLevel] = useState('');
   const [courses, setCourses] = useState('');
   const [areaOfStrength, setAreaOfStrength] = useState('');
+  const [matchingBio, setMatchingBio] = useState('');
   const [about, setAbout] = useState('');
   
   // Step 3: Documents (Files)
@@ -72,6 +75,7 @@ export default function ProfilePage() {
         setTeachingLevel(data.teachingLevel || '');
         setCourses(data.courses?.join(', ') || '');
         setAreaOfStrength(data.areaOfStrength || '');
+        setMatchingBio(data.matchingBio || '');
         setAbout(data.about || '');
         
         if (!data.isProfileComplete && data.role === 'tutor') {
@@ -148,6 +152,7 @@ export default function ProfilePage() {
           data.append('teachingLevel', teachingLevel);
           data.append('courses', JSON.stringify(courses.split(',').map(c => c.trim())));
           data.append('areaOfStrength', areaOfStrength);
+          data.append('matchingBio', matchingBio);
           data.append('about', about);
       } else if (currentStep === 3) {
           if (admissionLetter) data.append('admissionLetter', admissionLetter);
@@ -163,12 +168,43 @@ export default function ProfilePage() {
           setCurrentStep(currentStep + 1);
       } else if (currentStep === 4) {
           alert('Profile completed! Awaiting admin approval.');
-          window.location.reload();
+          if (updatedUser.role === 'tutor' || updatedUser.role === 'verified_tutor') {
+              router.push('/tutor-dashboard');
+          } else {
+              window.location.reload();
+          }
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to update profile step');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setSaving(true);
+    setError('');
+    try {
+        const data = new FormData();
+        data.append('profilePicture', file);
+        const res = await userApi.updateProfile(data);
+        setUser(res.data);
+        
+        // Dispatch custom event to notify other components (like Header) to refresh
+        window.dispatchEvent(new Event('profileUpdated'));
+        
+        const newUrl = res.data.documents?.profilePicture;
+        alert(`Profile picture updated successfully!\n\nNew URL: ${newUrl || 'None found in response'}`);
+    } catch (err: any) {
+        console.error('Upload error details:', err.response?.data);
+        const msg = err.response?.data?.message || 'Failed to upload profile picture';
+        setError(msg);
+        alert(`Upload Failed: ${msg}`);
+    } finally {
+        setSaving(false);
     }
   };
 
@@ -212,7 +248,11 @@ export default function ProfilePage() {
     try {
         await walletApi.payRegistrationFromWallet();
         alert('Payment successful! Your profile is now submitted for approval.');
-        window.location.reload();
+        if (user.role === 'tutor' || user.role === 'verified_tutor') {
+            router.push('/tutor-dashboard');
+        } else {
+            window.location.reload();
+        }
     } catch (err: any) {
         setError(err.response?.data?.message || 'Payment failed. Ensure you have funded your wallet.');
     } finally {
@@ -226,7 +266,8 @@ export default function ProfilePage() {
   const progressPercent = (currentStep / 4) * 100;
 
   // If Tutor and Profile Not Complete, Show Wizard
-  if (user.role === 'tutor' && !user.isProfileComplete) {
+  // Migration: If they already paid, don't force the wizard
+  if (user.role === 'tutor' && !user.isProfileComplete && user.registrationPaymentStatus === 'pending') {
       return (
           <main className="container pb-space-8 pt-space-8">
               <div style={{ maxWidth: '600px', margin: '0 auto' }}>
@@ -248,11 +289,24 @@ export default function ProfilePage() {
                                     <h3 style={{ marginBottom: '15px' }}>Personal Details</h3>
                                     <div className="form-group">
                                         <label className="form-label">Faculty</label>
-                                        <input type="text" className="form-input" value={faculty} onChange={e => setFaculty(e.target.value)} required />
+                                        <select className="form-input" value={faculty} onChange={e => {
+                                            setFaculty(e.target.value);
+                                            setDepartment(''); // Reset department on faculty change
+                                        }} required>
+                                            <option value="">Select Faculty</option>
+                                            {universityData.faculties.map(f => (
+                                                <option key={f.faculty} value={f.faculty}>{f.faculty}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Department</label>
-                                        <input type="text" className="form-input" value={department} onChange={e => setDepartment(e.target.value)} required />
+                                        <select className="form-input" value={department} onChange={e => setDepartment(e.target.value)} required disabled={!faculty}>
+                                            <option value="">Select Department</option>
+                                            {faculty && universityData.faculties.find(f => f.faculty === faculty)?.departments.map(dept => (
+                                                <option key={dept} value={dept}>{dept}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Level</label>
@@ -277,8 +331,8 @@ export default function ProfilePage() {
                                             setBankName(banks.find(b => b.code === e.target.value)?.name || '');
                                         }} required>
                                             <option value="">Select Bank</option>
-                                            {banks.map(bank => (
-                                                <option key={bank.code} value={bank.code}>{bank.name}</option>
+                                            {banks.map((bank, index) => (
+                                                <option key={`${bank.code}-${index}`} value={bank.code}>{bank.name}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -330,6 +384,18 @@ export default function ProfilePage() {
                                         <input type="text" className="form-input" value={areaOfStrength} onChange={e => setAreaOfStrength(e.target.value)} required placeholder="e.g. Calculus, Logic Design" />
                                     </div>
                                     <div className="form-group">
+                                        <label className="form-label" style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>Profile Summary (Expertise)</label>
+                                        <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '8px' }}>Describe the subjects you teach and your core strengths. This is visible to students and used by our AI to find you perfect matches.</p>
+                                        <textarea 
+                                            className="form-input" 
+                                            value={matchingBio} 
+                                            onChange={e => setMatchingBio(e.target.value)} 
+                                            required 
+                                            placeholder="e.g. I specialize in teaching Calculus and Engineering Mechanics. My strength is explaining complex concepts using real-world examples..."
+                                            style={{ minHeight: '100px', resize: 'vertical', borderColor: 'var(--color-primary-light)' }}
+                                        ></textarea>
+                                    </div>
+                                    <div className="form-group">
                                         <label className="form-label">About Me (Bio)</label>
                                         <textarea 
                                             className="form-input" 
@@ -347,12 +413,12 @@ export default function ProfilePage() {
                                 <>
                                     <h3 style={{ marginBottom: '15px' }}>Verification Documents</h3>
                                     <div className="form-group">
-                                        <label className="form-label">Admission Letter (PDF, Max 500KB)</label>
-                                        <input type="file" accept="application/pdf" className="form-input" onChange={e => setAdmissionLetter(e.target.files?.[0] || null)} required />
+                                        <label className="form-label">Admission Letter (JPEG, Max 1MB)</label>
+                                        <input type="file" accept="image/jpeg, image/jpg" className="form-input" onChange={e => setAdmissionLetter(e.target.files?.[0] || null)} required />
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-label">Result / Transcript (PDF, Max 500KB)</label>
-                                        <input type="file" accept="application/pdf" className="form-input" onChange={e => setTranscript(e.target.files?.[0] || null)} required />
+                                        <label className="form-label">Result / Transcript (JPEG, Max 1MB)</label>
+                                        <input type="file" accept="image/jpeg, image/jpg" className="form-input" onChange={e => setTranscript(e.target.files?.[0] || null)} required />
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label">Profile Picture (Image, Max 100KB)</label>
@@ -418,69 +484,138 @@ export default function ProfilePage() {
       );
   }
 
-  // Final Profile View (Tutee or Verified Tutor)
+  // Final Profile View (read-only)
   return (
     <main className="container pb-space-8 pt-space-8">
       <div style={{ marginTop: 'var(--space-6)', maxWidth: '640px', marginLeft: 'auto', marginRight: 'auto' }}>
+
+        {/* Profile Header Card */}
         <div className="card">
           <div className="card__body" style={{ textAlign: 'center' }}>
+            {/* Avatar + photo upload */}
             <div style={{ position: 'relative', width: '96px', height: '96px', margin: '0 auto var(--space-4)' }}>
               {user.documents?.profilePicture ? (
-                <img 
-                  src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${user.documents.profilePicture}`} 
-                  alt="Profile" 
-                  style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
-                />
+                <img src={getImageUrl(user.documents.profilePicture)} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               ) : (
-                <div style={{ 
-                  width: '100%', height: '100%', borderRadius: '50%', 
-                  background: 'var(--color-primary-light)', color: 'var(--color-primary)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '32px', fontWeight: 'bold', border: '2px solid var(--color-primary)'
-                }}>
+                <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'var(--color-primary-light)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontWeight: 'bold', border: '2px solid var(--color-primary)' }}>
                   {user.name.charAt(0)}
                 </div>
               )}
+              <label htmlFor="photo-upload" style={{ position: 'absolute', bottom: -5, right: -5, background: 'var(--color-primary)', color: 'white', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', fontSize: '18px' }} title="Change Photo">
+                +
+                <input id="photo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handlePhotoChange} disabled={saving} />
+              </label>
               {user.isApproved && (
-                  <div style={{ position: 'absolute', bottom: 0, right: 0, background: 'var(--success-green)', border: '2px solid white', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <span style={{ color: 'white', fontSize: '12px' }}>✓</span>
-                  </div>
+                <div style={{ position: 'absolute', top: 0, right: -5, background: 'var(--success-green)', border: '2px solid white', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ color: 'white', fontSize: '12px' }}>✓</span>
+                </div>
               )}
             </div>
-            
+
+            {saving && <p style={{ fontSize: '12px', color: 'var(--color-primary)', marginBottom: '10px' }}>Uploading photo...</p>}
+            {error && <p style={{ fontSize: '12px', color: 'red', marginBottom: '10px' }}>{error}</p>}
+
             <h1 className="page-header__title" style={{ marginBottom: 'var(--space-1)' }}>{user.name}</h1>
-            <p className="tutor-card__subject">{user.role === 'tutee' ? 'Student' : 'Tutor'} Profile · {user.registrationNumber || 'No ID'}</p>
-            
+            <p className="tutor-card__subject">{user.role === 'tutee' ? 'Student' : 'Tutor'} · {user.registrationNumber || 'No ID'}</p>
             <div style={{ marginTop: 'var(--space-2)', display: 'flex', gap: 'var(--space-2)', justifyContent: 'center' }}>
-                <span className={`tutor-card__badge ${user.role === 'tutee' ? 'tutor-card__badge--green' : 'tutor-card__badge--orange'}`}>
-                  {user.isApproved ? 'Newbie Tutor' : user.role === 'verified_tutor' ? 'Verified Tutor' : user.role === 'tutor' ? 'Tutor' : 'Tutee'}
-                </span>
-                {!user.isApproved && (user.role === 'tutor' || user.role === 'verified_tutor') && (
-                    <span className="tutor-card__badge" style={{ backgroundColor: '#E0F2FE', color: '#0369A1' }}>Pending Approval</span>
-                )}
+              <span className={`tutor-card__badge ${user.role === 'tutee' ? 'tutor-card__badge--green' : 'tutor-card__badge--orange'}`}>
+                {user.role === 'verified_tutor' ? 'Verified Tutor' : user.role === 'tutor' ? 'Tutor' : 'Student'}
+              </span>
+              {!user.isApproved && (user.role === 'tutor' || user.role === 'verified_tutor') && (
+                <span className="tutor-card__badge" style={{ backgroundColor: '#E0F2FE', color: '#0369A1' }}>Pending Approval</span>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="card" style={{ marginTop: 'var(--space-6)' }}>
+        {/* Account Info Card */}
+        <div className="card" style={{ marginTop: 'var(--space-4)' }}>
           <div className="card__body">
-            <h2 className="section-header__title" style={{ marginBottom: 'var(--space-4)' }}>Account Information</h2>
-            <div className="form-group">
-                <label className="form-label">Full Name</label>
-                <p className="form-input" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>{user.name}</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
+              <h2 className="section-header__title" style={{ margin: 0 }}>Account Information</h2>
+              <button onClick={() => router.push('/profile/edit')} className="btn btn--primary btn--sm">✏ Edit Profile</button>
             </div>
-            <div className="form-group">
-                <label className="form-label">Email</label>
-                <p className="form-input" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>{user.email}</p>
-            </div>
-            <div className="form-group">
-                <label className="form-label">Faculty / Department</label>
-                <p className="form-input" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>{user.faculty} / {user.department}</p>
+
+            <div style={{ display: 'grid', gap: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+                <span style={{ color: '#64748b', fontSize: '14px' }}>Full Name</span>
+                <span style={{ fontWeight: '500' }}>{user.name}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+                <span style={{ color: '#64748b', fontSize: '14px' }}>Email</span>
+                <span style={{ fontWeight: '500' }}>{user.email}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+                <span style={{ color: '#64748b', fontSize: '14px' }}>Faculty</span>
+                <span style={{ fontWeight: '500' }}>{user.faculty || '—'}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+                <span style={{ color: '#64748b', fontSize: '14px' }}>Department</span>
+                <span style={{ fontWeight: '500' }}>{user.department || '—'}</span>
+              </div>
+              {user.role !== 'tutee' && (
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+                    <span style={{ color: '#64748b', fontSize: '14px' }}>Level</span>
+                    <span style={{ fontWeight: '500' }}>{user.level || '—'}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
+                    <span style={{ color: '#64748b', fontSize: '14px' }}>Phone</span>
+                    <span style={{ fontWeight: '500' }}>{user.phone || '—'}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
 
-        <div style={{ marginTop: 'var(--space-6)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-2)' }}>
+        {/* Teaching Profile Card (Tutors only) */}
+        {user.role !== 'tutee' && (
+          <div className="card" style={{ marginTop: 'var(--space-4)' }}>
+            <div className="card__body">
+              <h2 className="section-header__title" style={{ marginBottom: 'var(--space-4)' }}>Teaching Profile</h2>
+
+              {/* Courses */}
+              <div style={{ marginBottom: '20px' }}>
+                <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '8px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Courses I Teach</p>
+                {user.courses && user.courses.length > 0 ? (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {user.courses.map((c: string) => (
+                      <span key={c} className="course-tag course-tag--active">{c}</span>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ color: '#94A3B8', fontSize: '14px' }}>No courses added yet. <button onClick={() => router.push('/profile/edit')} style={{ color: 'var(--color-primary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}>Add courses →</button></p>
+                )}
+              </div>
+
+              {/* Area of Strength */}
+              {user.areaOfStrength && (
+                <div style={{ marginBottom: '20px' }}>
+                  <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '6px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Area of Strength</p>
+                  <p style={{ color: 'var(--color-primary)', fontWeight: '500', fontSize: '15px' }}>{user.areaOfStrength}</p>
+                </div>
+              )}
+
+              {/* Profile Summary */}
+              <div>
+                <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '8px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Profile Summary (visible to students)</p>
+                {user.matchingBio ? (
+                  <div style={{ background: '#f0f9ff', border: '1px solid #bae6fd', padding: '15px', borderRadius: '10px', fontStyle: 'italic', color: '#0369a1', fontSize: '15px', lineHeight: '1.7' }}>
+                    "{user.matchingBio}"
+                  </div>
+                ) : (
+                  <p style={{ color: '#94A3B8', fontSize: '14px' }}>
+                    No summary added yet. <button onClick={() => router.push('/profile/edit')} style={{ color: 'var(--color-primary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}>Write your summary →</button>
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Quick Actions */}
+        <div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-2)' }}>
           <button onClick={() => router.push('/wallet')} className="btn btn--secondary">Wallet</button>
           <button onClick={() => router.push('/my-sessions')} className="btn btn--secondary">My Sessions</button>
         </div>

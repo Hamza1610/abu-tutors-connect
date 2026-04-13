@@ -6,6 +6,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import logger from './utils/logger';
 import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+import http from 'http';
+import { initSocket } from './utils/socketManager';
+
 import authRoutes from './routes/auth';
 import matchRoutes from './routes/match';
 import userRoutes from './routes/userRoutes';
@@ -18,7 +22,15 @@ import paymentRoutes from './routes/paymentRoutes';
 import messageRoutes from './routes/messageRoutes';
 
 const app: Express = express();
+const server = http.createServer(app);
 const PORT: number = parseInt(process.env.PORT as string, 10) || 5000;
+
+// Cloudinary Configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME as string,
+    api_key: process.env.CLOUDINARY_API_KEY as string,
+    api_secret: process.env.CLOUDINARY_API_SECRET as string
+});
 
 // Middleware
 app.use(cors());
@@ -29,6 +41,9 @@ app.use('/api/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(morgan('combined', {
     stream: { write: (message) => logger.http(message.trim()) }
 }));
+
+// Initialize Socket.io
+initSocket(server);
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -57,6 +72,7 @@ const MONGODB_URI: string = process.env.MONGODB_URI || "mongodb://127.0.0.1:2701
 mongoose.connect(MONGODB_URI)
     .then(() => {
         logger.info("Connected to MongoDB via Mongoose");
-        app.listen(PORT, () => logger.info(`Backend server running on port ${PORT}`));
+        console.log(`[RELOAD FINAL] Server ready at ${new Date().toLocaleTimeString()} - GEMINI 1.5 ACTIVE.`);
+        server.listen(PORT, () => logger.info(`Backend server running on port ${PORT}`));
     })
     .catch((err) => logger.error("Could not connect to MongoDB:", err));

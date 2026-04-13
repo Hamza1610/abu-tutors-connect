@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { notificationApi, userApi } from '../services/api';
+import { getImageUrl } from '../utils/image';
+import { getSocket, disconnectSocket } from '../utils/socket';
 
 export default function ClientHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,6 +20,17 @@ export default function ClientHeader() {
         setIsLoggedIn(true);
         fetchUserAndNotifications();
     }
+
+    // Listen for profile updates from other components
+    const handleProfileUpdate = () => {
+        console.log('Header detected profile update, refreshing...');
+        fetchUserAndNotifications();
+    };
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+
+    return () => {
+        window.removeEventListener('profileUpdated', handleProfileUpdate);
+    };
   }, [pathname]);
 
   const fetchUserAndNotifications = async () => {
@@ -28,12 +41,16 @@ export default function ClientHeader() {
           ]);
           setUser(userRes.data);
           setUnreadCount(notifRes.data.filter((n: any) => !n.read).length);
+          
+          // NEW: Initialize Socket
+          getSocket(userRes.data._id);
       } catch (err) {
           console.error('Header fetch error', err);
       }
   };
 
   const handleLogout = () => {
+      disconnectSocket(); // NEW
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       setIsLoggedIn(false);
@@ -48,17 +65,17 @@ export default function ClientHeader() {
           <span>ABUTutors</span>
         </Link>
         <nav className="app-header__nav">
-          <Link href="/">Home</Link>
-          <Link href="/tutors">Find Tutors</Link>
-          <Link href="/ai-match">AI Match</Link>
+          <Link href="/" className={pathname === '/' ? 'nav-link--active' : ''}>Home</Link>
+          <Link href="/tutors" className={pathname === '/tutors' ? 'nav-link--active' : ''}>Find Tutors</Link>
+          <Link href="/ai-match" className={pathname === '/ai-match' ? 'nav-link--active' : ''}>AI Match</Link>
           {isLoggedIn && user?.role === 'admin' && (
-              <Link href="/admin">Admin Panel</Link>
+              <Link href="/admin" className={pathname === '/admin' ? 'nav-link--active' : ''}>Admin Panel</Link>
           )}
           {isLoggedIn && user?.role !== 'tutee' && user?.role !== 'admin' && (
-              <Link href="/tutor-dashboard">Tutor Dash</Link>
+              <Link href="/tutor-dashboard" className={pathname === '/tutor-dashboard' ? 'nav-link--active' : ''}>Tutor Dash</Link>
           )}
           {isLoggedIn && (
-              <Link href="/my-sessions">Sessions</Link>
+              <Link href="/my-sessions" className={pathname === '/my-sessions' ? 'nav-link--active' : ''}>Sessions</Link>
           )}
         </nav>
         <div className="app-header__actions">
@@ -81,15 +98,15 @@ export default function ClientHeader() {
                 )}
               </Link>
               <Link href="/wallet" className="icon-btn" aria-label="Wallet">💰</Link>
-              <Link href="/profile" className="icon-btn" aria-label="Profile" style={{ padding: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Link href="/profile" className={`icon-btn ${pathname === '/profile' ? 'nav-link--active' : ''}`} aria-label="Profile" style={{ padding: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%' }}>
                 {user?.documents?.profilePicture ? (
                     <img 
-                        src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${user.documents.profilePicture}`} 
+                        src={getImageUrl(user.documents.profilePicture)} 
                         alt="Profile" 
-                        style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                     />
                 ) : (
-                    <span>👤</span>
+                    <span style={{ fontSize: '20px' }}>👤</span>
                 )}
               </Link>
               <button onClick={handleLogout} className="btn btn--outline btn--sm">Logout</button>

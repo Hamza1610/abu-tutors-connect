@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { userApi } from '../../../services/api';
+import { getImageUrl } from '../../../utils/image';
 
 export default function TutorProfilePage() {
   const router = useRouter();
@@ -62,7 +63,7 @@ export default function TutorProfilePage() {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-4)' }}>
                 {tutor.documents?.profilePicture ? (
                   <img 
-                    src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api'}${tutor.documents.profilePicture}`} 
+                    src={getImageUrl(tutor.documents.profilePicture)} 
                     alt={tutor.name} 
                     style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover' }} 
                   />
