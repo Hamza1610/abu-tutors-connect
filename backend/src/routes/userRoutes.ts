@@ -1,5 +1,8 @@
 import express from 'express';
-import { getProfile, updateProfile, getTutorProfile, getTutors, getUserPublicProfile } from '../controllers/userController';
+import { 
+    getProfile, updateProfile, getTutorProfile, getTutors, 
+    getUserPublicProfile, getAdminId, submitCourseApplication 
+} from '../controllers/userController';
 import { protect } from '../middleware/authMiddleware';
 import { upload, validateFileSize } from '../middleware/fileUpload';
 
@@ -11,7 +14,11 @@ router.get('/tutors/:id', getTutorProfile);
 
 // Profile routes
 router.get('/me', protect, getProfile);
+router.get('/admin-id', protect, getAdminId);
 router.get('/profile/:id', protect, getUserPublicProfile);
+
+// Course Application
+router.post('/apply-course', protect, upload.single('transcript'), validateFileSize, submitCourseApplication);
 
 // Unified update route
 router.route('/')

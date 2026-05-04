@@ -21,6 +21,16 @@ export interface IUser extends Document {
     isProfileComplete: boolean;
     isApproved: boolean;
     registrationPaymentStatus: 'pending' | 'completed' | 'free';
+    applicationStatus: 'pending' | 'approved' | 'rejected' | 'needs_revision';
+    adminFeedback?: string;
+    courseApplications?: Array<{
+        _id?: any;
+        courses: string[];
+        transcript: string;
+        status: 'pending' | 'approved' | 'rejected';
+        adminFeedback?: string;
+        createdAt: Date;
+    }>;
     documents?: {
         admissionLetter: string; // URL/Path
         transcript: string; // URL/Path
@@ -53,10 +63,10 @@ export interface IUser extends Document {
 
 const UserSchema: Schema = new Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, enum: ["tutee", "tutor", "verified_tutor", "admin"], default: "tutee" },
-    registrationNumber: { type: String, unique: true, sparse: true },
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    password: { type: Schema.Types.Mixed, required: true },
+    role: { type: String, enum: ['tutee', 'tutor', 'verified_tutor', 'admin'], default: 'tutee' },
+    registrationNumber: { type: String, unique: true, sparse: true, uppercase: true, trim: true },
     faculty: { type: String },
     department: { type: String },
     acceptedTerms: { type: Boolean, required: true, default: false },
@@ -72,6 +82,15 @@ const UserSchema: Schema = new Schema({
     isProfileComplete: { type: Boolean, default: false },
     isApproved: { type: Boolean, default: false },
     registrationPaymentStatus: { type: String, enum: ['pending', 'completed', 'free'], default: 'pending' },
+    applicationStatus: { type: String, enum: ['pending', 'approved', 'rejected', 'needs_revision'], default: 'pending' },
+    adminFeedback: { type: String },
+    courseApplications: [{
+        courses: [{ type: String }],
+        transcript: { type: String },
+        status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+        adminFeedback: { type: String },
+        createdAt: { type: Date, default: Date.now }
+    }],
     documents: {
         admissionLetter: { type: String },
         transcript: { type: String },

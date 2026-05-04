@@ -8,6 +8,7 @@ export interface ISettings extends Document {
     minRatingForVerify: number;
     noShowPayoutPercent: number;
     platformCommissionPercent: number;
+    defaultHourlyRate: number;
 }
 
 const SettingsSchema: Schema = new Schema({
@@ -17,7 +18,8 @@ const SettingsSchema: Schema = new Schema({
     minSessionsForVerify: { type: Number, default: 5 },
     minRatingForVerify: { type: Number, default: 3.5 },
     noShowPayoutPercent: { type: Number, default: 30 },
-    platformCommissionPercent: { type: Number, default: 10 }
+    platformCommissionPercent: { type: Number, default: 10 },
+    defaultHourlyRate: { type: Number, default: 500 }
 }, { timestamps: true });
 
 export default mongoose.model<ISettings>('Settings', SettingsSchema);

@@ -8,7 +8,8 @@ import {
     reportTuteeNoShow,
     syncSession,
     lockSlot,
-    rescheduleSession
+    rescheduleSession,
+    reviewSession
 } from '../controllers/sessionController';
 import { protect } from '../middleware/authMiddleware';
 
@@ -26,5 +27,6 @@ router.post('/:id/cancel', protect, cancelSession as any);
 router.post('/:id/no-show', protect, reportTuteeNoShow as any);
 router.post('/:id/sync', protect, syncSession as any);
 router.post('/:id/reschedule', protect, rescheduleSession as any);
+router.post('/:id/review', protect, reviewSession as any);
 
 export default router;

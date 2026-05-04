@@ -4,7 +4,7 @@ import {
     addVenue, updateVenue, deleteVenue, getVenues,
     getAllUsers, updateUserStatus, getAdminLogs,
     getAllSessions, overrideSession, getFinancialStats,
-    reconcileEscrows
+    reconcileEscrows, getPendingCourseApplications, processCourseApplication
 } from '../controllers/adminController';
 import { protect, admin } from '../middleware/authMiddleware';
 
@@ -12,6 +12,9 @@ const router = express.Router();
 
 router.get('/pending-tutors', protect, admin, getPendingTutors);
 router.put('/tutors/:id/approve', protect, admin, approveTutor);
+
+router.get('/course-applications', protect, admin, getPendingCourseApplications);
+router.put('/course-applications/:userId/:appId', protect, admin, processCourseApplication);
 
 router.route('/settings')
     .get(getSettings)
