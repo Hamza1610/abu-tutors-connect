@@ -827,3 +827,1081 @@ Please retry in 34.187821144s. [{"@type":"type.googleapis.com/google.rpc.Help","
 2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
 2026-04-13 00:59:41:5941 [INFO]: Login successful: admin@abututors.com
 2026-04-13 00:59:43:5943 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [QAyYhduadk_EKpnhAAAB]
+2026-04-22 22:35:00:350 [INFO]: Connected to MongoDB via Mongoose
+2026-04-22 22:35:00:350 [INFO]: Backend server running on port 5001
+2026-04-22 22:37:34:3734 [ERROR]: Token verification failed
+2026-04-22 22:37:34:3734 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:59:3759 [INFO]: Login successful: admin@abututors.com
+2026-04-22 22:38:02:382 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [2ntN2VOYEBTwwI3mAAAB]
+2026-04-22 22:46:40:4640 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-04-30 17:16:56:1656 [INFO]: Connected to MongoDB via Mongoose
+2026-04-30 17:16:56:1656 [INFO]: Backend server running on port 5001
+2026-04-30 17:17:14:1714 [INFO]: Login successful: admin@abututors.com
+2026-04-30 17:17:15:1715 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [W_j5tYdpPb3VKINlAAAB]
+2026-04-30 17:19:42:1942 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-04-30 17:19:47:1947 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-04-30 17:19:48:1948 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [nRr0u8nu2g9kQjsdAAAD]
+2026-04-30 17:19:48:1948 [INFO]: Auto-cancelled stale session 69cac22f5da517c2e90a2368
+2026-04-30 17:20:41:2041 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-30 17:20:49:2049 [INFO]: Login successful: asmanabdulrahman18@gmail.com
+2026-04-30 17:20:49:2049 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [wScamr7zBMsaEE6oAAAF]
+2026-04-30 17:21:16:2116 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-04-30 17:21:20:2120 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-04-30 17:21:21:2121 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [HeS7zVdz9q_LQXqaAAAH]
+2026-04-30 17:27:31:2731 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-30 17:30:32:3032 [INFO]: [HYBRID AI] Matching request received for course: COEN453, Budget: flexible
+2026-04-30 17:30:33:3033 [INFO]: [HYBRID AI] No candidates found in database for COEN453 within budget.
+2026-04-30 17:31:25:3125 [INFO]: [HYBRID AI] Matching request received for course: MATH105, Budget: flexible
+2026-04-30 17:31:26:3126 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-04-30 17:40:25:4025 [INFO]: Connected to MongoDB via Mongoose
+2026-04-30 17:40:25:4025 [INFO]: Backend server running on port 5001
+2026-04-30 17:40:27:4027 [INFO]: Login successful: ibnumar448@gmail.com
+2026-04-30 17:40:27:4027 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [ivciSoUSdMF3qyadAAAB]
+2026-04-30 17:41:07:417 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-04-30 17:41:13:4113 [INFO]: Login successful: szaria@gmail.com
+2026-04-30 17:41:14:4114 [INFO]: User 69c68a40a7cca9a26a48430f connected to Socket [SdqBKW0SXPNxcVbBAAAD]
+2026-04-30 17:41:26:4126 [INFO]: User 69c68a40a7cca9a26a48430f disconnected from Socket
+2026-04-30 17:41:29:4129 [INFO]: Login successful: szaria@gmail.com
+2026-04-30 17:41:29:4129 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 17:41:29:4129 [INFO]: User 69c68a40a7cca9a26a48430f connected to Socket [rSYkns1i6JEBTQOtAAAF]
+2026-04-30 17:41:35:4135 [INFO]: User 69c68a40a7cca9a26a48430f disconnected from Socket
+2026-04-30 17:41:43:4143 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-04-30 17:41:44:4144 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [G5GJz7LPsKjm3ZPyAAAH]
+2026-04-30 17:42:02:422 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-30 17:42:03:423 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 17:42:08:428 [INFO]: Login successful: ibnumar448@gmail.com
+2026-04-30 17:42:08:428 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [3ks2XPpX3DwlZ-BHAAAJ]
+2026-04-30 17:42:46:4246 [INFO]: [HYBRID AI] Matching request received for course: MATH241, Budget: flexible
+2026-04-30 17:43:03:433 [INFO]: [HYBRID AI] Match decision generated successfully for MATH241
+2026-04-30 17:53:19:5319 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-04-30 18:02:26:226 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [DzXzZSGGylfEESDgAAAL]
+2026-04-30 18:02:28:228 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-04-30 18:02:51:251 [INFO]: Login successful: admin@abututors.com
+2026-04-30 18:02:51:251 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [bkgN7N52Zk2Lal-DAAAN]
+2026-04-30 18:04:27:427 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-04-30 18:04:54:454 [INFO]: Login successful: dahiru@gmail.com
+2026-04-30 18:04:55:455 [INFO]: User 69c8097a51ad223633c4d1c1 connected to Socket [Fpn2eS5Bj8V8PiceAAAP]
+2026-04-30 18:07:24:724 [INFO]: Login successful: asmanabdulrahman18@gmail.com
+2026-04-30 18:07:25:725 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [BwgRo7JDBGlwTmLBAAAR]
+2026-04-30 18:10:01:101 [INFO]: User 69c8097a51ad223633c4d1c1 disconnected from Socket
+2026-04-30 18:10:38:1038 [INFO]: Login successful: ibnumar448@gmail.com
+2026-04-30 18:10:39:1039 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [-OFF3o74_McP63NcAAAT]
+2026-04-30 18:10:40:1040 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-04-30 18:13:23:1323 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-04-30 18:13:23:1323 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [xa8ZUC2-IvBNQpMHAAAV]
+2026-04-30 18:14:38:1438 [INFO]: [HYBRID AI] Matching request received for course: MATH241, Budget: 500
+2026-04-30 18:14:49:1449 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: fetch failed
+2026-04-30 18:15:27:1527 [INFO]: [HYBRID AI] Matching request received for course: COEN201, Budget: 100
+2026-04-30 18:15:27:1527 [INFO]: [HYBRID AI] No candidates found in database for COEN201 within budget.
+2026-04-30 18:15:29:1529 [INFO]: [HYBRID AI] Matching request received for course: COEN201, Budget: 100
+2026-04-30 18:15:29:1529 [INFO]: [HYBRID AI] No candidates found in database for COEN201 within budget.
+2026-04-30 18:15:30:1530 [INFO]: [HYBRID AI] Matching request received for course: COEN201, Budget: 100
+2026-04-30 18:15:30:1530 [INFO]: [HYBRID AI] No candidates found in database for COEN201 within budget.
+2026-04-30 18:15:30:1530 [INFO]: [HYBRID AI] Matching request received for course: COEN201, Budget: 100
+2026-04-30 18:15:30:1530 [INFO]: [HYBRID AI] No candidates found in database for COEN201 within budget.
+2026-04-30 18:18:25:1825 [WARN]: Paystack Bank Fetch Warning: getaddrinfo EAI_AGAIN api.paystack.co. Returning empty bank list.
+2026-04-30 18:18:25:1825 [WARN]: Paystack Bank Fetch Warning: getaddrinfo EAI_AGAIN api.paystack.co. Returning empty bank list.
+2026-04-30 18:18:25:1825 [WARN]: Paystack Bank Fetch Warning: getaddrinfo EAI_AGAIN api.paystack.co. Returning empty bank list.
+2026-04-30 18:18:25:1825 [WARN]: Paystack Bank Fetch Warning: getaddrinfo EAI_AGAIN api.paystack.co. Returning empty bank list.
+2026-04-30 18:18:52:1852 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:18:53:1853 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:17:1917 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:21:1921 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:22:1922 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:27:1927 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:19:31:1931 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:19:33:1933 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:34:1934 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:19:37:1937 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:39:1939 [WARN]: Paystack Bank Fetch Warning: . Returning empty bank list.
+2026-04-30 18:19:42:1942 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:19:48:1948 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:19:49:1949 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:19:49:1949 [WARN]: Paystack Bank Fetch Warning: Request failed with status code 504. Returning empty bank list.
+2026-04-30 18:21:36:2136 [INFO]: Login successful: ibnumar448@gmail.com
+2026-04-30 18:21:37:2137 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [qG3C_iXDMf-wUQJhAAAX]
+2026-04-30 18:23:56:2356 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-04-30 18:24:54:2454 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-30 18:25:32:2532 [INFO]: Removed slot Tuesday 09:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-04-30 18:25:32:2532 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-04-30 18:25:33:2533 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [Hd9pElB3Wadc4AYUAAAZ]
+2026-04-30 18:28:06:286 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-04-30 18:28:12:2812 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-04-30 18:28:12:2812 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [fgr-n3fn2XxSyjERAAAb]
+2026-04-30 18:32:11:3211 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-30 18:35:20:3520 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [1xjBHRgF7wWpbprDAAAd]
+2026-04-30 18:36:05:365 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-04-30 18:40:25:4025 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [_zAP8rPK216B3gtqAAAf]
+2026-04-30 18:42:04:424 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-04-30 18:42:04:424 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [AA7qIOoAfPl6izxoAAAh]
+2026-04-30 18:44:33:4433 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 21:54:55:5455 [INFO]: Connected to MongoDB via Mongoose
+2026-05-01 21:54:55:5455 [INFO]: Backend server running on port 5001
+2026-05-01 21:55:40:5540 [INFO]: Connected to MongoDB via Mongoose
+2026-05-01 21:57:18:5718 [INFO]: Connected to MongoDB via Mongoose
+2026-05-01 21:57:18:5718 [INFO]: Backend server running on port 5001
+2026-05-01 22:03:48:348 [INFO]: Login successful: admin@abututors.com
+2026-05-01 22:03:48:348 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [t46oO3GtbgtcT8rXAAAB]
+2026-05-01 22:04:41:441 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-01 22:16:10:1610 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-01 22:16:10:1610 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [27X5DYqgLIWAQfJiAAAD]
+2026-05-01 22:16:35:1635 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-01 22:16:35:1635 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [DqmmOs_Flc-tMeAfAAAF]
+2026-05-01 22:17:19:1719 [INFO]: Session 69f3908cea47cb62df052d33 started at Fri May 01 2026 22:17:19 GMT+0100 (West Africa Standard Time)
+2026-05-01 22:19:10:1910 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:19:10:1910 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:19:51:1951 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [2y8lBCogJD15e2vyAAAH]
+2026-05-01 22:19:52:1952 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [RRhBtqcZAHOlV5RJAAAJ]
+2026-05-01 22:21:00:210 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:21:01:211 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:21:31:2131 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [przHY_3czb_EkSMWAAAL]
+2026-05-01 22:27:02:272 [INFO]: Connected to MongoDB via Mongoose
+2026-05-01 22:27:02:272 [INFO]: Backend server running on port 5001
+2026-05-01 22:27:02:272 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [8a60thtkGo8K__NXAAAB]
+2026-05-01 22:28:16:2816 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:28:25:2825 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [9AIQnEs7qvs0YS3JAAAD]
+2026-05-01 22:33:52:3352 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [BrrGHZAjC1q-Wn5sAAAF]
+2026-05-01 22:34:16:3416 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:35:04:354 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [sgNrCuHSQWYxlyL4AAAH]
+2026-05-01 22:35:24:3524 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:38:46:3846 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:38:53:3853 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [qjbqxLb3kZuXoir9AAAJ]
+2026-05-01 22:40:40:4040 [INFO]: [HYBRID AI] Matching request received for course: MATH241, Budget: flexible
+2026-05-01 22:41:02:412 [INFO]: [HYBRID AI] Match decision generated successfully for MATH241
+2026-05-01 22:41:06:416 [INFO]: [HYBRID AI] Matching request received for course: MATH241, Budget: flexible
+2026-05-01 22:41:20:4120 [INFO]: [HYBRID AI] Match decision generated successfully for MATH241
+2026-05-01 22:45:58:4558 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-01 22:45:59:4559 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [6kiJBnYhfJTfjLGDAAAL]
+2026-05-01 22:46:26:4626 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:47:51:4751 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:48:21:4821 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [hcst-WbHeQ5FRVupAAAN]
+2026-05-01 22:48:21:4821 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [QQWBr-CGL1W_DkrxAAAP]
+2026-05-01 22:48:39:4839 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:49:02:492 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:49:23:4923 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [b5MkF-OdOwKzhA2OAAAR]
+2026-05-01 22:49:27:4927 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:50:53:5053 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [mx-WMamObbiN2dncAAAT]
+2026-05-01 22:52:00:520 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [LSPKa1izpOBj3IelAAAV]
+2026-05-01 22:52:00:520 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [jp2Qm8p8JWYytLosAAAX]
+2026-05-01 22:52:06:526 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:52:13:5213 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 22:53:40:5340 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:54:08:548 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [Z9QGuaFPWCxe72S9AAAZ]
+2026-05-01 22:54:10:5410 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:55:45:5545 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [69pTLcx2TzsmOycTAAAb]
+2026-05-01 22:56:36:5636 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 22:56:49:5649 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [2qMYzijwLUck4Y1pAAAd]
+2026-05-01 22:57:39:5739 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [r1Sx9YNabYLG_pqpAAAf]
+2026-05-01 22:57:54:5754 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [pT2wbOq-OmnKGaFbAAAh]
+2026-05-01 23:00:55:055 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 23:05:32:532 [INFO]: User registered successfully: lukmanaminu5656@gmail.com
+2026-05-01 23:05:33:533 [INFO]: User 69f523ac2973c57e9cd3b974 connected to Socket [qm7bSrYjok6KNkjXAAAj]
+2026-05-01 23:09:24:924 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 23:10:25:1025 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [0aEFUr76WmQCUdI_AAAl]
+2026-05-01 23:11:15:1115 [INFO]: Session 69f3908cea47cb62df052d33 completed and escrow released
+2026-05-01 23:13:36:1336 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [eegnFoxa6XSd3H8NAAAn]
+2026-05-01 23:14:02:142 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 23:14:17:1417 [INFO]: Removed slot Monday 09:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-01 23:14:17:1417 [INFO]: Session booked: Tutee 69f523ac2973c57e9cd3b974 -> Tutor 69c27157721d60f066767ce6
+2026-05-01 23:18:50:1850 [INFO]: Session 69f525b92973c57e9cd3bb42 started at Fri May 01 2026 23:18:50 GMT+0100 (West Africa Standard Time)
+2026-05-01 23:19:27:1927 [INFO]: Session 69f525b92973c57e9cd3bb42 completed and escrow released
+2026-05-01 23:19:27:1927 [INFO]: Session 69f525b92973c57e9cd3bb42 completed and escrow released
+2026-05-01 23:19:27:1927 [INFO]: Session 69f525b92973c57e9cd3bb42 completed and escrow released
+2026-05-01 23:19:27:1927 [INFO]: Session 69f525b92973c57e9cd3bb42 completed and escrow released
+2026-05-01 23:30:13:3013 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-01 23:31:23:3123 [INFO]: User 69f523ac2973c57e9cd3b974 disconnected from Socket
+2026-05-01 23:35:03:353 [INFO]: User registered successfully: 89lukmanaminu@gmail.com
+2026-05-01 23:37:59:3759 [INFO]: User registered successfully: mutawakkilaaminuibrahim55@gmail.com
+2026-05-01 23:38:00:380 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [8HN89oBeNsJVne6eAAAp]
+2026-05-01 23:41:21:4121 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [HeocCV6CUB4kO9mmAAAr]
+2026-05-01 23:43:42:4342 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 23:45:37:4537 [ERROR]: Verify Account Error: Request failed with status code 422
+2026-05-01 23:47:44:4744 [ERROR]: Verify Account Error: Request failed with status code 422
+2026-05-01 23:48:34:4834 [ERROR]: Verify Account Error: Request failed with status code 422
+2026-05-01 23:48:42:4842 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-01 23:48:46:4846 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [IwIHJFdfK1oaQDBIAAAt]
+2026-05-01 23:49:14:4914 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-01 23:49:47:4947 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [_uxN7sq6FxU8Xh0WAAAv]
+2026-05-01 23:52:53:5253 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-01 23:54:16:5416 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [l9WS4Xt_YiK-oZJKAAAx]
+2026-05-01 23:55:27:5527 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-01 23:55:28:5528 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-01 23:57:22:5722 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [svlQ6aaoowZ8rFPyAAAz]
+2026-05-01 23:57:23:5723 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [Nmb0bp0qiTnpqW60AAA1]
+2026-05-01 23:57:39:5739 [INFO]: Processing registration payment for user 69f52b472973c57e9cd3bd22. isFree: false, Fee: 1500
+2026-05-01 23:57:40:5740 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-01 23:59:31:5931 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 00:00:52:052 [INFO]: Login successful: admin@abututors.com
+2026-05-02 00:00:52:052 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [1LpMtqd3JgTW8VVtAAA3]
+2026-05-02 00:03:00:30 [INFO]: Tutor mutawakkilaaminuibrahim55@gmail.com approved by admin
+2026-05-02 00:03:06:36 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [Wqn1UjVb1b_sFdjZAAA5]
+2026-05-02 00:04:51:451 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 00:05:46:546 [INFO]: Login successful: asmanabdulrahman18@gmail.com
+2026-05-02 00:05:47:547 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [IFvbSNE84Prg2DtgAAA7]
+2026-05-02 00:06:14:614 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-02 00:06:31:631 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:06:31:631 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:08:49:849 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:08:49:849 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:08:50:850 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:08:50:850 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:00:90 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:00:90 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:00:90 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:00:90 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:01:91 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:01:91 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:01:91 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:01:91 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:01:91 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:01:91 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:02:92 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:02:92 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:04:94 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:04:94 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:05:95 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:05:95 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:05:95 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:05:95 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:06:96 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:06:96 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:06:96 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:06:96 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:09:06:96 [INFO]: [HYBRID AI] Matching request received for course: COEN336, Budget: 1000
+2026-05-02 00:09:06:96 [INFO]: [HYBRID AI] No candidates found in database for COEN336 within budget.
+2026-05-02 00:11:35:1135 [INFO]: [HYBRID AI] Matching request received for course: COEN-336, Budget: 1000
+2026-05-02 00:11:41:1141 [INFO]: [HYBRID AI] Match decision generated successfully for COEN-336
+2026-05-02 00:19:55:1955 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-05-02 00:22:01:221 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [ASqZZ_0oSwNpvTCVAAA9]
+2026-05-02 00:22:33:2233 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:33:2233 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:35:2235 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:35:2235 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:37:2237 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:37:2237 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:39:2239 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:39:2239 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:39:2239 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:39:2239 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:39:2239 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:39:2239 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:40:2240 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:22:40:2240 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:22:52:2252 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-05-02 00:23:32:2332 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [8i3gzKAlZjQIZii2AAA_]
+2026-05-02 00:24:01:241 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:01:241 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:08:248 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:08:248 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:09:249 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:09:249 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:10:2410 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:10:2410 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:11:2411 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:11:2411 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:24:2424 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:24:2424 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:27:2427 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:27:2427 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:43:2443 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:43:2443 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:44:2444 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:44:2444 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:47:2447 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:47:2447 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:24:54:2454 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:24:54:2454 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:25:14:2514 [INFO]: [HYBRID AI] Matching request received for course: COEN-336, Budget: 1000
+2026-05-02 00:25:21:2521 [INFO]: [HYBRID AI] Match decision generated successfully for COEN-336
+2026-05-02 00:26:46:2646 [INFO]: [HYBRID AI] Matching request received for course: COEN-335, Budget: 1000
+2026-05-02 00:26:46:2646 [INFO]: [HYBRID AI] No candidates found in database for COEN-335 within budget.
+2026-05-02 00:30:35:3035 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-05-02 00:30:51:3051 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [U0ooI-lXNMpEU6FhAABB]
+2026-05-02 00:31:56:3156 [INFO]: [HYBRID AI] Matching request received for course: HHSHSHH, Budget: 5000
+2026-05-02 00:31:56:3156 [INFO]: [HYBRID AI] No candidates found in database for HHSHSHH within budget.
+2026-05-02 00:31:58:3158 [INFO]: [HYBRID AI] Matching request received for course: HHSHSHH, Budget: 5000
+2026-05-02 00:31:58:3158 [INFO]: [HYBRID AI] No candidates found in database for HHSHSHH within budget.
+2026-05-02 00:32:05:325 [INFO]: [HYBRID AI] Matching request received for course: HHSHSHH, Budget: 5000
+2026-05-02 00:32:05:325 [INFO]: [HYBRID AI] No candidates found in database for HHSHSHH within budget.
+2026-05-02 00:32:09:329 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-05-02 00:32:30:3230 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [hWri0rel1IT1ip16AABD]
+2026-05-02 00:32:41:3241 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-05-02 00:32:50:3250 [INFO]: User 69ca4f7d2746c756bff34d8c connected to Socket [0yU6OpxGcB5V1Ia7AABF]
+2026-05-02 00:33:21:3321 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:21:3321 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:23:3323 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:23:3323 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:24:3324 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:24:3324 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:30:3330 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:31:3331 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:32:3332 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:32:3332 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:32:3332 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:32:3332 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:44:3344 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:44:3344 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:45:3345 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:45:3345 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:45:3345 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:45:3345 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:33:46:3346 [INFO]: [HYBRID AI] Matching request received for course: COSC309, Budget: 1000
+2026-05-02 00:33:46:3346 [INFO]: [HYBRID AI] No candidates found in database for COSC309 within budget.
+2026-05-02 00:34:03:343 [INFO]: User 69ca4f7d2746c756bff34d8c disconnected from Socket
+2026-05-02 11:06:49:649 [INFO]: Connected to MongoDB via Mongoose
+2026-05-02 11:06:49:649 [INFO]: Backend server running on port 5001
+2026-05-02 11:08:47:847 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [-1Dj9LIORbAn6WJnAAAB]
+2026-05-02 11:09:50:950 [INFO]: [HYBRID AI] Matching request received for course: MATH, Budget: 1500
+2026-05-02 11:10:07:107 [INFO]: [HYBRID AI] Match decision generated successfully for MATH
+2026-05-02 11:10:10:1010 [INFO]: [HYBRID AI] Matching request received for course: MATH, Budget: 1500
+2026-05-02 11:10:23:1023 [INFO]: [HYBRID AI] Match decision generated successfully for MATH
+2026-05-02 11:12:28:1228 [INFO]: [HYBRID AI] Matching request received for course: COSC, Budget: 1500
+2026-05-02 11:12:37:1237 [INFO]: [HYBRID AI] Match decision generated successfully for COSC
+2026-05-02 11:14:02:142 [INFO]: [HYBRID AI] Matching request received for course: COSC, Budget: 1500
+2026-05-02 11:14:14:1414 [INFO]: [HYBRID AI] Match decision generated successfully for COSC
+2026-05-02 11:16:00:160 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 11:16:44:1644 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 11:16:45:1645 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [CbnFay0EAp3j7gMrAAAD]
+2026-05-02 11:21:20:2120 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 16:57:04:574 [INFO]: Connected to MongoDB via Mongoose
+2026-05-02 16:57:04:574 [INFO]: Backend server running on port 5001
+2026-05-02 17:14:38:1438 [INFO]: Login successful: admin@abututors.com
+2026-05-02 17:14:39:1439 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [efpoAAXOkpSFWmfjAAAB]
+2026-05-02 17:19:59:1959 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 17:20:33:2033 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 17:20:33:2033 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [JX0Q8mVWvVppdllBAAAD]
+2026-05-02 17:20:34:2034 [INFO]: User registered successfully: aa@gmail.com
+2026-05-02 17:20:36:2036 [INFO]: User 69f624528477e5164908f5cc connected to Socket [somXCXcxF52S14rKAAAF]
+2026-05-02 17:21:06:216 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 17:25:19:2519 [INFO]: Login successful: aa@gmail.com
+2026-05-02 17:25:20:2520 [INFO]: User 69f624528477e5164908f5cc connected to Socket [46ox7cGRrYCIKY3rAAAH]
+2026-05-02 17:26:25:2625 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 17:37:24:3724 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [7mdQtFLyfOA8yV8JAAAJ]
+2026-05-02 17:39:27:3927 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 17:39:47:3947 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 17:39:48:3948 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [dmxWw-jTFukDhbkJAAAL]
+2026-05-02 17:40:00:400 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 17:41:05:415 [INFO]: Login successful: aa@gmail.com
+2026-05-02 17:41:05:415 [INFO]: User 69f624528477e5164908f5cc connected to Socket [q4x8D1ec9jDwK4OBAAAN]
+2026-05-02 17:42:09:429 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 17:42:25:4225 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 17:42:25:4225 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [5zU9OVAmWURFygCyAAAP]
+2026-05-02 17:42:31:4231 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 17:43:13:4313 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [0bduiBvYTdAPZDpEAAAR]
+2026-05-02 17:43:16:4316 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 17:44:26:4426 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [MaoFT4tOG7sXJEWtAAAT]
+2026-05-02 17:50:13:5013 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [l4oYv8ZDm4AO9VTTAAAV]
+2026-05-02 17:50:21:5021 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 17:51:01:511 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-02 17:51:02:512 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [W1uj6J6Lw-ifniqpAAAX]
+2026-05-02 17:52:08:528 [INFO]: Removed slot Wednesday 14:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 17:52:08:528 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-05-02 17:55:51:5551 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:00:45:045 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:06:37:637 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [prxrS1h_wxwYnjn7AAAZ]
+2026-05-02 18:06:50:650 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:07:33:733 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [5aP-YDRFkdO6s28eAAAb]
+2026-05-02 18:07:39:739 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [8X21ylETcn2b7XlEAAAd]
+2026-05-02 18:08:52:852 [INFO]: Restored slot Wednesday 14:00 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 18:08:52:852 [INFO]: Session 69f62bb88477e5164908f6fc cancelled and refunded
+2026-05-02 18:09:46:946 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:09:49:949 [INFO]: Removed slot Wednesday 14:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 18:09:49:949 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-05-02 18:10:18:1018 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:11:08:118 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [lwPD3MkcuvoQXViSAAAf]
+2026-05-02 18:11:12:1112 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:11:34:1134 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-02 18:11:34:1134 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [GrgSZCFz8yAF5Ba2AAAh]
+2026-05-02 18:13:06:136 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 18:13:06:136 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [YOu4pmlKHKiW8St0AAAj]
+2026-05-02 18:14:29:1429 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 18:18:02:182 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:19:04:194 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [XvAimGirYN3zDt9VAAAl]
+2026-05-02 18:19:05:195 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:19:13:1913 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [DjAx6sq-SFe_HU-JAAAn]
+2026-05-02 18:19:30:1930 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 18:22:53:2253 [INFO]: User registered successfully: bbb@gmail.com
+2026-05-02 18:22:53:2253 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [NQFoOXwqCN5K44_WAAAp]
+2026-05-02 18:24:03:243 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:12:2412 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:17:2417 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:22:2422 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:28:2428 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:30:2430 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:40:2440 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:48:2448 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:56:2456 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:25:01:251 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:25:08:258 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:27:56:2756 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:28:04:284 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:28:07:287 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:28:12:2812 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:28:24:2824 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [O20F778GYdeld9y8AAAr]
+2026-05-02 18:28:51:2851 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [15KQFzzAkRx4Nn9UAAAt]
+2026-05-02 18:29:09:299 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:11:2911 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:12:2912 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:14:2914 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:16:2916 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:18:2918 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:31:2931 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:37:2937 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:53:2953 [INFO]: Connected to MongoDB via Mongoose
+2026-05-02 18:29:53:2953 [INFO]: Backend server running on port 5001
+2026-05-02 18:29:53:2953 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [DkHbxpc0L2VjmUdQAAAB]
+2026-05-02 18:29:54:2954 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [CQ-tY6dkfDXprknfAAAD]
+2026-05-02 18:29:55:2955 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:33:00:330 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [p1blXapP6bASeXZBAAAF]
+2026-05-02 18:33:00:330 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:36:24:3624 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [YTE8BGaoO-oYaFbVAAAH]
+2026-05-02 18:36:35:3635 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 18:36:58:3658 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:38:59:3859 [INFO]: Processing registration payment for user 69f632ed8477e5164908f89d. isFree: false, Fee: 1500
+2026-05-02 18:39:00:390 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [mlmG3o5gSwf-0UgGAAAJ]
+2026-05-02 18:39:08:398 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [YhRansiDiHvWMZIeAAAL]
+2026-05-02 18:39:10:3910 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 18:39:22:3922 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [6Fk58oWFvwVJgEMXAAAN]
+2026-05-02 18:40:02:402 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [ly8U_DSx7DAJJ0O_AAAP]
+2026-05-02 18:40:02:402 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:40:07:407 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [6lkmcj5k5eW2Uv_sAAAR]
+2026-05-02 18:40:10:4010 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:40:24:4024 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 18:40:28:4028 [INFO]: Login successful: admin@abututors.com
+2026-05-02 18:40:29:4029 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [9z90V8pl0xha12JhAAAT]
+2026-05-02 18:41:13:4113 [INFO]: Tutor bbb@gmail.com approved by admin
+2026-05-02 18:41:44:4144 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [nvuWANAIfOA12J0GAAAV]
+2026-05-02 18:41:47:4147 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:43:19:4319 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [0iQegrcGnYzFmVg7AAAX]
+2026-05-02 18:44:15:4415 [INFO]: [HYBRID AI] Matching request received for course: COSC, Budget: 1000
+2026-05-02 18:44:26:4426 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: fetch failed
+2026-05-02 18:44:34:4434 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 18:44:54:4454 [INFO]: [HYBRID AI] Matching request received for course: COSC, Budget: 1000
+2026-05-02 18:45:04:454 [INFO]: [HYBRID AI] Match decision generated successfully for COSC
+2026-05-02 18:47:15:4715 [INFO]: Removed slot Monday 09:00 from Tutor 69f632ed8477e5164908f89d availability
+2026-05-02 18:47:15:4715 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69f632ed8477e5164908f89d
+2026-05-02 18:49:39:4939 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 18:50:35:5035 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 19:05:24:524 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [i78XCzSk2U3WCgQwAAAZ]
+2026-05-02 19:05:53:553 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [n4rMWs5t1EH_mEHfAAAb]
+2026-05-02 19:08:36:836 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 19:08:36:836 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 19:08:47:847 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [ycc4y-6rALT67oWDAAAd]
+2026-05-02 19:08:50:850 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [Mhqn-Cfdwv7eDMzGAAAf]
+2026-05-02 19:09:00:90 [INFO]: Session 69f638a310e441c971987311 started at Sat May 02 2026 19:09:00 GMT+0100 (West Africa Standard Time)
+2026-05-02 19:09:00:90 [INFO]: Session 69f638a310e441c971987311 started at Sat May 02 2026 19:09:00 GMT+0100 (West Africa Standard Time)
+2026-05-02 19:09:00:90 [INFO]: Session 69f638a310e441c971987311 started at Sat May 02 2026 19:09:00 GMT+0100 (West Africa Standard Time)
+2026-05-02 19:10:05:105 [INFO]: Complete Session Check: Received QR: complete_l69k4j_69c9bd09dfaa58478d59e134, Expected QR: complete_l69k4j_69c9bd09dfaa58478d59e134
+2026-05-02 19:10:05:105 [INFO]: Restored slot Monday 09:00 to Tutor 69f632ed8477e5164908f89d availability
+2026-05-02 19:10:05:105 [INFO]: Session 69f638a310e441c971987311 completed and escrow released
+2026-05-02 19:12:30:1230 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 19:12:43:1243 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [6jUOU6VxPrT2iWTMAAAh]
+2026-05-02 19:17:23:1723 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 19:20:05:205 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 19:25:32:2532 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [owxS_32Ak_PCb0aiAAAj]
+2026-05-02 19:25:35:2535 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 19:27:47:2747 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [VS4g0u3kTV5yWfYfAAAl]
+2026-05-02 19:28:32:2832 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 19:34:15:3415 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [zLWv_2Af6Xumf1nJAAAn]
+2026-05-02 19:34:16:3416 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 19:35:39:3539 [INFO]: Login successful: aa@gmail.com
+2026-05-02 19:35:40:3540 [INFO]: User 69f624528477e5164908f5cc connected to Socket [akI_bq36N3ulg4KTAAAp]
+2026-05-02 19:43:05:435 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 19:43:30:4330 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [oTNg8UpyI53ZKfFBAAAr]
+2026-05-02 19:43:55:4355 [INFO]: User 69f624528477e5164908f5cc connected to Socket [dgtPefAiKtOMV8-kAAAt]
+2026-05-02 19:50:56:5056 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 19:51:11:5111 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [2KLJYuh5SaOWGaQoAAAv]
+2026-05-02 19:51:32:5132 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [vhxWCliL8U3HUibEAAAx]
+2026-05-02 19:52:17:5217 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 19:57:45:5745 [INFO]: Connected to MongoDB via Mongoose
+2026-05-02 19:57:46:5746 [INFO]: Backend server running on port 5001
+2026-05-02 19:57:50:5750 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [zSOkSpwvK1lBDnrnAAAB]
+2026-05-02 19:58:59:5859 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 20:11:39:1139 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [O7O99suYP8l1TZphAAAD]
+2026-05-02 20:12:28:1228 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 20:12:41:1241 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [tVKLJMhJ0dx0IhnZAAAF]
+2026-05-02 20:13:25:1325 [INFO]: User 69f624528477e5164908f5cc connected to Socket [EowkjU7iUdOFfGZXAAAH]
+2026-05-02 20:13:35:1335 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:13:42:1342 [INFO]: Login successful: aa@gmail.com
+2026-05-02 20:13:43:1343 [INFO]: User 69f624528477e5164908f5cc connected to Socket [nNrxtAsst7WBnw4PAAAJ]
+2026-05-02 20:13:54:1354 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 20:14:06:146 [INFO]: Login successful: admin@abututors.com
+2026-05-02 20:14:06:146 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [gRHPiSwLnp5RPjubAAAL]
+2026-05-02 20:14:37:1437 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [6xF0c4IM6qh6FmMPAAAN]
+2026-05-02 20:15:31:1531 [INFO]: User 69f624528477e5164908f5cc connected to Socket [xEoIzGMU1pRzjHYJAAAP]
+2026-05-02 20:15:33:1533 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:15:37:1537 [INFO]: Login successful: admin@abututors.com
+2026-05-02 20:15:38:1538 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [lKExK1dATF3AhCK5AAAR]
+2026-05-02 20:16:57:1657 [INFO]: Removed slot Monday 10:00 from Tutor 69f632ed8477e5164908f89d availability
+2026-05-02 20:16:57:1657 [INFO]: Session booked: Tutee 69f624528477e5164908f5cc -> Tutor 69f632ed8477e5164908f89d
+2026-05-02 20:17:08:178 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 20:17:16:1716 [INFO]: Session 69f64da998871711dcdf7871 started at Sat May 02 2026 20:17:16 GMT+0100 (West Africa Standard Time)
+2026-05-02 20:17:16:1716 [INFO]: Session 69f64da998871711dcdf7871 started at Sat May 02 2026 20:17:16 GMT+0100 (West Africa Standard Time)
+2026-05-02 20:17:16:1716 [INFO]: Session 69f64da998871711dcdf7871 started at Sat May 02 2026 20:17:16 GMT+0100 (West Africa Standard Time)
+2026-05-02 20:17:49:1749 [INFO]: Complete Session Check: Received QR: start_7jnfk_69f624528477e5164908f5cc, Expected QR: complete_sszims_69f624528477e5164908f5cc
+2026-05-02 20:17:49:1749 [INFO]: Complete Session Check: Received QR: start_7jnfk_69f624528477e5164908f5cc, Expected QR: complete_sszims_69f624528477e5164908f5cc
+2026-05-02 20:18:01:181 [INFO]: Complete Session Check: Received QR: start_7jnfk_69f624528477e5164908f5cc, Expected QR: complete_sszims_69f624528477e5164908f5cc
+2026-05-02 20:18:01:181 [INFO]: Complete Session Check: Received QR: start_7jnfk_69f624528477e5164908f5cc, Expected QR: complete_sszims_69f624528477e5164908f5cc
+2026-05-02 20:18:01:181 [INFO]: Complete Session Check: Received QR: start_7jnfk_69f624528477e5164908f5cc, Expected QR: complete_sszims_69f624528477e5164908f5cc
+2026-05-02 20:18:32:1832 [INFO]: Complete Session Check: Received QR: complete_sszims_69f624528477e5164908f5cc, Expected QR: complete_sszims_69f624528477e5164908f5cc
+2026-05-02 20:18:32:1832 [INFO]: Restored slot Monday 10:00 to Tutor 69f632ed8477e5164908f89d availability
+2026-05-02 20:18:32:1832 [INFO]: Session 69f64da998871711dcdf7871 completed and escrow released
+2026-05-02 20:19:03:193 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:19:04:194 [INFO]: User 69f624528477e5164908f5cc connected to Socket [UMYk8lTmjreetF6-AAAT]
+2026-05-02 20:19:11:1911 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:19:11:1911 [INFO]: User 69f624528477e5164908f5cc connected to Socket [K33w1FrN0SaHuiRDAAAV]
+2026-05-02 20:19:48:1948 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:20:33:2033 [INFO]: User 69f624528477e5164908f5cc connected to Socket [LWWXJKVZ8yXAoDdYAAAX]
+2026-05-02 20:20:39:2039 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:20:39:2039 [INFO]: User 69f624528477e5164908f5cc connected to Socket [LV7vPnNGJf63CM6tAAAZ]
+2026-05-02 20:21:40:2140 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 20:21:52:2152 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:21:52:2152 [INFO]: User 69f624528477e5164908f5cc connected to Socket [GnlW6FIVzn4zOh8EAAAb]
+2026-05-02 20:29:44:2944 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 20:35:20:3520 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:35:21:3521 [INFO]: User 69f624528477e5164908f5cc connected to Socket [4f3Ihg-hO7aHqFqUAAAd]
+2026-05-02 20:38:59:3859 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [gbj1fVOYKBLJ8DNNAAAf]
+2026-05-02 20:40:59:4059 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 20:48:05:485 [INFO]: User 69f624528477e5164908f5cc connected to Socket [SrZHzxY5O_oTVRh4AAAh]
+2026-05-02 20:48:10:4810 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:51:36:5136 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:51:37:5137 [INFO]: User 69f624528477e5164908f5cc connected to Socket [eIg_AcKcF0vasXCRAAAj]
+2026-05-02 20:51:41:5141 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:51:50:5150 [INFO]: Login successful: aa@gmail.com
+2026-05-02 20:51:51:5151 [INFO]: User 69f624528477e5164908f5cc connected to Socket [BsQLajy_dop47sUyAAAl]
+2026-05-02 20:52:03:523 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:04:524 [INFO]: User 69f624528477e5164908f5cc connected to Socket [YyUwZCS5ER-rNxk_AAAn]
+2026-05-02 20:52:07:527 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:08:528 [INFO]: User 69f624528477e5164908f5cc connected to Socket [SDUkhlphSPj2ufEqAAAp]
+2026-05-02 20:52:10:5210 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:10:5210 [INFO]: User 69f624528477e5164908f5cc connected to Socket [_qVjSt0Rl_E7JWACAAAr]
+2026-05-02 20:52:21:5221 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:21:5221 [INFO]: User 69f624528477e5164908f5cc connected to Socket [ewCtrDeqgAbFYhPnAAAt]
+2026-05-02 20:52:23:5223 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:23:5223 [INFO]: User 69f624528477e5164908f5cc connected to Socket [h1LKnYGxmFSaVNrWAAAv]
+2026-05-02 20:52:25:5225 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:26:5226 [INFO]: User 69f624528477e5164908f5cc connected to Socket [EDkQaLRHszWaslL4AAAx]
+2026-05-02 20:52:28:5228 [INFO]: User 69f624528477e5164908f5cc connected to Socket [nQUJSwdLrkVC5rsDAAAz]
+2026-05-02 20:52:33:5233 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:34:5234 [INFO]: User 69f624528477e5164908f5cc connected to Socket [VYEDyy6cj-Bqf7UDAAA1]
+2026-05-02 20:52:37:5237 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:37:5237 [INFO]: User 69f624528477e5164908f5cc connected to Socket [SJtA7GlHZz43bfmqAAA3]
+2026-05-02 20:52:45:5245 [INFO]: User 69f624528477e5164908f5cc connected to Socket [17a0DMNQAiW1NhzMAAA5]
+2026-05-02 20:52:46:5246 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:53:5253 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:52:54:5254 [INFO]: User 69f624528477e5164908f5cc connected to Socket [ArhuvM6mL86-ars8AAA7]
+2026-05-02 20:53:02:532 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:54:14:5414 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:54:15:5415 [INFO]: User 69f624528477e5164908f5cc connected to Socket [tUQGQnl3J3ezJcIlAAA9]
+2026-05-02 20:57:36:5736 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:57:37:5737 [INFO]: User 69f624528477e5164908f5cc connected to Socket [wVaiypqGCVCwW27eAAA_]
+2026-05-02 20:57:37:5737 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [5IbRCsUoA8k17WKiAABB]
+2026-05-02 20:57:42:5742 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:57:42:5742 [INFO]: User 69f624528477e5164908f5cc connected to Socket [coSlNp4OLXfpr0brAABD]
+2026-05-02 20:57:44:5744 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:57:44:5744 [INFO]: User 69f624528477e5164908f5cc connected to Socket [I8LpzXmYw08IynY3AABF]
+2026-05-02 20:57:44:5744 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:57:45:5745 [INFO]: User 69f624528477e5164908f5cc connected to Socket [qihVNMxmcy0DndGmAABH]
+2026-05-02 20:57:45:5745 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:57:45:5745 [INFO]: User 69f624528477e5164908f5cc connected to Socket [9T1pDMAOSAj3Nw7jAABJ]
+2026-05-02 20:58:10:5810 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 20:58:11:5811 [INFO]: User 69f624528477e5164908f5cc connected to Socket [78p_x70CaYyeQIJvAABL]
+2026-05-02 21:02:34:234 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:02:35:235 [INFO]: User 69f624528477e5164908f5cc connected to Socket [q7u4ZrA__Dfn8bwjAABN]
+2026-05-02 21:03:24:324 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:11:18:1118 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [ElcexIQpNZFcbPKNAABP]
+2026-05-02 21:11:45:1145 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:11:46:1146 [INFO]: User 69f624528477e5164908f5cc connected to Socket [jmMn51olbBW3w8F4AABR]
+2026-05-02 21:11:49:1149 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:11:49:1149 [INFO]: User 69f624528477e5164908f5cc connected to Socket [OzoV3XlhiRrPbZRJAABT]
+2026-05-02 21:11:56:1156 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:11:56:1156 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [mkeksmVNKaTUq592AABV]
+2026-05-02 21:13:11:1311 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:13:12:1312 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [6zDvXAz2eNiGrH6VAABX]
+2026-05-02 21:13:18:1318 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-02 21:15:02:152 [INFO]: Connected to MongoDB via Mongoose
+2026-05-02 21:15:02:152 [INFO]: Backend server running on port 5001
+2026-05-02 21:15:02:152 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [ZGZ7dM4uLlln7a6iAAAB]
+2026-05-02 21:15:03:153 [INFO]: User 69f624528477e5164908f5cc connected to Socket [z7RqzfL0rjK7WFBPAAAD]
+2026-05-02 21:17:59:1759 [INFO]: User 69f632ed8477e5164908f89d connected to Socket [clo9bRpGnyIMdAkrAAAF]
+2026-05-02 21:18:05:185 [INFO]: User 69f632ed8477e5164908f89d disconnected from Socket
+2026-05-02 21:18:34:1834 [INFO]: Login successful: admin@abututors.com
+2026-05-02 21:18:34:1834 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [9_yYLCkLXPipD8QSAAAH]
+2026-05-02 21:18:42:1842 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:19:52:1952 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:20:40:2040 [INFO]: User registered successfully: cc@gmail.om
+2026-05-02 21:20:42:2042 [INFO]: User 69f65c98771168d8246aff72 connected to Socket [S7y2hxfxT1mmi28XAAAJ]
+2026-05-02 21:21:02:212 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-02 21:24:45:2445 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:24:57:2457 [INFO]: User 69f65c98771168d8246aff72 disconnected from Socket
+2026-05-02 21:24:58:2458 [INFO]: User 69f65c98771168d8246aff72 connected to Socket [0XhqcPxZ-fwW8s-xAAAL]
+2026-05-02 21:25:09:259 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 21:26:44:2644 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 21:27:03:273 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [FPSe8EmryX0miC_XAAAN]
+2026-05-02 21:27:04:274 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:27:05:275 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [AOevnCs5YHo22K8fAAAP]
+2026-05-02 21:27:06:276 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:27:10:2710 [WARN]: Paystack Bank Fetch Warning: socket hang up. Returning empty bank list.
+2026-05-02 21:27:43:2743 [INFO]: Login successful: admin@abututors.com
+2026-05-02 21:27:43:2743 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [c3lqknqIbUnfmXNdAAAR]
+2026-05-02 21:28:06:286 [INFO]: User 69f65c98771168d8246aff72 disconnected from Socket
+2026-05-02 21:28:15:2815 [INFO]: Login successful: aa@gmail.com
+2026-05-02 21:28:16:2816 [INFO]: User 69f624528477e5164908f5cc connected to Socket [rftP8x7pwIu0QY38AAAT]
+2026-05-02 21:28:45:2845 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:28:46:2846 [INFO]: User 69f624528477e5164908f5cc connected to Socket [VdMUQWE-_xrf0hVsAAAV]
+2026-05-02 21:29:31:2931 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:29:31:2931 [INFO]: User 69f624528477e5164908f5cc connected to Socket [2Iq-8MWvdKBenLliAAAX]
+2026-05-02 21:29:36:2936 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-02 21:30:21:3021 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:30:21:3021 [INFO]: User 69f624528477e5164908f5cc connected to Socket [_pRMfKk2Q-EltZksAAAZ]
+2026-05-02 21:34:06:346 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [32-HAPMX9vNDl_CgAAAb]
+2026-05-02 21:35:09:359 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:36:38:3638 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [Kt6qWcvpaV7etDCFAAAd]
+2026-05-02 21:36:41:3641 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:36:45:3645 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-02 21:36:46:3646 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [ap9MDzqAfvtTfMRPAAAf]
+2026-05-02 21:37:05:375 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 21:37:17:3717 [ERROR]: Send Message Error: Cannot destructure property 'receiverId' of 'req.body' as it is undefined.
+2026-05-02 21:37:24:3724 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-02 21:38:10:3810 [ERROR]: Send Message Error: Cannot destructure property 'receiverId' of 'req.body' as it is undefined.
+2026-05-02 21:39:00:390 [ERROR]: Send Message Error: Cannot destructure property 'receiverId' of 'req.body' as it is undefined.
+2026-05-02 21:39:24:3924 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:39:36:3936 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 21:39:49:3949 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [U52Ie6ix66TXXtAWAAAh]
+2026-05-02 21:40:06:406 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [FnqPedJGx62aky7rAAAj]
+2026-05-02 21:40:15:4015 [INFO]: User 69f624528477e5164908f5cc connected to Socket [6cZCI3h8O5nJNP7kAAAl]
+2026-05-02 21:42:07:427 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:43:19:4319 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [zj9r49mrIlq1eiqAAAAn]
+2026-05-02 21:44:02:442 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:44:08:448 [INFO]: Login successful: aa@gmail.com
+2026-05-02 21:44:08:448 [INFO]: User 69f624528477e5164908f5cc connected to Socket [kpmv_4AZTBQXFot7AAAp]
+2026-05-02 21:45:09:459 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 21:45:09:459 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 21:45:19:4519 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:45:54:4554 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 21:46:00:460 [INFO]: Login successful: admin@abututors.com
+2026-05-02 21:46:00:460 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [UkJwOtddWOCiMoTzAAAr]
+2026-05-02 21:47:58:4758 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [wPlYT0xEXEepfTOPAAAt]
+2026-05-02 21:48:45:4845 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-02 21:51:42:5142 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 21:51:43:5143 [INFO]: User 69f624528477e5164908f5cc connected to Socket [lRYeHnH36G931-vMAAAv]
+2026-05-02 21:52:56:5256 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-02 21:54:16:5416 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:54:56:5456 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [SaTUALsmU9Yu_tGMAAAx]
+2026-05-02 21:55:02:552 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 21:55:06:556 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-02 21:55:07:557 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [J_szu_vbWTmLJiobAAAz]
+2026-05-02 21:59:12:5912 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-02 22:01:24:124 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 22:03:42:342 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:04:18:418 [INFO]: User 69f624528477e5164908f5cc connected to Socket [kHdVMyVoIuVrTFolAAA1]
+2026-05-02 22:04:58:458 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:04:58:458 [INFO]: User 69f624528477e5164908f5cc connected to Socket [myLaqfWb0CEZ3pYxAAA3]
+2026-05-02 22:12:37:1237 [INFO]: User 69f624528477e5164908f5cc connected to Socket [iXIc60yhstASfZpFAAA5]
+2026-05-02 22:12:41:1241 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 22:12:53:1253 [WARN]: Paystack Bank Fetch Warning: getaddrinfo ENOTFOUND api.paystack.co. Returning empty bank list.
+2026-05-02 22:13:08:138 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:13:14:1314 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [xuL0yrP9OogvW-ZqAAA7]
+2026-05-02 22:13:15:1315 [INFO]: Login successful: cc@gmail.om
+2026-05-02 22:13:16:1316 [INFO]: User 69f65c98771168d8246aff72 connected to Socket [l4LIpXS-kAMkP_-IAAA9]
+2026-05-02 22:13:19:1319 [INFO]: User 69f65c98771168d8246aff72 disconnected from Socket
+2026-05-02 22:13:30:1330 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 22:13:31:1331 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [m47vDTfbssGrl9d_AAA_]
+2026-05-02 22:14:10:1410 [INFO]: [HYBRID AI] Matching request received for course: cocs, Budget: flexible
+2026-05-02 22:14:18:1418 [INFO]: Removed slot Monday 14:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:14:18:1418 [INFO]: Session booked: Tutee 69f624528477e5164908f5cc -> Tutor 69c27157721d60f066767ce6
+2026-05-02 22:14:20:1420 [INFO]: [HYBRID AI] Match decision generated successfully for cocs
+2026-05-02 22:14:27:1427 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 22:14:28:1428 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [xt9o3o1Ity5fSjDBAABB]
+2026-05-02 22:14:29:1429 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 22:14:30:1430 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [vfXcQZ1KASJUvrmpAABD]
+2026-05-02 22:14:59:1459 [INFO]: Session 69f6692a771168d8246b06ad started at Sat May 02 2026 22:14:59 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:15:33:1533 [INFO]: Complete Session Check: Received QR: undefined, Expected QR: complete_muvt37_69f624528477e5164908f5cc
+2026-05-02 22:15:33:1533 [INFO]: Restored slot Monday 14:00 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:15:33:1533 [INFO]: Session 69f6692a771168d8246b06ad completed and escrow released
+2026-05-02 22:16:07:167 [INFO]: User 69f52b472973c57e9cd3bd22 connected to Socket [P6rOm9QLCDG3vS0OAABF]
+2026-05-02 22:18:23:1823 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:18:49:1849 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 22:18:59:1859 [INFO]: User 69f52b472973c57e9cd3bd22 disconnected from Socket
+2026-05-02 22:19:00:190 [INFO]: User 69f624528477e5164908f5cc connected to Socket [_JK7FOJZk5xZArfAAABH]
+2026-05-02 22:19:05:195 [INFO]: Login successful: aa@gmail.com
+2026-05-02 22:19:06:196 [INFO]: User 69f624528477e5164908f5cc connected to Socket [uy9fqRlyE3QNsTE5AABJ]
+2026-05-02 22:19:09:199 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:19:18:1918 [INFO]: [HYBRID AI] Matching request received for course: cosc, Budget: flexible
+2026-05-02 22:19:24:1924 [INFO]: [HYBRID AI] Match decision generated successfully for cosc
+2026-05-02 22:19:26:1926 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 22:19:26:1926 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [yiYpZac8BIpIv4vTAABL]
+2026-05-02 22:19:53:1953 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:19:53:1953 [INFO]: User 69f624528477e5164908f5cc connected to Socket [duhWKaFxR3rrhduyAABN]
+2026-05-02 22:19:59:1959 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:19:59:1959 [INFO]: User 69f624528477e5164908f5cc connected to Socket [kkodhUBqbAjf2YXVAABP]
+2026-05-02 22:20:03:203 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:20:04:204 [INFO]: User 69f624528477e5164908f5cc connected to Socket [0-HpMSF2WJPESBIxAABR]
+2026-05-02 22:20:41:2041 [INFO]: [HYBRID AI] Matching request received for course: math222, Budget: flexible
+2026-05-02 22:20:43:2043 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:20:43:2043 [INFO]: User 69f624528477e5164908f5cc connected to Socket [xfZrb9babDgWB_FcAABT]
+2026-05-02 22:20:45:2045 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:20:45:2045 [INFO]: User 69f624528477e5164908f5cc connected to Socket [YyXI4jIFVz2LiRpUAABV]
+2026-05-02 22:20:58:2058 [INFO]: [HYBRID AI] Match decision generated successfully for math222
+2026-05-02 22:21:09:219 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:21:10:2110 [INFO]: User 69f624528477e5164908f5cc connected to Socket [XH6lyORjnPHwp50JAABX]
+2026-05-02 22:22:49:2249 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 22:22:57:2257 [INFO]: Login successful: aa@gmail.com
+2026-05-02 22:22:57:2257 [INFO]: User 69f624528477e5164908f5cc connected to Socket [TZJ1rapWKbRcxfZRAABZ]
+2026-05-02 22:23:14:2314 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:23:14:2314 [ERROR]: Paystack Init Error: read ECONNRESET
+2026-05-02 22:23:42:2342 [INFO]: User 69f624528477e5164908f5cc connected to Socket [jE3uzyhVMJogCkzIAABb]
+2026-05-02 22:23:49:2349 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:24:10:2410 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 22:24:10:2410 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [wtb-TmF9d3RV4ZN8AABd]
+2026-05-02 22:24:55:2455 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:24:56:2456 [INFO]: User 69f624528477e5164908f5cc connected to Socket [MuMcxpsREO50nQlzAABf]
+2026-05-02 22:25:02:252 [INFO]: Removed slot Monday 11:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:25:02:252 [INFO]: Session booked: Tutee 69f624528477e5164908f5cc -> Tutor 69c27157721d60f066767ce6
+2026-05-02 22:25:14:2514 [INFO]: Session 69f66bae771168d8246b09f2 started at Sat May 02 2026 22:25:14 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:25:14:2514 [INFO]: Session 69f66bae771168d8246b09f2 started at Sat May 02 2026 22:25:14 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:25:36:2536 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:25:37:2537 [INFO]: User 69f624528477e5164908f5cc connected to Socket [RHbXFmG5IQh4fW7zAABh]
+2026-05-02 22:25:40:2540 [INFO]: Complete Session Check: Received QR: complete_pgoay_69f624528477e5164908f5cc, Expected QR: complete_pgoay_69f624528477e5164908f5cc
+2026-05-02 22:25:40:2540 [INFO]: Complete Session Check: Received QR: complete_pgoay_69f624528477e5164908f5cc, Expected QR: complete_pgoay_69f624528477e5164908f5cc
+2026-05-02 22:25:40:2540 [INFO]: Complete Session Check: Received QR: complete_pgoay_69f624528477e5164908f5cc, Expected QR: complete_pgoay_69f624528477e5164908f5cc
+2026-05-02 22:25:40:2540 [INFO]: Complete Session Check: Received QR: complete_pgoay_69f624528477e5164908f5cc, Expected QR: complete_pgoay_69f624528477e5164908f5cc
+2026-05-02 22:25:40:2540 [INFO]: Restored slot Monday 11:00 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:25:40:2540 [INFO]: Session 69f66bae771168d8246b09f2 completed and escrow released
+2026-05-02 22:25:40:2540 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 5 modifiedPaths "availability"
+2026-05-02 22:25:40:2540 [INFO]: Session 69f66bae771168d8246b09f2 completed and escrow released
+2026-05-02 22:25:40:2540 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 5 modifiedPaths "availability"
+2026-05-02 22:25:40:2540 [INFO]: Session 69f66bae771168d8246b09f2 completed and escrow released
+2026-05-02 22:25:40:2540 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 5 modifiedPaths "availability"
+2026-05-02 22:25:40:2540 [INFO]: Session 69f66bae771168d8246b09f2 completed and escrow released
+2026-05-02 22:25:53:2553 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:25:54:2554 [INFO]: User 69f624528477e5164908f5cc connected to Socket [HAxRqPuY9J1fkvHzAABj]
+2026-05-02 22:26:36:2636 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:26:37:2637 [INFO]: User 69f624528477e5164908f5cc connected to Socket [8GbMePVW88eNkDKrAABl]
+2026-05-02 22:26:44:2644 [INFO]: Removed slot Monday 12:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:26:44:2644 [INFO]: Session booked: Tutee 69f624528477e5164908f5cc -> Tutor 69c27157721d60f066767ce6
+2026-05-02 22:26:55:2655 [INFO]: Session 69f66c14771168d8246b0b91 started at Sat May 02 2026 22:26:55 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:26:55:2655 [INFO]: Session 69f66c14771168d8246b0b91 started at Sat May 02 2026 22:26:55 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:26:55:2655 [INFO]: Session 69f66c14771168d8246b0b91 started at Sat May 02 2026 22:26:55 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:26:55:2655 [INFO]: Session 69f66c14771168d8246b0b91 started at Sat May 02 2026 22:26:55 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:26:55:2655 [INFO]: Session 69f66c14771168d8246b0b91 started at Sat May 02 2026 22:26:55 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:26:55:2655 [INFO]: Session 69f66c14771168d8246b0b91 started at Sat May 02 2026 22:26:55 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:27:15:2715 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:27:16:2716 [INFO]: User 69f624528477e5164908f5cc connected to Socket [yK4YzUjHXqzEbaG1AABn]
+2026-05-02 22:27:23:2723 [INFO]: Complete Session Check: Received QR: complete_pwqhs_69f624528477e5164908f5cc, Expected QR: complete_pwqhs_69f624528477e5164908f5cc
+2026-05-02 22:27:23:2723 [INFO]: Restored slot Monday 12:00 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:27:23:2723 [INFO]: Session 69f66c14771168d8246b0b91 completed and escrow released
+2026-05-02 22:27:46:2746 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-02 22:27:47:2747 [INFO]: User 69f624528477e5164908f5cc connected to Socket [GU1Fwt7FvW8Tg20BAABp]
+2026-05-02 22:29:06:296 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 22:29:29:2929 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [CwIjueTA_CsbXgwrAABr]
+2026-05-02 22:29:29:2929 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [H9QFOIN8JzvWVJVxAABt]
+2026-05-02 22:29:37:2937 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-02 22:30:31:3031 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-02 22:30:31:3031 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [Tom0SbuQBDlhuwUzAABv]
+2026-05-02 22:30:46:3046 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-02 22:31:20:3120 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-02 22:31:21:3121 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [pi6h7_6Se7AvpYCkAABx]
+2026-05-02 22:31:52:3152 [INFO]: Removed slot Monday 02:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:31:52:3152 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-05-02 22:32:01:321 [INFO]: Session 69f66d48771168d8246b0c98 started at Sat May 02 2026 22:32:01 GMT+0100 (West Africa Standard Time)
+2026-05-02 22:32:11:3211 [INFO]: Complete Session Check: Received QR: complete_larg8k_69c9bd09dfaa58478d59e134, Expected QR: complete_larg8k_69c9bd09dfaa58478d59e134
+2026-05-02 22:32:11:3211 [INFO]: Restored slot Monday 02:00 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-02 22:32:11:3211 [INFO]: Session 69f66d48771168d8246b0c98 completed and escrow released
+2026-05-03 13:23:37:2337 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 13:23:37:2337 [INFO]: Backend server running on port 5001
+2026-05-03 13:41:39:4139 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 13:42:23:4223 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 13:42:23:4223 [INFO]: Backend server running on port 5001
+2026-05-03 14:05:46:546 [INFO]: Login successful: admin@abututors.com
+2026-05-03 14:05:46:546 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [ZxvRcyeD_tNEOrdiAAAB]
+2026-05-03 14:06:06:66 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 14:06:23:623 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [YdgyNHht3Ie3cfdiAAAD]
+2026-05-03 14:08:15:815 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-03 14:08:16:816 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [0LwLs1fSzhglXpzvAAAF]
+2026-05-03 14:10:31:1031 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-03 14:12:12:1212 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:12:24:1224 [INFO]: Login successful: aa@gmail.com
+2026-05-03 14:12:30:1230 [INFO]: User 69f624528477e5164908f5cc connected to Socket [NqRSrMo2rYNBkbEsAAAH]
+2026-05-03 14:13:07:137 [INFO]: [HYBRID AI] Matching request received for course: COST, Budget: 500
+2026-05-03 14:13:16:1316 [INFO]: [HYBRID AI] Match decision generated successfully for COST
+2026-05-03 14:13:42:1342 [INFO]: [HYBRID AI] Matching request received for course: COST, Budget: 500
+2026-05-03 14:13:55:1355 [INFO]: [HYBRID AI] Match decision generated successfully for COST
+2026-05-03 14:14:57:1457 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-03 14:15:26:1526 [INFO]: User 69f624528477e5164908f5cc connected to Socket [jFaE8VLbLmhfCex3AAAJ]
+2026-05-03 14:16:22:1622 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-03 14:16:43:1643 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 14:16:43:1643 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [wOu3knihdRJEE1W8AAAL]
+2026-05-03 14:16:53:1653 [INFO]: Session 69f62fdd8477e5164908f7bb cancelled and refunded
+2026-05-03 14:18:06:186 [INFO]: Removed slot Thursday 09:00 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-03 14:18:06:186 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-05-03 14:18:38:1838 [INFO]: Session 69f74b0d507a4b547e7758d1 started at Sun May 03 2026 14:18:38 GMT+0100 (West Africa Standard Time)
+2026-05-03 14:19:02:192 [INFO]: Complete Session Check: Received QR: complete_d0vq_69c9bd09dfaa58478d59e134, Expected QR: complete_d0vq_69c9bd09dfaa58478d59e134
+2026-05-03 14:19:02:192 [INFO]: Complete Session Check: Received QR: complete_d0vq_69c9bd09dfaa58478d59e134, Expected QR: complete_d0vq_69c9bd09dfaa58478d59e134
+2026-05-03 14:19:02:192 [INFO]: Complete Session Check: Received QR: complete_d0vq_69c9bd09dfaa58478d59e134, Expected QR: complete_d0vq_69c9bd09dfaa58478d59e134
+2026-05-03 14:19:02:192 [INFO]: Restored slot Thursday 09:00 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-03 14:19:02:192 [INFO]: Session 69f74b0d507a4b547e7758d1 completed and escrow released
+2026-05-03 14:19:02:192 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 11 modifiedPaths "availability"
+2026-05-03 14:19:02:192 [INFO]: Session 69f74b0d507a4b547e7758d1 completed and escrow released
+2026-05-03 14:19:02:192 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 11 modifiedPaths "availability"
+2026-05-03 14:19:02:192 [INFO]: Session 69f74b0d507a4b547e7758d1 completed and escrow released
+2026-05-03 14:23:11:2311 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:23:39:2339 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [lY4aJuYYlUYqG339AAAN]
+2026-05-03 14:23:46:2346 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [REc7I3-B137dI9GmAAAP]
+2026-05-03 14:24:03:243 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-03 14:24:06:246 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:26:56:2656 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [U8e_itCKrz_fyKibAAAR]
+2026-05-03 14:27:11:2711 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 14:27:12:2712 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [KgM3BJ_TtWpGSaA2AAAT]
+2026-05-03 14:27:38:2738 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:27:54:2754 [INFO]: Login successful: admin@abututors.com
+2026-05-03 14:27:55:2755 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [d5rjvHfOoqsWeaIjAAAV]
+2026-05-03 14:28:57:2857 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:29:09:299 [INFO]: Tutor ibnuumar448@gmail.com rejected by admin
+2026-05-03 14:31:23:3123 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [yA95anUZ8wrluIcXAAAX]
+2026-05-03 14:34:08:348 [INFO]: Removed slot Wednesday 09:30 from Tutor 69c27157721d60f066767ce6 availability
+2026-05-03 14:34:08:348 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-05-03 14:34:14:3414 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 14:34:14:3414 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [NEK1l1l_v05geJmzAAAZ]
+2026-05-03 14:34:23:3423 [WARN]: Paystack Bank Fetch Warning: read ECONNRESET. Returning empty bank list.
+2026-05-03 14:34:45:3445 [INFO]: Session 69f74ed0507a4b547e775d29 started at Sun May 03 2026 14:34:45 GMT+0100 (West Africa Standard Time)
+2026-05-03 14:34:55:3455 [INFO]: Complete Session Check: Received QR: complete_zhvx2l_69c9bd09dfaa58478d59e134, Expected QR: complete_zhvx2l_69c9bd09dfaa58478d59e134
+2026-05-03 14:34:55:3455 [INFO]: Complete Session Check: Received QR: complete_zhvx2l_69c9bd09dfaa58478d59e134, Expected QR: complete_zhvx2l_69c9bd09dfaa58478d59e134
+2026-05-03 14:34:55:3455 [INFO]: Tutor ibnuumar448@gmail.com upgraded to Verified Status
+2026-05-03 14:34:55:3455 [INFO]: Tutor ibnuumar448@gmail.com upgraded to Verified Status
+2026-05-03 14:34:55:3455 [INFO]: Restored slot Wednesday 09:30 to Tutor 69c27157721d60f066767ce6 availability
+2026-05-03 14:34:55:3455 [INFO]: Session 69f74ed0507a4b547e775d29 completed and escrow released
+2026-05-03 14:34:55:3455 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 13 modifiedPaths "availability"
+2026-05-03 14:34:55:3455 [INFO]: Session 69f74ed0507a4b547e775d29 completed and escrow released
+2026-05-03 14:35:10:3510 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 14:35:11:3511 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [foL6GSFTPRzCeS__AAAb]
+2026-05-03 14:37:09:379 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:42:53:4253 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [DN0KeW64OMkCmcnvAAAd]
+2026-05-03 14:49:01:491 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 14:50:34:5034 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [pdY6XadlJt7kS904AAAf]
+2026-05-03 14:50:46:5046 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:04:42:442 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 15:04:49:449 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [9QIz2W5C0sHWAIaUAAAh]
+2026-05-03 15:13:00:130 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 15:13:00:130 [INFO]: Backend server running on port 5001
+2026-05-03 15:16:09:169 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 15:16:09:169 [INFO]: Backend server running on port 5001
+2026-05-03 15:16:10:1610 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 15:16:10:1610 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [J-Fxofxfl0cFbDmIAAAB]
+2026-05-03 15:18:41:1841 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:22:29:2229 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [Aa4HFEYDIWDBDMXJAAAD]
+2026-05-03 15:23:23:2323 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-03 15:23:24:2324 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [buXko5bz6uCa0PWyAAAF]
+2026-05-03 15:25:41:2541 [ERROR]: Token verification failed
+2026-05-03 15:28:43:2843 [INFO]: Session booked: Tutee 69c9bd09dfaa58478d59e134 -> Tutor 69c27157721d60f066767ce6
+2026-05-03 15:28:53:2853 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-03 15:28:58:2858 [INFO]: Login successful: admin@abututors.com
+2026-05-03 15:28:59:2859 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [wH-qntxjoVaTx9GuAAAH]
+2026-05-03 15:29:21:2921 [INFO]: User registered successfully: mariamy2019@gmail.com
+2026-05-03 15:29:22:2922 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [ci8PsBd0IcWjeGzSAAAJ]
+2026-05-03 15:30:43:3043 [INFO]: Session 69f75b9bd561b09ce8c2e3f4 started at Sun May 03 2026 15:30:43 GMT+0100 (West Africa Standard Time)
+2026-05-03 15:30:43:3043 [INFO]: Session 69f75b9bd561b09ce8c2e3f4 started at Sun May 03 2026 15:30:43 GMT+0100 (West Africa Standard Time)
+2026-05-03 15:30:43:3043 [INFO]: Session 69f75b9bd561b09ce8c2e3f4 started at Sun May 03 2026 15:30:43 GMT+0100 (West Africa Standard Time)
+2026-05-03 15:30:43:3043 [INFO]: Session 69f75b9bd561b09ce8c2e3f4 started at Sun May 03 2026 15:30:43 GMT+0100 (West Africa Standard Time)
+2026-05-03 15:30:52:3052 [INFO]: Complete Session Check: Received QR: complete_infh4r_69c9bd09dfaa58478d59e134, Expected QR: complete_infh4r_69c9bd09dfaa58478d59e134
+2026-05-03 15:30:52:3052 [INFO]: Complete Session Check: Received QR: complete_infh4r_69c9bd09dfaa58478d59e134, Expected QR: complete_infh4r_69c9bd09dfaa58478d59e134
+2026-05-03 15:30:52:3052 [INFO]: Session 69f75b9bd561b09ce8c2e3f4 completed and escrow released
+2026-05-03 15:30:52:3052 [INFO]: Session 69f75b9bd561b09ce8c2e3f4 completed and escrow released
+2026-05-03 15:31:03:313 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 15:33:48:3348 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-03 15:34:49:3449 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [ic5K947P6xXawt8oAAAL]
+2026-05-03 15:35:47:3547 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 15:36:21:3621 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 15:36:22:3622 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [opwEC1ZpvtEdXUYfAAAN]
+2026-05-03 15:36:38:3638 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 15:36:38:3638 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [PPgumWdaCE1NfMvdAAAP]
+2026-05-03 15:39:54:3954 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [osN2wqBKqYbS4FbsAAAR]
+2026-05-03 15:40:05:405 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [tdXKL4uM9BEE-44CAAAT]
+2026-05-03 15:40:05:405 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 15:40:05:405 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [4ffqiMLIDolzpiacAAAV]
+2026-05-03 15:40:17:4017 [INFO]: Processing registration payment for user 69f75bc1d561b09ce8c2e4aa. isFree: true, Fee: 0
+2026-05-03 15:40:18:4018 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 15:41:10:4110 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-03 15:41:26:4126 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [wpD-g2T8t1EVeP2cAAAX]
+2026-05-03 15:41:32:4132 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [wNcc_T1DRrEIWu-lAAAa]
+2026-05-03 15:41:32:4132 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [GtrMxVe8j7tyb5w8AAAb]
+2026-05-03 15:43:32:4332 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:46:25:4625 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-03 15:48:30:4830 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 15:48:31:4831 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [Cf6tER7T6-TuIJ4DAAAd]
+2026-05-03 15:49:59:4959 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 15:49:59:4959 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [kqDuEWAEkgxt6EG1AAAf]
+2026-05-03 15:54:04:544 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 15:54:21:5421 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 15:54:36:5436 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [PRsv0jSg3BbHCCrBAAAh]
+2026-05-03 15:54:44:5444 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:54:45:5445 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [osYKrMJtRtg2Gj6NAAAj]
+2026-05-03 15:54:48:5448 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:54:49:5449 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [KrbVEQOsRsTdDmd1AAAl]
+2026-05-03 15:55:29:5529 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [_kJFkMU8LPo53nCeAAAn]
+2026-05-03 15:55:33:5533 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:56:02:562 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 15:56:02:562 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [0MHYcyHqWVJLu_4sAAAp]
+2026-05-03 15:56:05:565 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 15:57:39:5739 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 16:11:38:1138 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [KLOOjWgn_pyiEKK_AAAr]
+2026-05-03 16:16:55:1655 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 16:28:52:2852 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:28:52:2852 [INFO]: Backend server running on port 5001
+2026-05-03 16:31:49:3149 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:32:14:3214 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:32:14:3214 [INFO]: Backend server running on port 5001
+2026-05-03 16:35:31:3531 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:39:56:3956 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:39:56:3956 [INFO]: Backend server running on port 5001
+2026-05-03 16:41:23:4123 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:41:23:4123 [INFO]: Backend server running on port 5001
+2026-05-03 16:47:54:4754 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 16:47:54:4754 [INFO]: Backend server running on port 5001
+2026-05-03 16:48:38:4838 [INFO]: Login successful: admin@abututors.com
+2026-05-03 16:48:38:4838 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [BKp8bjoszblCybdJAAAB]
+2026-05-03 16:48:58:4858 [INFO]: Login successful: admin@abututors.com
+2026-05-03 16:49:00:490 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [hKWlEJUgbPH1LSnDAAAD]
+2026-05-03 21:22:57:2257 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 21:22:58:2258 [INFO]: Backend server running on port 5001
+2026-05-03 21:26:22:2622 [INFO]: Login successful: admin@abututors.com
+2026-05-03 21:26:23:2623 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [bh_yUHdgacooht_WAAAB]
+2026-05-03 21:26:58:2658 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 21:27:05:275 [INFO]: Login successful: admin@abututors.com
+2026-05-03 21:27:05:275 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [9jGBMWfw24cG_JV3AAAD]
+2026-05-03 21:27:38:2738 [INFO]: Revision requested for tutor mariamy2019@gmail.com
+2026-05-03 21:28:12:2812 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 21:29:31:2931 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 21:29:32:2932 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [VXyRQlRJxwkRFi6TAAAF]
+2026-05-03 21:32:34:3234 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 21:32:39:3239 [INFO]: Login successful: ibnumar448@gmail.com
+2026-05-03 21:32:39:3239 [INFO]: User 69c9bd09dfaa58478d59e134 connected to Socket [nb7RniATRS0HJGctAAAH]
+2026-05-03 21:33:33:3333 [INFO]: User 69c9bd09dfaa58478d59e134 disconnected from Socket
+2026-05-03 21:33:58:3358 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 21:33:58:3358 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [FKVaKcyLn7Hs6GSnAAAJ]
+2026-05-03 21:36:59:3659 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 21:37:00:370 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [BiogYUATJ9Ezsl7aAAAL]
+2026-05-03 21:38:53:3853 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 21:38:59:3859 [INFO]: Login successful: admin@abututors.com
+2026-05-03 21:39:00:390 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [jI5tpc6s22qfpsLSAAAN]
+2026-05-03 21:39:10:3910 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 21:39:26:3926 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 21:39:26:3926 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [Aq41TBLP7fZXGaqFAAAP]
+2026-05-03 21:40:09:409 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 21:40:10:4010 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [ZvcG5nVo1m1j7Cq1AAAR]
+2026-05-03 21:40:19:4019 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 21:40:24:4024 [INFO]: Login successful: admin@abututors.com
+2026-05-03 21:40:25:4025 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [8BpdNRAxgW-VKV2UAAAT]
+2026-05-03 21:40:56:4056 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 21:41:00:410 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 21:41:01:411 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [bstw6tf2Y4hSChVAAAAV]
+2026-05-03 21:42:43:4243 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 21:42:45:4245 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 21:42:46:4246 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [F3Sq7gvI05ctGQitAAAX]
+2026-05-03 22:01:10:110 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 22:01:16:116 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 22:01:16:116 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [R0k99KVuBWbaTnSfAAAZ]
+2026-05-03 22:02:35:235 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:02:41:241 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 22:02:41:241 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [_bQgxoLFwU_xvpFiAAAb]
+2026-05-03 22:03:55:355 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 22:04:01:41 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 22:04:01:41 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [gJW5n0ZBUyDtntEXAAAd]
+2026-05-03 22:09:15:915 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:09:15:915 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [swmLw-_mGakL9m2tAAAf]
+2026-05-03 22:09:51:951 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:09:55:955 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 22:09:55:955 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [sIiRky1RhZzOLTA6AAAh]
+2026-05-03 22:10:58:1058 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 22:11:02:112 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 22:11:02:112 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [tmYoT_L2eL8hdmzjAAAj]
+2026-05-03 22:11:27:1127 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:11:32:1132 [INFO]: Login successful: admin@abututors.com
+2026-05-03 22:11:32:1132 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [HXRF5PoTF2CCe3SiAAAl]
+2026-05-03 22:11:37:1137 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 22:11:42:1142 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 22:11:43:1143 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [Y9OrQ5P-hkL0LD3VAAAn]
+2026-05-03 22:12:43:1243 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:12:48:1248 [INFO]: Login successful: admin@abututors.com
+2026-05-03 22:12:48:1248 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [FvAwLeIsqDW5EEUQAAAp]
+2026-05-03 22:13:01:131 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 22:13:07:137 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 22:13:07:137 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [SsiZE0gvSNPSpKccAAAr]
+2026-05-03 22:15:23:1523 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [JCn7WsZnmGX2BrSfAAAt]
+2026-05-03 22:15:41:1541 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 22:16:00:160 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 22:16:00:160 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [GYDbEsGYRQTktGU8AAAv]
+2026-05-03 22:18:30:1830 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 22:18:34:1834 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [HUVjsDHpfhDZsJbHAAAx]
+2026-05-03 22:25:39:2539 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 22:35:55:3555 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:35:55:3555 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [7ZShAUvs-lfzTMCsAAAz]
+2026-05-03 22:36:49:3649 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:36:54:3654 [INFO]: Login successful: admin@abututors.com
+2026-05-03 22:36:54:3654 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [1X-wJN5I-wowaKFtAAA1]
+2026-05-03 22:41:28:4128 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 22:41:34:4134 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 22:41:35:4135 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [0EOSV9h4DCaFTdmkAAA3]
+2026-05-03 22:49:00:490 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:49:24:4924 [INFO]: Login successful: aa@gmail.com
+2026-05-03 22:49:25:4925 [INFO]: User 69f624528477e5164908f5cc connected to Socket [2moc2pUI0kkmVreLAAA5]
+2026-05-03 22:50:23:5023 [INFO]: Connected to MongoDB via Mongoose
+2026-05-03 22:50:24:5024 [INFO]: Backend server running on port 5001
+2026-05-03 22:50:28:5028 [INFO]: User 69f624528477e5164908f5cc connected to Socket [yMmBmzW5laTQUDjIAAAC]
+2026-05-03 22:51:04:514 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [RbMwtD28yGefznX-AAAE]
+2026-05-03 22:51:10:5110 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:51:10:5110 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [il3eMdk87D3uQiw6AAAG]
+2026-05-03 22:51:51:5151 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 22:51:55:5155 [INFO]: Login successful: admin@abututors.com
+2026-05-03 22:51:55:5155 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [mFeOL-a2Wa0dQEsoAAAI]
+2026-05-03 22:52:51:5251 [INFO]: Tutor ibnuumar448@gmail.com approved by admin
+2026-05-03 22:54:03:543 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-03 22:54:41:5441 [INFO]: Tutor mariamy2019@gmail.com approved by admin
+2026-05-03 22:55:19:5519 [INFO]: [HYBRID AI] Matching request received for course: COCS, Budget: 500
+2026-05-03 22:55:34:5534 [INFO]: [HYBRID AI] Match decision generated successfully for COCS
+2026-05-03 22:56:37:5637 [INFO]: [HYBRID AI] Matching request received for course: COCS, Budget: 500
+2026-05-03 22:56:45:5645 [INFO]: [HYBRID AI] Match decision generated successfully for COCS
+2026-05-03 22:58:02:582 [INFO]: User 69ba921329fd8fbf6fd6066e disconnected from Socket
+2026-05-03 23:08:38:838 [INFO]: Login successful: ibnuumar448@gmail.com
+2026-05-03 23:08:38:838 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [8PzH8-iapJ0wasoRAAAK]
+2026-05-03 23:09:30:930 [INFO]: Login successful: aa@gmail.com
+2026-05-03 23:09:30:930 [INFO]: User 69f624528477e5164908f5cc connected to Socket [p35RsAFfXIvI1B0VAAAM]
+2026-05-03 23:11:30:1130 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-03 23:11:36:1136 [INFO]: User 69f624528477e5164908f5cc connected to Socket [Rava6izPuMjtK9eiAAAO]
+2026-05-03 23:13:20:1320 [INFO]: User 69f624528477e5164908f5cc connected to Socket [4gSkhW1Kr-riUQd3AAAQ]
+2026-05-03 23:13:21:1321 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-03 23:13:40:1340 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-03 23:14:01:141 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 23:14:02:142 [INFO]: User 69c27157721d60f066767ce6 connected to Socket [mFtzoVcunp8vfWdPAAAS]
+2026-05-03 23:15:41:1541 [INFO]: User 69f624528477e5164908f5cc connected to Socket [lzhG5tWE8Sr8sscoAAAU]
+2026-05-03 23:18:16:1816 [INFO]: User 69c27157721d60f066767ce6 disconnected from Socket
+2026-05-03 23:18:26:1826 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 23:18:26:1826 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [dQSKy0Tn3LN_FH2eAAAW]
+2026-05-03 23:18:45:1845 [INFO]: User 69f75bc1d561b09ce8c2e4aa disconnected from Socket
+2026-05-03 23:18:48:1848 [INFO]: Login successful: mariamy2019@gmail.com
+2026-05-03 23:18:49:1849 [INFO]: User 69f75bc1d561b09ce8c2e4aa connected to Socket [Wgk-_oGDitdZwQwLAAAY]
+2026-05-03 23:19:21:1921 [INFO]: User 69f624528477e5164908f5cc disconnected from Socket
+2026-05-04 13:22:07:227 [INFO]: Connected to MongoDB via Mongoose
+2026-05-04 13:22:07:227 [INFO]: Backend server running on port 5001
+2026-05-04 13:28:47:2847 [INFO]: Login successful: admin@abututors.com
+2026-05-04 13:28:48:2848 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [oseN26WDfoNtT9zQAAAB]

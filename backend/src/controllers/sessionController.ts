@@ -6,6 +6,7 @@ import NotificationModel from '../models/Notification';
 import Escrow from '../models/Escrow';
 import logger from '../utils/logger';
 import mongoose from 'mongoose';
+import { emitSessionUpdate } from '../utils/socketManager';
 import Settings from '../models/Settings';
 import { checkTutorUpgrade } from './adminController';
 import { IUser } from '../models/User';
@@ -15,6 +16,7 @@ import SlotLock from '../models/SlotLock';
 interface Request extends ExpressRequest {
     user?: any;
 }
+
 
 // @desc    Book a new tutoring session
 // @route   POST /api/sessions
@@ -58,7 +60,7 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
 
         // 2. Pricing Enforcement & Validation from System Settings
         const settings = await Settings.findOne() || await Settings.create({});
-        let finalizedAmount = 500; // Default for newbie
+        let finalizedAmount = settings.defaultHourlyRate || 500; 
         
         if (tutor.role === 'verified_tutor') {
             const requestedAmount = Number(amount);
@@ -75,8 +77,8 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
             }
             finalizedAmount = requestedAmount;
         } else {
-            // Newbie tutors use the default or a specific newbie rate
-            finalizedAmount = 500; 
+            // Newbie tutors use the default system rate
+            finalizedAmount = settings.defaultHourlyRate || 500; 
         }
 
         // 3. Check Tutee Wallet Balance
@@ -134,32 +136,8 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
             link: '/tutor-dashboard'
         });
 
-        // 7.5 Remove slot from Tutor's availability matrix
-        try {
-            const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const sessionDate = new Date(date);
-            const dayName = dayNames[sessionDate.getDay()];
-            
-            if (tutor.availability && Array.isArray(tutor.availability)) {
-                let updated = false;
-                const newAvailability = tutor.availability.map((avail: any) => {
-                    if (avail.day === dayName && Array.isArray(avail.slots)) {
-                        const originalCount = avail.slots.length;
-                        avail.slots = avail.slots.filter((s: string) => s !== time);
-                        if (avail.slots.length !== originalCount) updated = true;
-                    }
-                    return avail;
-                });
-
-                if (updated) {
-                    await User.findByIdAndUpdate(tutorId, { availability: newAvailability });
-                    logger.info(`Removed slot ${dayName} ${time} from Tutor ${tutorId} availability`);
-                }
-            }
-        } catch (availError: any) {
-            logger.error(`Failed to update tutor availability: ${availError.message}`);
-            // Don't fail the whole booking if this fails
-        }
+        // 7.5 Removed: Slots are no longer deleted from availability matrix to allow recurring weekly bookings.
+        // Conflicts for the same specific date are already handled by the existingSession check above.
 
         // 8. Clear Lock if exists
         await SlotLock.deleteOne({ tutorId, slot: slotTime, tuteeId });
@@ -219,6 +197,7 @@ export const getUserSessions = async (req: Request, res: Response): Promise<void
                     await escrow.save();
                     logger.info(`Auto-cancelled stale session ${session._id}`);
                 }
+                
             }
         }
 
@@ -283,6 +262,9 @@ export const startSession = async (req: Request, res: Response): Promise<void> =
             link: '/my-sessions'
         });
 
+        // Emit Real-time Socket Event to Tutee
+        emitSessionUpdate(session.tuteeId.toString(), session);
+
         logger.info(`Session ${id} started at ${session.actualStartTime}`);
         res.json({ message: 'Session started successfully', session });
     } catch (error: any) {
@@ -316,7 +298,7 @@ export const completeSession = async (req: Request, res: Response): Promise<void
         }
 
         // Verify QR Data OR PIN
-        const isQRMatch = qrData && qrData === session.completionQRCodeData;
+        logger.info(`Complete Session Check: Received QR: ${qrData}, Expected QR: ${session.completionQRCodeData}`); const isQRMatch = qrData && qrData === session.completionQRCodeData;
         const isPinMatch = pin && pin === session.completionPIN;
 
         if (!isQRMatch && !isPinMatch) {
@@ -406,6 +388,10 @@ export const completeSession = async (req: Request, res: Response): Promise<void
             link: '/my-sessions'
         });
 
+        // Emit Real-time Socket Event to Tutee
+        emitSessionUpdate(session.tuteeId.toString(), session);
+
+
         logger.info(`Session ${id} completed and escrow released`);
         res.json({ message: 'Session completed and payment released', session });
     } catch (error: any) {
@@ -455,6 +441,7 @@ export const cancelSession = async (req: Request, res: Response): Promise<void> 
             escrow.status = 'refunded';
             await escrow.save();
         }
+
 
         // Notify both parties
         const initiatorId = req.user.id;
@@ -638,6 +625,7 @@ export const reportTuteeNoShow = async (req: Request, res: Response): Promise<vo
             await escrow.save();
         }
 
+
         logger.info(`Tutee no-show reported for session ${id}.`);
         res.json({ message: 'Tutee no-show reported successfully', session });
     } catch (error: any) {
@@ -733,5 +721,88 @@ export const lockSlot = async (req: Request, res: Response): Promise<void> => {
     } catch (error: any) {
         logger.error(`Lock Slot Error: ${error.message}`);
         res.status(500).json({ message: 'Server error locking slot' });
+    }
+};
+
+// @desc    Submit a review for a completed session (Tutee -> Tutor)
+// @route   POST /api/sessions/:id/review
+// @access  Private (Tutee)
+export const reviewSession = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { rating, reviewText } = req.body;
+        const sessionId = req.params.id;
+        const tuteeId = req.user.id;
+
+        if (!rating || rating < 1 || rating > 5) {
+            res.status(400).json({ message: 'Rating must be between 1 and 5' });
+            return;
+        }
+
+        const session = await Session.findById(sessionId);
+        
+        if (!session) {
+            res.status(404).json({ message: 'Session not found' });
+            return;
+        }
+
+        if (session.status !== 'completed') {
+            res.status(400).json({ message: 'Can only review completed sessions' });
+            return;
+        }
+
+        if (session.tuteeId.toString() !== tuteeId) {
+            res.status(403).json({ message: 'Only the tutee can review the tutor for this session' });
+            return;
+        }
+
+        if (session.tuteeRating) {
+            res.status(400).json({ message: 'Session already reviewed' });
+            return;
+        }
+
+        // Save review
+        session.tuteeRating = rating;
+        session.tuteeReview = reviewText || '';
+        await session.save();
+
+        // Recalculate Tutor's Average Rating
+        const tutorId = session.tutorId;
+        const allTutorSessions = await Session.find({
+            tutorId,
+            status: 'completed',
+            tuteeRating: { $exists: true, $ne: null }
+        });
+
+        let newAverage = 0;
+        if (allTutorSessions.length > 0) {
+            const sum = allTutorSessions.reduce((acc, curr) => acc + (curr.tuteeRating || 0), 0);
+            newAverage = Number((sum / allTutorSessions.length).toFixed(1));
+        }
+
+        // Update Tutor and check auto-verification
+        const tutor = await User.findById(tutorId);
+        if (tutor) {
+            tutor.averageRating = newAverage;
+            
+            // Auto-verify if they have 5+ reviews and average >= 4.0
+            if (tutor.role === 'tutor' && allTutorSessions.length >= 5 && newAverage >= 4.0) {
+                tutor.role = 'verified_tutor';
+                logger.info(`Tutor ${tutor.email} auto-verified after reaching ${allTutorSessions.length} ratings averaging ${newAverage}.`);
+                
+                await NotificationModel.create({
+                    userId: tutorId,
+                    title: '🎉 Congratulations! You are Verified!',
+                    message: `You achieved an average rating of ${newAverage} across ${allTutorSessions.length} sessions and have been upgraded to Verified Tutor!`,
+                    type: 'system'
+                });
+            }
+
+            await tutor.save();
+        }
+
+        res.json({ message: 'Review submitted successfully', session });
+    } catch (error: any) {
+        logger.error(`Review Session Error: ${error.message}`);
+        res.status(500).json({ message: 'Server error submitting review' });
     }
 };

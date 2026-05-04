@@ -7,13 +7,22 @@ interface AuthRequest extends Request {
     user?: any;
 }
 
-const getTutorsForMatch = async (course: string, budget?: number) => {
+const getTutorsForMatch = async (course: string, prompt: string, budget?: number) => {
+    // Extract key words from the prompt (words > 4 chars, max 3 words)
+    const keywords = prompt.split(/\s+/).filter(w => w.length > 4).slice(0, 3);
+    const keywordRegex = keywords.length > 0 ? new RegExp(keywords.join('|'), 'i') : /.*/;
+
     // Build query object
     const query: any = {
         role: { $in: ['tutor', 'verified_tutor'] },
         $or: [
             { courses: { $regex: course, $options: 'i' } },
-            { department: { $regex: course, $options: 'i' } }
+            { department: { $regex: course, $options: 'i' } },
+            { areaOfStrength: { $regex: course, $options: 'i' } },
+            { matchingBio: { $regex: course, $options: 'i' } },
+            // Also look for conceptual keywords from the student's problem description
+            { areaOfStrength: { $regex: keywordRegex } },
+            { matchingBio: { $regex: keywordRegex } }
         ]
     };
 
@@ -23,10 +32,24 @@ const getTutorsForMatch = async (course: string, budget?: number) => {
     }
 
     // Standard backend search to find candidates, sorted by rating and experience metrics
-    return await User.find(query)
+    let candidates = await User.find(query)
         .sort({ averageRating: -1, sessionsCompleted: -1 })
         .limit(15)
         .select('name faculty level courses matchingBio averageRating sessionsCompleted hourlyRate areaOfStrength _id');
+
+    // FALLBACK: If specific concept search yields 0, just pull the absolute best tutors on the platform
+    // and let the AI decide if any of them possess cross-applicable skills.
+    if (candidates.length === 0) {
+        const fallbackQuery: any = { role: { $in: ['tutor', 'verified_tutor'] } };
+        if (budget) fallbackQuery.hourlyRate = { $lte: budget };
+        
+        candidates = await User.find(fallbackQuery)
+            .sort({ averageRating: -1, sessionsCompleted: -1 })
+            .limit(15)
+            .select('name faculty level courses matchingBio averageRating sessionsCompleted hourlyRate areaOfStrength _id');
+    }
+
+    return candidates;
 };
 
 export const requestMatch = async (req: AuthRequest, res: Response): Promise<void> => {
@@ -40,7 +63,7 @@ export const requestMatch = async (req: AuthRequest, res: Response): Promise<voi
         logger.info(`[HYBRID AI] Matching request received for course: ${course}, Budget: ${budget || 'flexible'}`);
 
         // 1. Pre-fetch candidates (Database Search - Fast & Free)
-        const candidates = await getTutorsForMatch(course, Number(budget) || undefined);
+        const candidates = await getTutorsForMatch(course, prompt, Number(budget) || undefined);
 
         if (candidates.length === 0) {
             logger.info(`[HYBRID AI] No candidates found in database for ${course} within budget.`);
@@ -67,7 +90,7 @@ export const requestMatch = async (req: AuthRequest, res: Response): Promise<voi
 
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Using gemini-1.5-flash for speed and cost efficiency
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const promptTemplate = `
         You are the ABUTutorsConnect AI Matchmaker and Research Analyst.
@@ -94,9 +117,10 @@ export const requestMatch = async (req: AuthRequest, res: Response): Promise<voi
            - Subject/topic relevance (highest weight)
            - Tutor rating & sessions completed (reliability)
            - Cost efficiency against the student's budget
-        2. Select the top 1 to 3 tutors that BEST fit the student's problem.
-        3. Write a dynamic, highly analytical, human-like "reasoning" paragraph for EACH recommendation explaining EXACTLY why they are a great fit based on their metrics and the student's prompt. Do NOT be generic (e.g., instead of "Good fit", say "With a perfect 5.0 rating and a rate well within your budget, their specific focus on calculus makes them an ideal match for your derivatives problem.")
-        4. Return ONLY a valid JSON object matching the format below. No other text.
+        2. **CRITICAL RULE**: Prioritize the student's "Problem Description" over strict course code matching! Even if the tutor teaches a different course code, if their "Strength" or "Bio" proves they understand the concepts the student is struggling with, score them highly!
+        3. Select the top 1 to 3 tutors that BEST fit the student's problem. If absolutely NONE of the tutors are even remotely capable of helping with the topic, you may return an empty recommendations array.
+        4. Write a dynamic, highly analytical, human-like "reasoning" paragraph for EACH recommendation explaining EXACTLY why they are a great fit based on their metrics and the student's prompt. Do NOT be generic (e.g., instead of "Good fit", say "With a perfect 5.0 rating and a rate well within your budget, their specific focus on calculus makes them an ideal match for your derivatives problem.")
+        5. Return ONLY a valid JSON object matching the format below. No other text.
 
         OUTPUT FORMAT:
         {
@@ -150,7 +174,7 @@ export const requestMatch = async (req: AuthRequest, res: Response): Promise<voi
         logger.error(`[HYBRID AI] Critical Failure: ${err.message}`);
         // Panic Fallback: Return database matches so service doesn't "break" for user
         try {
-            const candidates = await getTutorsForMatch(req.body.course || "", Number(req.body.budget) || undefined);
+            const candidates = await getTutorsForMatch(req.body.course || "", req.body.prompt || "", Number(req.body.budget) || undefined);
             res.status(200).json({
                 message: "I found some highly qualified tutors who can help you with your course!",
                 recommendations: candidates.slice(0, 3).map(c => ({

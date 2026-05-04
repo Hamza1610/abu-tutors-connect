@@ -195,3 +195,50 @@ Please retry in 34.187821144s. [{"@type":"type.googleapis.com/google.rpc.Help","
 2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
 2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
 2026-04-13 00:59:38:5938 [ERROR]: Token verification failed
+2026-04-22 22:37:34:3734 [ERROR]: Token verification failed
+2026-04-22 22:37:34:3734 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-22 22:37:52:3752 [ERROR]: Token verification failed
+2026-04-30 17:31:26:3126 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-04-30 18:14:49:1449 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: fetch failed
+2026-05-01 23:45:37:4537 [ERROR]: Verify Account Error: Request failed with status code 422
+2026-05-01 23:47:44:4744 [ERROR]: Verify Account Error: Request failed with status code 422
+2026-05-01 23:48:34:4834 [ERROR]: Verify Account Error: Request failed with status code 422
+2026-05-02 18:24:03:243 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:12:2412 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:17:2417 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:22:2422 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:28:2428 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:30:2430 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:40:2440 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:48:2448 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:24:56:2456 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:25:01:251 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:25:08:258 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:27:56:2756 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:28:04:284 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:28:07:287 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:09:299 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:11:2911 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:12:2912 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:14:2914 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:16:2916 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:18:2918 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:31:2931 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:29:37:2937 [ERROR]: Set PIN Error: Illegal arguments: undefined, string
+2026-05-02 18:44:26:4426 [ERROR]: [HYBRID AI] Critical Failure: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: fetch failed
+2026-05-02 21:37:17:3717 [ERROR]: Send Message Error: Cannot destructure property 'receiverId' of 'req.body' as it is undefined.
+2026-05-02 21:38:10:3810 [ERROR]: Send Message Error: Cannot destructure property 'receiverId' of 'req.body' as it is undefined.
+2026-05-02 21:39:00:390 [ERROR]: Send Message Error: Cannot destructure property 'receiverId' of 'req.body' as it is undefined.
+2026-05-02 22:23:14:2314 [ERROR]: Paystack Init Error: read ECONNRESET
+2026-05-02 22:25:40:2540 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 5 modifiedPaths "availability"
+2026-05-02 22:25:40:2540 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 5 modifiedPaths "availability"
+2026-05-02 22:25:40:2540 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 5 modifiedPaths "availability"
+2026-05-03 14:19:02:192 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 11 modifiedPaths "availability"
+2026-05-03 14:19:02:192 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 11 modifiedPaths "availability"
+2026-05-03 14:34:55:3455 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 13 modifiedPaths "availability"
+2026-05-03 15:25:41:2541 [ERROR]: Token verification failed

@@ -46,15 +46,21 @@ export const setTransactionPin = async (req: AuthRequest, res: Response): Promis
             return;
         }
 
-        // Verify password before setting PIN for security
-        if (!user.password) {
-            res.status(400).json({ message: 'Password required' });
-            return;
-        }
-        const isMatch = await bcrypt.compare(currentPassword, user.password);
-        if (!isMatch) {
-            res.status(401).json({ message: 'Incorrect password' });
-            return;
+        // Verify password before setting PIN for security if changing an existing PIN
+        if (user.transactionPin) {
+            if (!currentPassword) {
+                res.status(400).json({ message: 'Current password required to change PIN' });
+                return;
+            }
+            if (!user.password) {
+                res.status(400).json({ message: 'User account has no password' });
+                return;
+            }
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                res.status(401).json({ message: 'Incorrect password' });
+                return;
+            }
         }
 
         const salt = await bcrypt.genSalt(10);

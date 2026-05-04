@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import User from '../models/User';
 import { v2 as cloudinary } from 'cloudinary';
 import Settings from '../models/Settings';
+import Session from '../models/Session';
 import logger from '../utils/logger';
 
 // @desc    Get user profile (current user)
@@ -30,7 +31,15 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         const userId = req.user.id;
         const files = req.files as { [fieldname: string]: Express.Multer.File[] };
         
-        // 1. Handle File Uploads (Atomic & Direct)
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        console.log(`[PROFILE_UPDATE] User: ${user.email}, Role: ${user.role}, Body Keys:`, Object.keys(req.body));
+
+        // 1. Handle File Uploads
         if (files) {
             const fileKeys = ['profilePicture', 'admissionLetter', 'transcript'] as const;
             for (const key of fileKeys) {
@@ -40,10 +49,10 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
                             folder: `abu_tutors/${key === 'profilePicture' ? 'profiles' : 'documents'}`
                         });
                         
-                        await mongoose.model('User').collection.updateOne(
-                            { _id: new mongoose.Types.ObjectId(userId) },
-                            { $set: { [`documents.${key}`]: result.secure_url } }
-                        );
+                        if (!user.documents) {
+                            user.documents = { admissionLetter: '', transcript: '', profilePicture: '' };
+                        }
+                        user.documents[key] = result.secure_url;
 
                         if (require('fs').existsSync(files[key][0].path)) {
                             require('fs').unlinkSync(files[key][0].path);
@@ -57,105 +66,118 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
             }
         }
 
-        // 2. Handle Body Updates (Simplified)
-        let updateData: any = {};
-        if (req.body.name) updateData.name = req.body.name;
-        if (req.body.phone) updateData.phone = req.body.phone;
-        if (req.body.about) updateData.about = req.body.about;
-        if (req.body.level) updateData.level = req.body.level;
+        // 2. Handle Body Updates
+        if (req.body.name) user.name = req.body.name;
+        if (req.body.phone) user.phone = req.body.phone;
+        if (req.body.about) user.about = req.body.about;
+        if (req.body.level) user.level = req.body.level;
         
-        if (req.body.email && req.body.email.toLowerCase() !== (req as any).user.email?.toLowerCase()) {
+        if (req.body.email && req.body.email.toLowerCase() !== user.email.toLowerCase()) {
             const newEmail = req.body.email.toLowerCase().trim();
             const emailExists = await User.findOne({ email: newEmail, _id: { $ne: userId } });
             if (emailExists) {
                 res.status(400).json({ message: 'Email address is already in use by another account' });
                 return;
             }
-            updateData.email = newEmail;
+            user.email = newEmail;
         }
         
-        // Only allow admin to update static academic fields (Faculty/Department)
-        if (req.user.role === 'admin') {
-            if (req.body.faculty) updateData.faculty = req.body.faculty;
-            if (req.body.department) updateData.department = req.body.department;
+        if (req.body.faculty) {
+            console.log(`[PROFILE_UPDATE] Updating Faculty to: ${req.body.faculty}`);
+            user.faculty = req.body.faculty;
+        }
+        if (req.body.department) {
+            console.log(`[PROFILE_UPDATE] Updating Department to: ${req.body.department}`);
+            user.department = req.body.department;
         }
         
-        if (req.body.matchingBio) updateData.matchingBio = req.body.matchingBio;
-        if (req.body.areaOfStrength) updateData.areaOfStrength = req.body.areaOfStrength;
+        if (req.body.matchingBio !== undefined) user.matchingBio = req.body.matchingBio;
+        if (req.body.areaOfStrength) user.areaOfStrength = req.body.areaOfStrength;
+        
         if (req.body.availability) {
             try {
-                // Handle both JSON string and parsed object
-                updateData.availability = typeof req.body.availability === 'string' 
+                user.availability = typeof req.body.availability === 'string' 
                     ? JSON.parse(req.body.availability) 
                     : req.body.availability;
             } catch {
-                updateData.availability = req.body.availability;
+                user.availability = req.body.availability;
             }
         }
 
-        // Bank Details Update
-        if (req.body.bankName) updateData['bankDetails.bankName'] = req.body.bankName;
-        if (req.body.bankCode) updateData['bankDetails.bankCode'] = req.body.bankCode;
-        if (req.body.accountNumber) updateData['bankDetails.accountNumber'] = req.body.accountNumber;
-        if (req.body.accountName) updateData['bankDetails.accountName'] = req.body.accountName;
+        // Bank Details
+        if (req.body.bankName || req.body.accountNumber) {
+            if (!user.bankDetails) {
+                user.bankDetails = { bankName: '', bankCode: '', accountNumber: '', accountName: '' };
+            }
+            if (req.body.bankName) user.bankDetails.bankName = req.body.bankName;
+            if (req.body.bankCode) user.bankDetails.bankCode = req.body.bankCode;
+            if (req.body.accountNumber) user.bankDetails.accountNumber = req.body.accountNumber;
+            if (req.body.accountName) user.bankDetails.accountName = req.body.accountName;
+        }
 
-        // NEW: Enforce Global Max Hourly Rate for Tutors
         if (req.body.hourlyRate) {
+            if (user.role !== 'verified_tutor' && user.role !== 'admin') {
+                res.status(403).json({ message: 'Only verified tutors can customize their hourly rate' });
+                return;
+            }
             const hr = Number(req.body.hourlyRate);
             const settings = await Settings.findOne() || await Settings.create({});
             if (hr > settings.maxHourlyRate) {
                 res.status(400).json({ message: `Your hourly rate cannot exceed the system limit of ₦${settings.maxHourlyRate}` });
                 return;
             }
-            updateData.hourlyRate = hr;
+            user.hourlyRate = hr;
         }
-        // Handle courses array (sent as JSON string from profile editor or array from mobile)
+
         if (req.body.courses) {
             if (Array.isArray(req.body.courses)) {
-                updateData.courses = req.body.courses;
-            } else if (typeof req.body.courses === 'string') {
+                user.courses = req.body.courses;
+            } else {
                 try {
                     const parsed = JSON.parse(req.body.courses);
-                    if (Array.isArray(parsed)) {
-                        updateData.courses = parsed;
-                    } else {
-                        updateData.courses = req.body.courses.split(',').map((c: string) => c.trim()).filter(Boolean);
-                    }
+                    user.courses = Array.isArray(parsed) ? parsed : req.body.courses.split(',').map((c: string) => c.trim()).filter(Boolean);
                 } catch {
-                    updateData.courses = req.body.courses.split(',').map((c: string) => c.trim()).filter(Boolean);
+                    user.courses = req.body.courses.split(',').map((c: string) => c.trim()).filter(Boolean);
                 }
             }
         }
         
-        // Tutor Specifics (Simplified)
+        // --- Status Management ---
+        // Wizard/Onboarding Step
         if (req.body.step) {
             const step = parseInt(req.body.step);
-            updateData.profileStep = step;
+            user.profileStep = step;
             if (step === 4) {
-                updateData.isProfileComplete = true;
+                user.isProfileComplete = true;
+                user.applicationStatus = 'pending';
+                console.log(`[PROFILE_UPDATE] Onboarding completed for ${user.email}`);
             }
         }
-
-        // 3. Final Save for metadata
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { $set: updateData },
-            { returnDocument: 'after', runValidators: false }
-        );
-
-        if (!updatedUser) {
-            res.status(404).json({ message: 'User not found' });
-            return;
+        
+        // Revision Handling
+        if (user.applicationStatus === 'needs_revision') {
+            user.applicationStatus = 'pending';
+            user.adminFeedback = '';
+            console.log(`[PROFILE_UPDATE] Revision submitted by ${user.email}. Status reset to pending.`);
         }
 
-        console.log(`[PROFILE REBUILT] Success for ${updatedUser.role}. Photo URL: ${updatedUser.documents?.profilePicture}`);
+        // 3. Save the document
+        console.log(`[PROFILE_UPDATE] Final Document State - Faculty: ${user.faculty}, Dept: ${user.department}, Status: ${user.applicationStatus}`);
         
-        const userRes = updatedUser.toObject();
-        delete userRes.password;
-        res.json(userRes);
+        try {
+            const savedUser = await user.save();
+            console.log(`[PROFILE_UPDATE] SAVE SUCCESS - DB Faculty: ${savedUser.faculty}, DB Dept: ${savedUser.department}`);
+            
+            const userRes = savedUser.toObject();
+            delete userRes.password;
+            res.json(userRes);
+        } catch (saveError: any) {
+            console.error(`[PROFILE_UPDATE] SAVE FAILED:`, saveError);
+            throw saveError;
+        }
 
     } catch (error: any) {
-        console.error('Unified Profile Update Error:', error);
+        console.error('[PROFILE_UPDATE] UNCAUGHT ERROR:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 };
@@ -185,7 +207,37 @@ export const getTutorProfile = async (req: Request, res: Response): Promise<void
         const tutor = await User.findById(req.params.id).select('-password');
         
         if (tutor && (tutor.role === 'tutor' || tutor.role === 'verified_tutor')) {
-            res.json(tutor);
+            // Fetch reviews from completed sessions
+            const reviews = await Session.find({ 
+                tutorId: tutor._id, 
+                status: 'completed', 
+                tuteeRating: { $exists: true } 
+            })
+            .populate('tuteeId', 'name documents.profilePicture')
+            .select('tuteeRating tuteeReview createdAt tuteeId')
+            .sort({ createdAt: -1 })
+            .limit(20);
+
+            // Fetch upcoming sessions to mask availability matrix
+            const upcomingSessions = await Session.find({
+                tutorId: tutor._id,
+                status: { $in: ['pending', 'active', 'completed'] },
+                date: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) } // From today onwards
+            }).select('date time');
+
+            const occupiedSlots = upcomingSessions.map(s => {
+                const dateStr = s.date.toISOString().split('T')[0];
+                return `${dateStr}T${s.time}`;
+            });
+
+            console.log(`[OCCUPIED_SLOTS] Tutor: ${tutor.name}, Count: ${occupiedSlots.length}, Slots:`, occupiedSlots);
+
+            const tutorData = {
+                ...tutor.toObject(),
+                reviews,
+                occupiedSlots
+            };
+            res.json(tutorData);
         } else {
             res.status(404).json({ message: 'Tutor not found' });
         }
@@ -210,5 +262,70 @@ export const getUserPublicProfile = async (req: Request, res: Response): Promise
     } catch (error: any) {
         logger.error(`Get User Public Profile Error: ${error.message}`, { error });
         res.status(500).json({ message: "Server error getting user profile", error: error.message });
+    }
+};
+
+// @desc    Get system admin ID for support messaging
+// @route   GET /api/users/admin-id
+// @access  Private
+export const getAdminId = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const admin = await User.findOne({ role: 'admin' }).select('_id name');
+        if (admin) {
+            res.json({ _id: admin._id, name: admin.name });
+        } else {
+            res.status(404).json({ message: 'No admin found in the system' });
+        }
+    } catch (error: any) {
+        logger.error(`Get Admin ID Error: ${error.message}`, { error });
+        res.status(500).json({ message: "Server error getting admin ID", error: error.message });
+    }
+};
+
+// @desc    Submit a new course application (Registered tutors only)
+// @route   POST /api/users/apply-course
+// @access  Private
+export const submitCourseApplication = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const userId = req.user.id;
+        const { courses } = req.body;
+        const file = req.file;
+
+        if (!courses || !file) {
+            res.status(400).json({ message: "Please provide courses and a supporting transcript." });
+            return;
+        }
+
+        const user = await User.findById(userId);
+        if (!user || !user.role.includes('tutor')) {
+            res.status(403).json({ message: "Only registered tutors can apply for new courses." });
+            return;
+        }
+
+        // Upload transcript to Cloudinary
+        const result = await cloudinary.uploader.upload(file.path, {
+            folder: 'abu_tutors/documents'
+        });
+
+        const newApplication = {
+            courses: Array.isArray(courses) ? courses : JSON.parse(courses),
+            transcript: result.secure_url,
+            status: 'pending' as const,
+            createdAt: new Date()
+        };
+
+        if (!user.courseApplications) user.courseApplications = [];
+        user.courseApplications.push(newApplication);
+
+        await user.save();
+
+        if (require('fs').existsSync(file.path)) {
+            require('fs').unlinkSync(file.path);
+        }
+
+        res.status(201).json({ message: "Course application submitted successfully.", user });
+    } catch (error: any) {
+        logger.error(`Submit Course Application Error: ${error.message}`);
+        res.status(500).json({ message: "Server error submitting course application", error: error.message });
     }
 };

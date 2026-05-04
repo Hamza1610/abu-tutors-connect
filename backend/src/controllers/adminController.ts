@@ -19,11 +19,14 @@ export const getPendingTutors = async (req: Request, res: Response): Promise<voi
     try {
         const tutors = await User.find({ 
             role: { $in: ['tutor', 'verified_tutor'] }, 
-            isProfileComplete: true, 
-            isApproved: false 
+            $or: [
+                { isApproved: false },
+                { applicationStatus: { $in: ['pending', 'needs_revision'] } }
+            ]
         }).select('-password');
         res.json(tutors);
     } catch (error: any) {
+        console.error(`[ADMIN_ERROR] Get Pending Tutors:`, error);
         logger.error(`Get Pending Tutors Error: ${error.message}`);
         res.status(500).json({ message: "Server error getting pending tutors" });
     }
@@ -34,7 +37,7 @@ export const getPendingTutors = async (req: Request, res: Response): Promise<voi
 // @access  Private/Admin
 export const approveTutor = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { status } = req.body; // 'approve' or 'reject'
+        const { status, feedback } = req.body; // 'approve', 'reject', or 'needs_revision'
         const user = await User.findById(req.params.id);
 
         if (!user) {
@@ -44,6 +47,8 @@ export const approveTutor = async (req: Request, res: Response): Promise<void> =
 
         if (status === 'approve') {
             user.isApproved = true;
+            user.applicationStatus = 'approved';
+            user.adminFeedback = '';
             await AdminLog.create({
                 adminId: req.user.id,
                 action: 'APPROVE_TUTOR',
@@ -51,23 +56,127 @@ export const approveTutor = async (req: Request, res: Response): Promise<void> =
                 details: `Approved tutor ${user.email}`
             });
             logger.info(`Tutor ${user.email} approved by admin`);
+        } else if (status === 'needs_revision') {
+            user.isApproved = false;
+            user.applicationStatus = 'needs_revision';
+            user.adminFeedback = feedback || 'Please review your documents.';
+            user.isProfileComplete = false; // Allow them to edit again
+            await AdminLog.create({
+                adminId: req.user.id,
+                action: 'REQUEST_REVISION',
+                targetId: user._id.toString(),
+                details: `Revision requested for ${user.email}: ${feedback}`
+            });
+            logger.info(`Revision requested for tutor ${user.email}`);
         } else {
             user.isApproved = false;
-            user.isProfileComplete = false; // Reset profile completion for rejection
+            user.applicationStatus = 'rejected';
+            user.adminFeedback = feedback || 'Application rejected.';
+            user.isProfileComplete = false; // Reset profile completion
             await AdminLog.create({
                 adminId: req.user.id,
                 action: 'REJECT_TUTOR',
                 targetId: user._id.toString(),
-                details: `Rejected tutor ${user.email}`
+                details: `Rejected tutor ${user.email}: ${feedback}`
             });
             logger.info(`Tutor ${user.email} rejected by admin`);
         }
 
         await user.save();
-        res.json({ message: `Tutor ${status}d successfully`, user });
+        res.json({ message: `Tutor ${status.replace('_', ' ')} successfully`, user });
     } catch (error: any) {
         logger.error(`Approve Tutor Error: ${error.message}`);
         res.status(500).json({ message: "Server error during tutor approval" });
+    }
+};
+
+// @desc    Get all pending course applications
+// @route   GET /api/admin/course-applications
+// @access  Private/Admin
+export const getPendingCourseApplications = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const users = await User.find({ 
+            "courseApplications.status": "pending" 
+        }).select('name email courseApplications registrationNumber');
+        
+        // Flatten the applications for the admin view
+        const applications = users.flatMap(u => 
+            (u.courseApplications || [])
+                .filter(app => app.status === 'pending')
+                .map(app => {
+                    const appObj = (app as any).toObject ? (app as any).toObject() : app;
+                    return {
+                        userId: u._id,
+                        userName: u.name,
+                        userEmail: u.email,
+                        registrationNumber: u.registrationNumber,
+                        ...appObj,
+                        _id: app._id // Keep the sub-document ID
+                    };
+                })
+        );
+
+        res.json(applications);
+    } catch (error: any) {
+        logger.error(`Get Course Applications Error: ${error.message}`);
+        res.status(500).json({ message: "Server error getting course applications" });
+    }
+};
+
+// @desc    Process a course application (Approve/Reject)
+// @route   PUT /api/admin/course-applications/:userId/:appId
+// @access  Private/Admin
+export const processCourseApplication = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { userId, appId } = req.params;
+        const { status, feedback } = req.body; // 'approved' or 'rejected'
+
+        const user = await User.findById(userId);
+        if (!user || !user.courseApplications) {
+            res.status(404).json({ message: "User or application not found" });
+            return;
+        }
+
+        const appIndex = user.courseApplications.findIndex(a => a._id?.toString() === appId);
+        if (appIndex === -1) {
+            res.status(404).json({ message: "Application not found" });
+            return;
+        }
+
+        const application = user.courseApplications[appIndex];
+        if (!application) {
+            res.status(404).json({ message: "Application data not found" });
+            return;
+        }
+        application.status = status;
+        application.adminFeedback = feedback;
+
+        if (status === 'approved') {
+            // Add new courses to the main courses list, ensuring uniqueness
+            const currentCourses = new Set(user.courses || []);
+            application.courses.forEach(c => currentCourses.add(c));
+            user.courses = Array.from(currentCourses);
+            
+            // Optionally update the main transcript if provided
+            if (application.transcript) {
+                if (!user.documents) user.documents = { admissionLetter: '', transcript: '', profilePicture: '' };
+                user.documents.transcript = application.transcript;
+            }
+        }
+
+        await user.save();
+        
+        await AdminLog.create({
+            adminId: req.user.id,
+            action: status === 'approved' ? 'APPROVE_COURSE_APP' : 'REJECT_COURSE_APP',
+            targetId: userId as any,
+            details: `${status === 'approved' ? 'Approved' : 'Rejected'} course application for ${user.email}. Courses: ${application.courses.join(', ')}`
+        });
+
+        res.json({ message: `Course application ${status} successfully`, user });
+    } catch (error: any) {
+        logger.error(`Process Course Application Error: ${error.message}`);
+        res.status(500).json({ message: "Server error processing course application" });
     }
 };
 
@@ -99,6 +208,7 @@ export const updateSettings = async (req: Request, res: Response): Promise<void>
         settings.minRatingForVerify = req.body.minRatingForVerify ?? settings.minRatingForVerify;
         settings.noShowPayoutPercent = req.body.noShowPayoutPercent ?? settings.noShowPayoutPercent;
         settings.platformCommissionPercent = req.body.platformCommissionPercent ?? settings.platformCommissionPercent;
+        settings.defaultHourlyRate = req.body.defaultHourlyRate ?? settings.defaultHourlyRate;
 
         await settings.save();
         res.json(settings);
