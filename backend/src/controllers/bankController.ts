@@ -73,19 +73,18 @@ export const verifyAccount = async (req: Request, res: Response): Promise<void> 
             const errorDetail = paystackError.response?.data?.message || paystackError.message;
             logger.warn(`Paystack Resolve Error: ${errorDetail}`);
 
-            // 3. Optional Mock: Only for specific test number '0000000000'
-            if (accountNumber === '0000000000') {
-                logger.info('Test Number detected: Providing mock success.');
+            // 3. Fallback for Test Mode: If using sk_test, allow any account number to succeed for development
+            if (PAYSTACK_SECRET.startsWith('sk_test')) {
+                logger.info('Test Mode detected: Providing mock success for bank verification.');
                 res.json({
-                    account_number: '0000000000',
+                    account_number: accountNumber as string,
                     account_name: 'TEST ACCOUNT (SUCCESS)',
                     bank_id: 1
                 });
                 return;
             }
 
-            // 4. Return the ACTUAL error from Paystack so you can see why it failed
-            res.status(400).json({ message: `Paystack Error: ${errorDetail}` });
+            res.status(400).json({ message: `Bank verification failed: ${errorDetail}` });
         }
     } catch (error: any) {
         logger.error(`Verify Account System Error: ${error.message}`);
