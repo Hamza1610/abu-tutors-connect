@@ -391,6 +391,30 @@ export default function MySessionsPage() {
                             <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)}>Message</button>
                           </>
                         )}
+                        {s.status === 'completed' && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', width: '100%' }}>
+                            {!s.tuteeRating ? (
+                              <button 
+                                className="btn btn--primary" 
+                                onClick={() => setRatingModal({
+                                  isOpen: true,
+                                  sessionId: s._id,
+                                  rating: 5,
+                                  reviewText: '',
+                                  step: 'rating'
+                                })}
+                              >
+                                Rate Tutor
+                              </button>
+                            ) : (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 12px', background: '#FEF3C7', borderRadius: '8px', color: '#92400E', fontWeight: 'bold' }}>
+                                <span>⭐ {s.tuteeRating}/5</span>
+                                <span style={{ fontSize: '12px', opacity: 0.8 }}>Rated</span>
+                              </div>
+                            )}
+                            <button className="btn btn--secondary" onClick={() => router.push(`/messages?partnerId=${partner._id}`)}>Message</button>
+                          </div>
+                        )}
                       </>
                     )}
                   </div>
