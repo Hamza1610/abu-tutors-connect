@@ -69,7 +69,7 @@ export const approveTutor = async (req: Request, res: Response): Promise<void> =
             // Automated Welcome Message
             await Message.create({
                 senderId: req.user.id,
-                receiverId: user._id,
+                receiverId: user._id as any,
                 content: `Congratulations ${user.name}! Your tutor application has been approved. You can now set your availability and start accepting sessions.`
             });
 
@@ -91,7 +91,7 @@ export const approveTutor = async (req: Request, res: Response): Promise<void> =
             // Automated Message
             await Message.create({
                 senderId: req.user.id,
-                receiverId: user._id,
+                receiverId: user._id as any,
                 content: status === 'reject' 
                     ? `Hello ${user.name}, we regret to inform you that your tutor application has been declined. Admin Feedback: ${user.adminFeedback}`
                     : `Hello ${user.name}, your tutor application needs some changes. Admin Feedback: ${user.adminFeedback}. Please update your profile and resubmit for approval.`

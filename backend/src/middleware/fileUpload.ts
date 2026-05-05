@@ -1,8 +1,9 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { Request } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary-v2';
 
 // Ensure uploads directory exists for local fallback
 const uploadDir = 'uploads';
@@ -16,8 +17,8 @@ let storage;
 if (process.env.CLOUDINARY_CLOUD_NAME && process.env.NODE_ENV === 'production') {
     console.log('[UPLOAD] Using Cloudinary Storage for Production');
     storage = new CloudinaryStorage({
-        cloudinary: cloudinary,
-        params: async (req, file) => {
+        cloudinary: cloudinary as any,
+        params: async (req: Request, file: any) => {
             const folder = file.fieldname === 'profilePicture' ? 'profiles' : 'documents';
             return {
                 folder: `abututors/${folder}`,
@@ -29,10 +30,10 @@ if (process.env.CLOUDINARY_CLOUD_NAME && process.env.NODE_ENV === 'production') 
 } else {
     console.log('[UPLOAD] Using Local Disk Storage');
     storage = multer.diskStorage({
-        destination: (req, file, cb) => {
+        destination: (req: Request, file: any, cb: any) => {
             cb(null, uploadDir);
         },
-        filename: (req, file, cb) => {
+        filename: (req: Request, file: any, cb: any) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
             cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
         }
