@@ -1905,3 +1905,10 @@ Please retry in 34.187821144s. [{"@type":"type.googleapis.com/google.rpc.Help","
 2026-05-04 13:22:07:227 [INFO]: Backend server running on port 5001
 2026-05-04 13:28:47:2847 [INFO]: Login successful: admin@abututors.com
 2026-05-04 13:28:48:2848 [INFO]: User 69ba921329fd8fbf6fd6066e connected to Socket [oseN26WDfoNtT9zQAAAB]
+2026-05-04 14:49:07:497 [ERROR]: Could not connect to MongoDB: connect ECONNREFUSED 127.0.0.1:27017
+2026-05-04 14:51:09:519 [ERROR]: Could not connect to MongoDB: connect ECONNREFUSED 127.0.0.1:27017
+2026-05-04 15:06:37:637 [ERROR]: Could not connect to MongoDB: bad auth : authentication failed
+2026-05-04 15:11:31:1131 [INFO]: Connected to MongoDB via Mongoose
+2026-05-04 15:11:32:1132 [INFO]: Backend server running on port 5001
+2026-05-05 10:51:15:5115 [INFO]: Connected to MongoDB via Mongoose
+2026-05-05 10:51:16:5116 [INFO]: Backend server running on port 5001
