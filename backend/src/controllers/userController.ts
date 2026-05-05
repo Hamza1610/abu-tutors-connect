@@ -5,6 +5,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import Settings from '../models/Settings';
 import Session from '../models/Session';
 import logger from '../utils/logger';
+import { uploadToCloudinary } from '../utils/cloudinaryHelper';
 
 // @desc    Get user profile (current user)
 // @route   GET /api/users/
@@ -45,18 +46,13 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
             for (const key of fileKeys) {
                 if (files[key]?.[0]) {
                     try {
-                        const result = await cloudinary.uploader.upload(files[key][0].path, {
-                            folder: `abu_tutors/${key === 'profilePicture' ? 'profiles' : 'documents'}`
-                        });
+                        const folder = key === 'profilePicture' ? 'profiles' : 'documents';
+                        const secureUrl = await uploadToCloudinary(files[key][0].path, folder);
                         
                         if (!user.documents) {
                             user.documents = { admissionLetter: '', transcript: '', profilePicture: '' };
                         }
-                        user.documents[key] = result.secure_url;
-
-                        if (require('fs').existsSync(files[key][0].path)) {
-                            require('fs').unlinkSync(files[key][0].path);
-                        }
+                        user.documents[key] = secureUrl;
                     } catch (err: any) {
                         console.error(`[${key.toUpperCase()} UPLOAD ERROR]`, err);
                         res.status(400).json({ message: `${key} upload failed: ${err.message}` });
@@ -147,18 +143,16 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         if (req.body.step) {
             const step = parseInt(req.body.step);
             user.profileStep = step;
-            if (step === 4) {
+            
+            // Only move to pending on the FINAL step IF they aren't already approved AND NOT rejected
+            if (step === 4 && !user.isApproved && user.applicationStatus !== 'rejected') {
+                // If they were needs_revision, this is a resubmission
+                const wasNeedsRevision = user.applicationStatus === 'needs_revision';
                 user.isProfileComplete = true;
                 user.applicationStatus = 'pending';
-                console.log(`[PROFILE_UPDATE] Onboarding completed for ${user.email}`);
+                user.adminFeedback = ''; // Clear feedback on resubmission
+                console.log(`[PROFILE_UPDATE] Onboarding/Revision completed for ${user.email}. Status set to pending. (Previous: ${wasNeedsRevision ? 'needs_revision' : 'new'})`);
             }
-        }
-        
-        // Revision Handling
-        if (user.applicationStatus === 'needs_revision') {
-            user.applicationStatus = 'pending';
-            user.adminFeedback = '';
-            console.log(`[PROFILE_UPDATE] Revision submitted by ${user.email}. Status reset to pending.`);
         }
 
         // 3. Save the document
@@ -221,7 +215,7 @@ export const getTutorProfile = async (req: Request, res: Response): Promise<void
             // Fetch upcoming sessions to mask availability matrix
             const upcomingSessions = await Session.find({
                 tutorId: tutor._id,
-                status: { $in: ['pending', 'active', 'completed'] },
+                status: { $in: ['pending', 'active'] }, // 'completed' sessions should not block the UI availability
                 date: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) } // From today onwards
             }).select('date time');
 

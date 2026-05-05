@@ -179,61 +179,61 @@ export default function Register() {
                                     <div className="card" style={{ maxWidth: '600px', width: '100%', maxHeight: '80vh', overflowY: 'auto', position: 'relative' }}>
                                         <div className="card__body">
                                             <h2 className="section-header__title">Terms and Conditions</h2>
-                                            <div style={{ fontSize: '14px', lineHeight: '1.6', color: '#475569', marginBottom: '20px' }}>
-                                                <div style={{ maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
-                                                    <h3>Terms and Conditions</h3>
-Welcome to our Tutoring Platform. By registering and using our services, you agree to the following terms and conditions:
+                                            <div className="terms-scroll" style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #E2E8F0', padding: '15px', borderRadius: '8px', fontSize: '14px', lineHeight: '1.6', color: '#475569', backgroundColor: '#F8FAFC', marginBottom: '20px' }}>
+                          <p style={{ fontWeight: 'bold', fontSize: '16px', color: 'var(--color-primary)', marginBottom: '10px' }}>Terms and Conditions</p>
+                          <p>Welcome to our Tutoring Platform. By registering and using our services, you agree to the following terms and conditions:</p>
+                          
+                          <p><strong>1. Eligibility</strong><br />
+                          You must provide accurate and truthful information during registration.<br />
+                          Users must be a registered student (tutee) or verified tutor.<br />
+                          Tutors must pay the registration fee unless waived by Admin.</p>
 
-<p><strong>1. Eligibility</strong><br />
-You must provide accurate and truthful information during registration.<br />
-Users must be a registered student (tutee) or verified tutor.<br />
-Tutors must pay the registration fee unless waived by Admin.</p>
+                          <p><strong>2. Account Responsibilities</strong><br />
+                          Keep your login credentials secure.<br />
+                          You are responsible for all activity on your account.<br />
+                          Users may register as both tutor and tutee using the same email.</p>
 
-<p><strong>2. Account Responsibilities</strong><br />
-Keep your login credentials secure.<br />
-You are responsible for all activity on your account.<br />
-Users may register as both tutor and tutee using the same email.</p>
+                          <p><strong>3. Profile Completion & Verification</strong><br />
+                          Tutors must complete their profile and submit required documents.<br />
+                          Admin will review profiles before granting access to the system.<br />
+                          Verified tutors may set their hourly charge.</p>
 
-<p><strong>3. Profile Completion & Verification</strong><br />
-Tutors must complete their profile and submit required documents.<br />
-Admin will review profiles before granting access to the system.<br />
-Verified tutors may set their hourly charge.</p>
+                          <p><strong>4. Session Rules</strong><br />
+                          Sessions must start and end using QR codes or secure PINs.<br />
+                          Once started, sessions are tracked using device clock/local timer, even if offline.<br />
+                          Tutors and tutees must follow professional conduct.</p>
 
-<p><strong>4. Session Rules</strong><br />
-Sessions must start and end using QR codes or secure PINs.<br />
-Once started, sessions are tracked using device clock/local timer, even if offline.<br />
-Tutors and tutees must follow professional conduct.</p>
+                          <p><strong>5. Payment & Escrow</strong><br />
+                          Session fees are deducted from the tutee’s wallet and held in Escrow.<br />
+                          Escrow is released to the tutor only after a session ends successfully.<br />
+                          No commission will be taken from tutors after a session; the full agreed amount is released.<br />
+                          Refunds or reschedules are allowed according to No-Show or dispute policies.</p>
 
-<p><strong>5. Payment & Escrow</strong><br />
-Session fees are deducted from the tutee’s wallet and held in Escrow.<br />
-Escrow is released to the tutor only after a session ends successfully.<br />
-Refunds or reschedules are allowed according to No-Show or dispute policies.</p>
+                          <p><strong>6. Ratings and Feedback</strong><br />
+                          Both tutors and tutees must submit honest ratings and reviews.<br />
+                          Ratings contribute to tutor verification and system trust.</p>
 
-<p><strong>6. Ratings and Feedback</strong><br />
-Both tutors and tutees must submit honest ratings and reviews.<br />
-Ratings contribute to tutor verification and system trust.</p>
+                          <p><strong>7. Disputes</strong><br />
+                          Users may flag disputes if issues arise.<br />
+                          Escrow funds remain frozen until Admin resolves the issue.</p>
 
-<p><strong>7. Disputes</strong><br />
-Users may flag disputes if issues arise.<br />
-Escrow funds remain frozen until Admin resolves the issue.</p>
+                          <p><strong>8. User Conduct</strong><br />
+                          Users must treat each other professionally and respectfully.<br />
+                          Harassment, abuse, or fraudulent activity may result in account suspension or removal.</p>
 
-<p><strong>8. User Conduct</strong><br />
-Users must treat each other professionally and respectfully.<br />
-Harassment, abuse, or fraudulent activity may result in account suspension or removal.</p>
+                          <p><strong>9. Admin Authority</strong><br />
+                          Admin may update these terms at any time.<br />
+                          Users are required to agree to the latest terms to continue using the platform.<br />
+                          Admin manages registration fees (which may be free at admin's discretion), session monitoring, disputes, and Escrow resolution.</p>
 
-<p><strong>9. Admin Authority</strong><br />
-Admin may update these terms at any time.<br />
-Users are required to agree to the latest terms to continue using the platform.<br />
-Admin manages registration fees, session monitoring, disputes, and Escrow resolution.</p>
+                          <p><strong>10. Limitation of Liability</strong><br />
+                          The administrators will not be held liable for any recklessness from either tutor or tutee.<br />
+                          The platform is not liable for personal disputes between tutors and tutees.<br />
+                          The platform is not responsible for technical issues such as internet outages or device failures.</p>
 
-<p><strong>10. Limitation of Liability</strong><br />
-The platform is not liable for personal disputes between tutors and tutees.<br />
-The platform is not responsible for technical issues such as internet outages or device failures.</p>
-
-<p><strong>11. Acceptance</strong><br />
-By continuing to use the platform, you confirm that you accept these terms and conditions and will abide by them.</p>
-                                                </div>
-                                            </div>
+                          <p><strong>11. Acceptance</strong><br />
+                          By continuing to use the platform, you confirm that you accept these terms and conditions and will abide by them.</p>
+                      </div>
                                             <button type="button" className="btn btn--primary" style={{ width: '100%' }} onClick={() => setShowTerms(false)}>Close and Continue</button>
                                         </div>
                                     </div>

@@ -271,15 +271,22 @@ export default function ProfilePage() {
   const handleCapturePayment = async () => {
     setSaving(true);
     try {
-        await walletApi.payRegistrationFromWallet();
-        alert('Payment successful! Your profile is now submitted for approval.');
+        if (user.registrationPaymentStatus === 'pending' && !adminSettings?.isRegistrationFree) {
+            await walletApi.payRegistrationFromWallet();
+            alert('Payment successful! Your profile is now submitted for approval.');
+        } else {
+            // Just resubmitting
+            await userApi.updateProfile({ step: 4, resubmit: true });
+            alert('Your profile has been resubmitted for review.');
+        }
+        
         if (user.role === 'tutor' || user.role === 'verified_tutor') {
             router.push('/tutor-dashboard');
         } else {
             window.location.reload();
         }
     } catch (err: any) {
-        setError(err.response?.data?.message || 'Payment failed. Ensure you have funded your wallet.');
+        setError(err.response?.data?.message || 'Action failed. Ensure you have funded your wallet.');
     } finally {
         setSaving(false);
     }
@@ -291,14 +298,24 @@ export default function ProfilePage() {
   const progressPercent = (currentStep / 4) * 100;
 
   // If Tutor and Profile Not Complete, Show Wizard
-  // Migration: If they already paid, don't force the wizard
-  if (user.role === 'tutor' && !user.isProfileComplete && user.registrationPaymentStatus === 'pending') {
+  const isRevision = user.applicationStatus === 'needs_revision';
+  if (user.role === 'tutor' && (!user.isProfileComplete || isRevision)) {
       return (
           <main className="container pb-space-8 pt-space-8">
               <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+                  {isRevision && (
+                      <div className="card" style={{ marginBottom: '20px', border: '1px solid #feb2b2', background: '#fff5f5' }}>
+                          <div className="card__body">
+                              <h3 style={{ color: '#c53030', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                                  <span style={{ fontSize: '20px' }}>⚠</span> Revision Requested
+                              </h3>
+                              <p style={{ color: '#742a2a', fontSize: '14px' }}>{user.adminFeedback || 'Please review and update your application details as requested by the admin.'}</p>
+                          </div>
+                      </div>
+                  )}
                   <div className="card" style={{ marginBottom: '20px' }}>
                     <div className="card__body">
-                        <h2 className="section-header__title">Complete Your Tutor Profile</h2>
+                        <h2 className="section-header__title">{isRevision ? 'Update Your Profile' : 'Complete Your Tutor Profile'}</h2>
                         <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '20px' }}>Step {currentStep} of 4</p>
                         
                         {/* Progress Bar */}
@@ -455,7 +472,14 @@ export default function ProfilePage() {
                             {currentStep === 4 && (
                                 <div style={{ textAlign: 'center' }}>
                                     <h3 style={{ marginBottom: '15px' }}>Registration {adminSettings?.isRegistrationFree ? 'Status' : 'Payment'}</h3>
-                                    {adminSettings?.isRegistrationFree ? (
+                                    
+                                    {user.registrationPaymentStatus === 'completed' ? (
+                                        <div style={{ background: '#f0fdf4', padding: '20px', borderRadius: '8px', marginBottom: '20px', border: '1px solid #bbf7d0' }}>
+                                            <div style={{ fontSize: '40px', marginBottom: '10px' }}>✅</div>
+                                            <p style={{ color: '#166534', fontWeight: 'bold' }}>Payment Verified</p>
+                                            <p style={{ fontSize: '13px', marginTop: '8px' }}>You have already completed the registration payment.</p>
+                                        </div>
+                                    ) : adminSettings?.isRegistrationFree ? (
                                         <div style={{ background: '#f0fdf4', padding: '20px', borderRadius: '8px', marginBottom: '20px', border: '1px solid #bbf7d0' }}>
                                             <p style={{ color: '#166534', fontWeight: 'bold' }}>Registration is Currently FREE!</p>
                                             <p style={{ fontSize: '13px', marginTop: '8px' }}>The administrative fee has been waived by the system admin.</p>
@@ -484,9 +508,9 @@ export default function ProfilePage() {
                                         onClick={handleCapturePayment} 
                                         className="btn btn--primary" 
                                         style={{ width: '100%' }} 
-                                        disabled={saving || (!adminSettings?.isRegistrationFree && wallet && wallet.balance < (adminSettings?.registrationFee || 5000))}
+                                        disabled={saving || (user.registrationPaymentStatus === 'pending' && !adminSettings?.isRegistrationFree && wallet && wallet.balance < (adminSettings?.registrationFee || 5000))}
                                     >
-                                        {saving ? 'Processing...' : adminSettings?.isRegistrationFree ? 'Complete Registration' : 'Pay Registration Fee'}
+                                        {saving ? 'Processing...' : user.applicationStatus === 'pending' ? (adminSettings?.isRegistrationFree ? 'Complete Registration' : 'Pay Registration Fee') : 'Resubmit for Approval'}
                                     </button>
                                 </div>
                             )}

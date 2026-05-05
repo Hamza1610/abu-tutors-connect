@@ -7,6 +7,7 @@ import { sessionApi } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { Colors, Spacing, Radius, FontSize } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import VerificationModal from '../../components/VerificationModal';
 import SessionTimer from '../../components/SessionTimer';
 
@@ -23,6 +24,7 @@ export default function SessionsScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const router = useRouter();
 
   const isTutor = user?.role === 'tutor' || user?.role === 'verified_tutor';
 
@@ -71,7 +73,8 @@ export default function SessionsScreen() {
         if (data && (data.status === 'active' || data.status === 'completed')) {
           setVerifying(prev => ({ ...prev, isOpen: false }));
         }
-        if (data && data.status === 'completed' && !isTutor) {
+        // ONLY open review modal if it's not already open and not currently submitting
+        if (data && data.status === 'completed' && !isTutor && !data.tuteeRating && !reviewing.isOpen && !submittingReview) {
           setReviewing({
             isOpen: true,
             sessionId: data._id,
@@ -120,6 +123,8 @@ export default function SessionsScreen() {
       });
       Alert.alert('Success', 'Thank you for your feedback!');
       setReviewing({ isOpen: false, sessionId: '', tutorName: '', rating: 0, reviewText: '' });
+      // Update local state to hide the rate button immediately
+      setSessions(prev => prev.map(s => s._id === reviewing.sessionId ? { ...s, tuteeRating: reviewing.rating } : s));
       fetchSessions();
     } catch (err: any) {
       Alert.alert('Error', err.response?.data?.message || 'Failed to submit review.');
@@ -253,6 +258,15 @@ export default function SessionsScreen() {
                       onPress={() => openVerifyModal(item, 'complete')}
                     >
                       <Text style={styles.actionBtnText}>{isTutor ? 'Scan to Finish' : 'Show Finish QR'}</Text>
+                    </TouchableOpacity>
+                  )}
+                  {otherParty?._id && (
+                    <TouchableOpacity
+                      style={[styles.actionBtn, { backgroundColor: Colors.background, borderWidth: 1, borderColor: Colors.primary + '33' }]}
+                      onPress={() => router.push(`/chat/${otherParty?._id}`)}
+                    >
+                      <Ionicons name="chatbubble-ellipses-outline" size={16} color={Colors.primary} />
+                      <Text style={[styles.actionBtnText, { color: Colors.primary, marginLeft: 4 }]}>Message</Text>
                     </TouchableOpacity>
                   )}
                   {canCancel && (

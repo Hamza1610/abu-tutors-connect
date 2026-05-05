@@ -1,14 +1,14 @@
 // ABUTutorsConnect - Updated Design Tokens (Synced with Web App)
 export const Colors = {
-  // Primary (Orange)
-  primary: '#FF8000',
-  primaryHover: '#E67300',
-  primaryLight: '#FFF8F3',
+  // Primary (ABU Green)
+  primary: '#00703C',
+  primaryHover: '#005C31',
+  primaryLight: '#EBF7F0',
   
-  // Secondary (Purple/AI Match)
-  secondary: '#583BFA',
-  secondaryHover: '#4A30D9',
-  secondaryLight: '#EDE9FE',
+  // Secondary (ABU Gold)
+  secondary: '#D4AF37',
+  secondaryHover: '#C5A021',
+  secondaryLight: '#FCF9E8',
 
   // Neutrals
   background: '#F8F8F8',
@@ -28,7 +28,7 @@ export const Colors = {
   success: '#00CC66',
   warning: '#FFBF00', // Gold/Star
   danger: '#DC2626',
-  accent: '#FF8000',
+  accent: '#00703C',
 
   // Dark mode (Legacy/Placeholder - we prioritize the specified brand colors)
   dark: {

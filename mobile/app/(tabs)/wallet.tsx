@@ -69,8 +69,23 @@ export default function WalletScreen() {
     fetchWallet();
     if (user?.role !== 'tutee') {
       fetchBanks();
+      // Auto-populate bank details from profile
+      if (user?.bankDetails?.accountNumber) {
+        setAccountNumber(user.bankDetails.accountNumber);
+        setAccountName(user.bankDetails.accountName || '');
+        if (user.bankDetails.bankCode) {
+          // We'll set the bank object once banks are loaded
+        }
+      }
     }
   }, [fetchWallet, user]);
+
+  useEffect(() => {
+    if (banks.length > 0 && user?.bankDetails?.bankCode) {
+      const userBank = banks.find(b => b.code === user.bankDetails.bankCode);
+      if (userBank) setSelectedBank(userBank);
+    }
+  }, [banks, user]);
 
   // --- Paystack logic ---
   const handleInitializePayment = async () => {
@@ -138,19 +153,30 @@ export default function WalletScreen() {
       Alert.alert('PIN Required', 'Please enter your transaction PIN.');
       return;
     }
-    setWithdrawing(true);
-    try {
-      await walletApi.withdrawFunds({ amount, pin: withdrawPin });
-      Alert.alert('Withdrawal Successful', 'Your request has been submitted and will be processed shortly.');
-      setWithdrawModal(false);
-      setWithdrawAmount('');
-      setWithdrawPin('');
-      fetchWallet();
-    } catch (err: any) {
-      Alert.alert('Withdrawal Failed', err.response?.data?.message || 'Check your balance or PIN.');
-    } finally {
-      setWithdrawing(false);
-    }
+    Alert.alert(
+      'Test Environment',
+      'NOTE: This is a testing environment. Money cannot be actually withdrawn to a real bank account at this stage.',
+      [
+        { text: 'Cancel', style: 'cancel', onPress: () => setWithdrawing(false) },
+        {
+          text: 'Proceed for Testing',
+          onPress: async () => {
+            try {
+              await walletApi.withdrawFunds({ amount, pin: withdrawPin });
+              Alert.alert('Withdrawal Successful', 'Your request has been submitted and will be processed shortly.');
+              setWithdrawModal(false);
+              setWithdrawAmount('');
+              setWithdrawPin('');
+              fetchWallet();
+            } catch (err: any) {
+              Alert.alert('Withdrawal Failed', err.response?.data?.message || 'Check your balance or PIN.');
+            } finally {
+              setWithdrawing(false);
+            }
+          }
+        }
+      ]
+    );
   };
 
   if (loading && !refreshing) {

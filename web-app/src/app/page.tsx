@@ -142,7 +142,7 @@ export default function LandingPage() {
                   <span className="ai-features__bullet" />
                   <div>
                     <h4 className="ai-features__title">Smart Matching</h4>
-                    <p className="ai-features__desc">Gemini AI analyzes your academic needs and finds the best peer match.</p>
+                    <p className="ai-features__desc">AI analyzes your academic needs and finds the best peer match.</p>
                   </div>
                 </li>
                 <li className="ai-features__item">

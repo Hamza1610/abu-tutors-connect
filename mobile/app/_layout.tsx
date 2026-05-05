@@ -11,7 +11,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
-        <Stack.Screen name="tutor/[id]" options={{ headerShown: true, title: 'Tutor Profile', headerTintColor: '#1A73E8' }} />
+        <Stack.Screen name="tutor/[id]" options={{ headerShown: true, title: 'Tutor Profile', headerTintColor: '#00703C' }} />
         <Stack.Screen name="book-session" options={{ headerShown: false }} />
         <Stack.Screen name="wallet" options={{ headerShown: false }} />
         <Stack.Screen name="notifications" options={{ headerShown: false }} />

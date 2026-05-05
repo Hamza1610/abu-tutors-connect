@@ -91,6 +91,10 @@ export default function WalletPage() {
 
     setWithdrawing(true);
     try {
+      if (!confirm('NOTE: This is a testing environment. Money cannot be actually withdrawn to a real bank account at this stage. Do you want to proceed with a test withdrawal?')) {
+        setWithdrawing(false);
+        return;
+      }
       await walletApi.withdrawFunds({ amount, pin: withdrawPin });
       alert('Withdrawal request submitted successfully!');
       setShowWithdrawModal(false);

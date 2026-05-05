@@ -5,15 +5,15 @@
  */
 
 :root {
-  /* Primary Colors - #FF8000 from spec */
-  --color-primary: #FF8000;
-  --color-primary-hover: #E67300;
-  --color-primary-light: #FFF8F3;
+  /* Primary Colors - ABU Green from Logo */
+  --color-primary: #00703C;
+  --color-primary-hover: #005C31;
+  --color-primary-light: #EBF7F0;
   
-  /* Secondary (AI Match card) - #583BFA from spec */
-  --color-secondary: #583BFA;
-  --color-secondary-hover: #4A30D9;
-  --color-secondary-light: #EDE9FE;
+  /* Secondary (AI Match card) - ABU Gold from Logo */
+  --color-secondary: #D4AF37;
+  --color-secondary-hover: #C5A021;
+  --color-secondary-light: #FCF9E8;
   
   /* Neutrals - pixel spec */
   --color-bg: #F8F8F8;
@@ -30,7 +30,7 @@
   --color-border-light: #DDDDDD;
   
   /* Semantic - badge/star from spec */
-  --color-accent-orange: #FF8000;
+  --color-accent-green-alt: #00703C;
   --color-accent-green: #00CC66;
   --color-accent-gold: #FFBF00;
   --success-green: #00CC66;
