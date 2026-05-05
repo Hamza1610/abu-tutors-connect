@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { userApi } from '../../services/api';
+import { useAlert } from '../../context/AlertContext';
 
 export default function SettingsPage() {
+  const { showAlert } = useAlert();
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -27,10 +29,10 @@ export default function SettingsPage() {
     setSaving(true);
     try {
       await userApi.updateProfile(profile);
-      alert('Settings updated successfully!');
+      showAlert('Settings updated successfully!', { type: 'success' });
     } catch (err) {
       console.error('Update failed', err);
-      alert('Failed to update settings');
+      showAlert('Failed to update settings', { type: 'error' });
     } finally {
       setSaving(false);
     }
@@ -137,7 +139,7 @@ export default function SettingsPage() {
           <div className="card__body">
             <h2 className="section-header__title" style={{ marginBottom: 'var(--space-4)' }}>Privacy & Security</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-              <button className="btn btn--secondary" onClick={() => alert('Password reset link sent to your email!')}>Change Password</button>
+              <button className="btn btn--secondary" onClick={() => showAlert('Password reset link sent to your email!', { type: 'success' })}>Change Password</button>
               <div style={{ padding: 'var(--space-4)', background: '#FEF3C7', borderRadius: 'var(--radius-md)', marginTop: 'var(--space-4)' }}>
                 <p className="tutor-card__subject" style={{ margin: 0 }}><strong>Danger Zone:</strong> Delete all your account data permanently.</p>
                 <button className="btn" style={{ background: '#DC2626', color: 'white', marginTop: 'var(--space-2)' }}>Delete Account</button>

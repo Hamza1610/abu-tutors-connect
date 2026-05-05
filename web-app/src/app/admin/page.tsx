@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminApi, userApi, walletApi, bankApi, messageApi } from '../../services/api';
+import { useAlert } from '../../context/AlertContext';
 import { getImageUrl } from '../../utils/image';
 
 export default function AdminDashboard() {
+  const { showAlert } = useAlert();
   const router = useRouter();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -129,7 +131,7 @@ export default function AdminDashboard() {
     if (status === 'reject' || status === 'needs_revision') {
       feedback = prompt(`Enter feedback/reason for ${status.replace('_', ' ')}:`) || '';
       if (!feedback && status === 'needs_revision') {
-        alert('Feedback is required for revision requests.');
+        showAlert('Feedback is required for revision requests.', { type: 'error' });
         return;
       }
     } else {
@@ -138,7 +140,7 @@ export default function AdminDashboard() {
 
     try {
       await adminApi.approveTutor(id, status, feedback);
-      alert(`Tutor ${status.replace('_', ' ')}d successfully`);
+      showAlert(`Tutor ${status.replace('_', ' ')}d successfully`, { type: 'success' });
       
       // Instant UI update: Remove from local pending list
       setPendingTutors(prev => prev.filter(t => t._id !== id));
@@ -146,7 +148,7 @@ export default function AdminDashboard() {
       // Background refresh to keep everything in sync
       setTimeout(() => fetchData(), 500);
     } catch (err) {
-      alert('Action failed');
+      showAlert('Action failed', { type: 'error' });
     }
   };
 
@@ -160,10 +162,10 @@ export default function AdminDashboard() {
 
     try {
       await adminApi.processCourseApplication(userId, appId, status, feedback);
-      alert(`Course application ${status} successfully`);
+      showAlert(`Course application ${status} successfully`, { type: 'success' });
       fetchData();
     } catch (err) {
-      alert('Action failed');
+      showAlert('Action failed', { type: 'error' });
     }
   };
 
@@ -180,9 +182,9 @@ export default function AdminDashboard() {
         noShowPayoutPercent: noShowPayout,
         defaultHourlyRate
       });
-      alert('Settings updated');
+      showAlert('Settings updated', { type: 'success' });
     } catch (err) {
-      alert('Update failed');
+      showAlert('Update failed', { type: 'error' });
     }
   };
 
@@ -193,9 +195,9 @@ export default function AdminDashboard() {
       setVenueName('');
       setVenueLocation('');
       fetchData();
-      alert('Venue added');
+      showAlert('Venue added', { type: 'success' });
     } catch (err) {
-      alert('Failed to add venue');
+      showAlert('Failed to add venue', { type: 'error' });
     }
   };
 
@@ -205,7 +207,7 @@ export default function AdminDashboard() {
       await adminApi.deleteVenue(id);
       fetchData();
     } catch (err) {
-      alert('Delete failed');
+      showAlert('Delete failed', { type: 'error' });
     }
   };
 
@@ -217,11 +219,11 @@ export default function AdminDashboard() {
     setSendingMsg(true);
     try {
       await adminApi.sendMessageToUser(msgUser._id, msgContent);
-      alert('Message sent successfully');
+      showAlert('Message sent successfully', { type: 'success' });
       setMsgContent('');
       setShowMsgModal(false);
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Failed to send message');
+      showAlert(err.response?.data?.message || 'Failed to send message', { type: 'error' });
     } finally {
       setSendingMsg(false);
     }
@@ -234,7 +236,7 @@ export default function AdminDashboard() {
         const res = await bankApi.verifyAccount(accountNumber, selectedBankCode);
         setAccountName(res.data.account_name);
     } catch (err: any) {
-        alert('Could not verify account. Please check details.');
+        showAlert('Could not verify account. Please check details.', { type: 'error' });
     } finally {
         setVerifyingAccount(false);
     }
@@ -251,10 +253,10 @@ export default function AdminDashboard() {
             accountNumber,
             accountName
         } as any);
-        alert('Bank details updated successfully');
+        showAlert('Bank details updated successfully', { type: 'success' });
         fetchData();
     } catch (err) {
-        alert('Failed to update bank details');
+        showAlert('Failed to update bank details', { type: 'error' });
     } finally {
         setLoading(false);
     }
@@ -263,7 +265,7 @@ export default function AdminDashboard() {
   const handleSetAdminPin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPin !== confirmPin) {
-        alert('PINs do not match');
+        showAlert('PINs do not match', { type: 'error' });
         return;
     }
     const currentPassword = prompt('Enter your admin password to set your Transaction PIN:');
@@ -272,12 +274,12 @@ export default function AdminDashboard() {
     setIsSettingPin(true);
     try {
         await walletApi.setTransactionPin({ pin: newPin, currentPassword });
-        alert('Transaction PIN set successfully!');
+        showAlert('Transaction PIN set successfully!', { type: 'success' });
         setNewPin('');
         setConfirmPin('');
         fetchData();
     } catch (err: any) {
-        alert(err.response?.data?.message || 'Failed to set PIN');
+        showAlert(err.response?.data?.message || 'Failed to set PIN', { type: 'error' });
     } finally {
         setIsSettingPin(false);
     }
@@ -301,7 +303,7 @@ export default function AdminDashboard() {
     setWithdrawing(true);
     try {
       await walletApi.withdrawFunds({ amount, pin: withdrawPin });
-      alert('Withdrawal initiated successfully!');
+      showAlert('Withdrawal initiated successfully!', { type: 'success' });
       setShowWithdrawModal(false);
       setWithdrawAmount('');
       setWithdrawPin('');
@@ -751,9 +753,9 @@ export default function AdminDashboard() {
                       <button 
                         onClick={() => {
                           if (!adminUser?.bankDetails?.accountNumber) {
-                            alert('Please set your payout bank account first (Step 1 below).');
+                            showAlert('Please set your payout bank account first (Step 1 below).', { type: 'info' });
                           } else if (!adminUser?.transactionPin) {
-                            alert('Please set your transaction PIN first (Step 2 below).');
+                            showAlert('Please set your transaction PIN first (Step 2 below).', { type: 'info' });
                           } else {
                             setShowWithdrawModal(true);
                           }

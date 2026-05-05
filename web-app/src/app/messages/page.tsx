@@ -5,8 +5,10 @@ import { messageApi, userApi } from '../../services/api';
 import { getImageUrl } from '../../utils/image';
 import { useRouter } from 'next/navigation';
 import { getSocket } from '../../utils/socket';
+import { useAlert } from '../../context/AlertContext';
 
 export default function MessagesPage() {
+    const { showAlert } = useAlert();
     const [conversations, setConversations] = useState<any[]>([]);
     const [selectedPartner, setSelectedPartner] = useState<any>(null);
     const [messages, setMessages] = useState<any[]>([]);
@@ -137,7 +139,7 @@ export default function MessagesPage() {
             const updatedConv = await messageApi.getChatList();
             setConversations(updatedConv.data);
         } catch (err) {
-            alert("Failed to send message");
+            showAlert("Failed to send message", { type: 'error' });
         } finally {
             setSending(false);
         }

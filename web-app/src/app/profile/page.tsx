@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import { userApi, bankApi, walletApi, adminApi, messageApi } from '../../services/api';
 import { universityData } from '../../data/universityData';
 import { getImageUrl } from '../../utils/image';
+import { useAlert } from '../../context/AlertContext';
 import CourseApplicationModal from '../../components/CourseApplicationModal';
 
 export default function ProfilePage() {
+  const { showAlert } = useAlert();
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -174,7 +176,7 @@ export default function ProfilePage() {
       if (currentStep < 4) {
           setCurrentStep(currentStep + 1);
       } else if (currentStep === 4) {
-          alert('Profile completed! Awaiting admin approval.');
+          showAlert('Profile completed! Awaiting admin approval.', { type: 'success' });
           if (updatedUser.role === 'tutor' || updatedUser.role === 'verified_tutor') {
               router.push('/tutor-dashboard');
           } else {
@@ -204,12 +206,12 @@ export default function ProfilePage() {
         window.dispatchEvent(new Event('profileUpdated'));
         
         const newUrl = res.data.documents?.profilePicture;
-        alert(`Profile picture updated successfully!\n\nNew URL: ${newUrl || 'None found in response'}`);
+        showAlert(`Profile picture updated successfully!`, { type: 'success' });
     } catch (err: any) {
         console.error('Upload error details:', err.response?.data);
         const msg = err.response?.data?.message || 'Failed to upload profile picture';
         setError(msg);
-        alert(`Upload Failed: ${msg}`);
+        showAlert(`Upload Failed: ${msg}`, { type: 'error' });
     } finally {
         setSaving(false);
     }
@@ -223,11 +225,11 @@ export default function ProfilePage() {
         const res = await userApi.getAdminId();
         const adminId = res.data._id;
         await messageApi.sendMessage({ receiverId: adminId, content: supportMsg });
-        alert('Message sent to Support! We will reply shortly.');
+        showAlert('Message sent to Support! We will reply shortly.', { type: 'success' });
         setShowSupportModal(false);
         setSupportMsg('');
     } catch (err: any) {
-        alert(err.response?.data?.message || 'Failed to send message');
+        showAlert(err.response?.data?.message || 'Failed to send message', { type: 'error' });
     } finally {
         setSendingSupport(false);
     }
@@ -260,7 +262,7 @@ export default function ProfilePage() {
     try {
         await walletApi.setTransactionPin({ pin, currentPassword });
         setPinSet(true);
-        alert('Transaction PIN set successfully!');
+        showAlert('Transaction PIN set successfully!', { type: 'success' });
     } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to set PIN');
     } finally {
@@ -273,11 +275,11 @@ export default function ProfilePage() {
     try {
         if (user.registrationPaymentStatus === 'pending' && !adminSettings?.isRegistrationFree) {
             await walletApi.payRegistrationFromWallet();
-            alert('Payment successful! Your profile is now submitted for approval.');
+            showAlert('Payment successful! Your profile is now submitted for approval.', { type: 'success' });
         } else {
             // Just resubmitting
             await userApi.updateProfile({ step: 4, resubmit: true });
-            alert('Your profile has been resubmitted for review.');
+            showAlert('Your profile has been resubmitted for review.', { type: 'success' });
         }
         
         if (user.role === 'tutor' || user.role === 'verified_tutor') {
@@ -715,7 +717,7 @@ export default function ProfilePage() {
         isOpen={showCourseModal}
         onClose={() => setShowCourseModal(false)}
         onSuccess={() => {
-            alert('Your application for new courses has been submitted and is awaiting review.');
+            showAlert('Your application for new courses has been submitted and is awaiting review.', { type: 'success' });
             window.location.reload();
         }}
       />

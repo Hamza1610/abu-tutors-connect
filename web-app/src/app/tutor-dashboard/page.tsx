@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { statsApi, sessionApi, userApi, adminApi, paymentApi } from '../../services/api';
+import { useAlert } from '../../context/AlertContext';
 import QRModal from '../../components/QRModal';
 import CourseApplicationModal from '../../components/CourseApplicationModal';
 import Link from 'next/link';
@@ -90,6 +91,7 @@ const ActiveSessionBanner = ({ session, onSync }: { session: any, onSync: (id: s
 };
 
 export default function TutorDashboard() {
+  const { showAlert } = useAlert();
   const [stats, setStats] = useState<any>(null);
   const [sessions, setSessions] = useState<any[]>([]);
   const [user, setUser] = useState<any>(null);
@@ -150,9 +152,9 @@ export default function TutorDashboard() {
               department: user.department,
               phone: user.phone
           });
-          alert('Availability matrix updated!');
-      } catch (err) {
-          alert('Update failed: ' + (err.response?.data?.message || 'Check your profile details'));
+          showAlert('Availability matrix updated!', { type: 'success' });
+      } catch (err: any) {
+          showAlert('Update failed: ' + (err.response?.data?.message || 'Check your profile details'), { type: 'error' });
       }
   };
 
@@ -194,11 +196,11 @@ export default function TutorDashboard() {
       try {
           if (qrModal.step === 'start') {
               await sessionApi.startSession(qrModal.sessionId, data);
-              alert('Session started!');
+              showAlert('Session started!', { type: 'success' });
           }
           fetchData();
       } catch (err: any) {
-          alert(err.response?.data?.message || 'Verification failed');
+          showAlert(err.response?.data?.message || 'Verification failed', { type: 'error' });
       }
   };
 
@@ -399,7 +401,7 @@ export default function TutorDashboard() {
         isOpen={showCourseModal}
         onClose={() => setShowCourseModal(false)}
         onSuccess={() => {
-            alert('Your application for new courses has been submitted and is awaiting review.');
+            showAlert('Your application for new courses has been submitted and is awaiting review.', { type: 'success' });
             fetchData();
         }}
       />

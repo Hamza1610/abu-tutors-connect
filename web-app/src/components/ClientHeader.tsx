@@ -11,6 +11,7 @@ export default function ClientHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -31,6 +32,11 @@ export default function ClientHeader() {
     return () => {
         window.removeEventListener('profileUpdated', handleProfileUpdate);
     };
+  }, [pathname]);
+
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
   }, [pathname]);
 
   const fetchUserAndNotifications = async () => {
@@ -57,75 +63,125 @@ export default function ClientHeader() {
       router.push('/login');
   };
 
+  const NavLinks = () => (
+    <>
+      {(!isLoggedIn || user?.role !== 'admin') && (
+        <>
+          <Link href="/" className={pathname === '/' ? 'nav-link--active' : ''}>Home</Link>
+          <Link href="/tutors" className={pathname === '/tutors' ? 'nav-link--active' : ''}>Find Tutors</Link>
+          <Link href="/ai-match" className={pathname === '/ai-match' ? 'nav-link--active' : ''}>AI Match</Link>
+        </>
+      )}
+      {isLoggedIn && user?.role === 'admin' && (
+          <Link href="/admin" className={pathname === '/admin' ? 'nav-link--active' : ''}>Admin Panel</Link>
+      )}
+      {isLoggedIn && user?.role !== 'tutee' && user?.role !== 'admin' && (
+          <Link href="/tutor-dashboard" className={pathname === '/tutor-dashboard' ? 'nav-link--active' : ''}>Tutor Dash</Link>
+      )}
+      {isLoggedIn && user?.role !== 'admin' && (
+          <Link href="/my-sessions" className={pathname === '/my-sessions' ? 'nav-link--active' : ''}>Sessions</Link>
+      )}
+    </>
+  );
+
   return (
-    <header className="app-header">
-      <div className="app-header__inner container">
-        <Link href="/" className="logo">
-          <img src="/logo.png" alt="ABUTutors" style={{ height: '40px', width: 'auto' }} />
-        </Link>
-        <nav className="app-header__nav">
-          {(!isLoggedIn || user?.role !== 'admin') && (
+    <>
+      <header className="app-header">
+        <div className="app-header__inner container">
+          <Link href="/" className="logo">
+            <img src="/logo.png" alt="ABUTutors" style={{ height: '32px', width: 'auto' }} />
+          </Link>
+
+          <nav className="app-header__nav">
+            <NavLinks />
+          </nav>
+
+          <div className="app-header__actions">
+            {isLoggedIn ? (
+              <>
+                <Link href="/notifications" className="icon-btn" aria-label="Notifications" style={{ position: 'relative' }}>
+                  <span>🔔</span>
+                  {unreadCount > 0 && (
+                      <span className="icon-btn__badge" 
+                            style={{ 
+                                position: 'absolute', 
+                                top: '-2px', 
+                                right: '-2px', 
+                                background: '#DC2626', 
+                                borderRadius: '50%', 
+                                width: '10px', 
+                                height: '10px' 
+                            }} 
+                      />
+                  )}
+                </Link>
+                <Link href="/wallet" className="icon-btn hidden-mobile" aria-label="Wallet">💰</Link>
+                <Link href="/profile" className={`icon-btn ${pathname === '/profile' ? 'nav-link--active' : ''}`} aria-label="Profile" style={{ padding: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%' }}>
+                  {user?.documents?.profilePicture ? (
+                      <img 
+                          src={getImageUrl(user.documents.profilePicture)} 
+                          alt="Profile" 
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                      />
+                  ) : (
+                      <img 
+                          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=0D8ABC&color=fff`} 
+                          alt="Profile" 
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                      />
+                  )}
+                </Link>
+                <button onClick={() => setIsMenuOpen(true)} className="menu-toggle" aria-label="Open Menu">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="btn btn--outline btn--sm" style={{ padding: '6px 12px', fontSize: '13px' }}>Login</Link>
+                <Link href="/register" className="btn btn--primary btn--sm" style={{ padding: '6px 12px', fontSize: '13px' }}>Sign Up</Link>
+                <button onClick={() => setIsMenuOpen(true)} className="menu-toggle" aria-label="Open Menu">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`mobile-menu-overlay ${isMenuOpen ? 'mobile-menu-overlay--open' : ''}`}
+        onClick={() => setIsMenuOpen(false)}
+      ></div>
+
+      {/* Mobile Menu Side Panel */}
+      <div className={`mobile-menu ${isMenuOpen ? 'mobile-menu--open' : ''}`}>
+        <button className="mobile-menu__close" onClick={() => setIsMenuOpen(false)}>✕</button>
+        <nav className="mobile-menu__nav">
+          <NavLinks />
+          {isLoggedIn && (
             <>
-              <Link href="/" className={pathname === '/' ? 'nav-link--active' : ''}>Home</Link>
-              <Link href="/tutors" className={pathname === '/tutors' ? 'nav-link--active' : ''}>Find Tutors</Link>
-              <Link href="/ai-match" className={pathname === '/ai-match' ? 'nav-link--active' : ''}>AI Match</Link>
+              <Link href="/wallet">Wallet</Link>
+              <Link href="/profile">My Profile</Link>
+              <Link href="/notifications">Notifications ({unreadCount})</Link>
             </>
-          )}
-          {isLoggedIn && user?.role === 'admin' && (
-              <Link href="/admin" className={pathname === '/admin' ? 'nav-link--active' : ''}>Admin Panel</Link>
-          )}
-          {isLoggedIn && user?.role !== 'tutee' && user?.role !== 'admin' && (
-              <Link href="/tutor-dashboard" className={pathname === '/tutor-dashboard' ? 'nav-link--active' : ''}>Tutor Dash</Link>
-          )}
-          {isLoggedIn && user?.role !== 'admin' && (
-              <Link href="/my-sessions" className={pathname === '/my-sessions' ? 'nav-link--active' : ''}>Sessions</Link>
           )}
         </nav>
-        <div className="app-header__actions">
+        <div className="mobile-menu__footer">
           {isLoggedIn ? (
-            <>
-              <Link href="/notifications" className="icon-btn" aria-label="Notifications" style={{ position: 'relative' }}>
-                <span>🔔</span>
-                {unreadCount > 0 && (
-                    <span className="icon-btn__badge" 
-                          style={{ 
-                              position: 'absolute', 
-                              top: '-2px', 
-                              right: '-2px', 
-                              background: '#DC2626', 
-                              borderRadius: '50%', 
-                              width: '12px', 
-                              height: '12px' 
-                          }} 
-                    />
-                )}
-              </Link>
-              <Link href="/wallet" className="icon-btn" aria-label="Wallet">💰</Link>
-              <Link href="/profile" className={`icon-btn ${pathname === '/profile' ? 'nav-link--active' : ''}`} aria-label="Profile" style={{ padding: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%' }}>
-                {user?.documents?.profilePicture ? (
-                    <img 
-                        src={getImageUrl(user.documents.profilePicture)} 
-                        alt="Profile" 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                    />
-                ) : (
-                    <img 
-                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=0D8ABC&color=fff`} 
-                        alt="Profile" 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                    />
-                )}
-              </Link>
-              <button onClick={handleLogout} className="btn btn--outline btn--sm">Logout</button>
-            </>
+            <button onClick={handleLogout} className="btn btn--outline btn--block">Logout</button>
           ) : (
-            <>
-              <Link href="/login" className="btn btn--outline" style={{ padding: '8px 16px', fontSize: '14px' }}>Login</Link>
-              <Link href="/register" className="btn btn--primary" style={{ padding: '8px 16px', fontSize: '14px' }}>Sign Up</Link>
-            </>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <Link href="/login" className="btn btn--outline btn--block">Login</Link>
+              <Link href="/register" className="btn btn--primary btn--block">Sign Up</Link>
+            </div>
           )}
         </div>
       </div>
-    </header>
+    </>
   );
 }

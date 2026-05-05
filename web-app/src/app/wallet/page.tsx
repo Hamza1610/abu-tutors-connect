@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { walletApi, userApi } from '../../services/api';
+import { useAlert } from '../../context/AlertContext';
 
 export default function WalletPage() {
+  const { showAlert } = useAlert();
   const router = useRouter();
   const [wallet, setWallet] = useState<any>(null);
   const [user, setUser] = useState<any>(null);
@@ -42,7 +44,7 @@ export default function WalletPage() {
     if (!amountStr || isNaN(Number(amountStr))) return;
     const amount = Number(amountStr);
     if (amount < 100) {
-      alert('Minimum funding amount is ₦100');
+      showAlert('Minimum funding amount is ₦100', { type: 'error' });
       return;
     }
 
@@ -58,7 +60,7 @@ export default function WalletPage() {
       }
     } catch (err: any) {
       console.error('Funding failed', err);
-      alert(err.response?.data?.message || 'Funding failed. Please try again.');
+      showAlert(err.response?.data?.message || 'Funding failed. Please try again.', { type: 'error' });
     } finally {
       setFunding(false);
     }
@@ -96,7 +98,7 @@ export default function WalletPage() {
         return;
       }
       await walletApi.withdrawFunds({ amount, pin: withdrawPin });
-      alert('Withdrawal request submitted successfully!');
+      showAlert('Withdrawal request submitted successfully!', { type: 'success' });
       setShowWithdrawModal(false);
       setWithdrawAmount('');
       setWithdrawPin('');

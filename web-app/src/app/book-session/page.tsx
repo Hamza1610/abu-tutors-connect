@@ -3,9 +3,11 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { userApi, sessionApi, walletApi, adminApi } from '../../services/api';
+import { useAlert } from '../../context/AlertContext';
 import { getImageUrl } from '../../utils/image';
 
 function BookSessionContent() {
+  const { showAlert } = useAlert();
   const router = useRouter();
   const searchParams = useSearchParams();
   const tutorId = searchParams.get('tutor');
@@ -88,7 +90,7 @@ function BookSessionContent() {
               slot: `${dateStr}T${timeStr}` 
           });
           setLockExpiry(new Date(res.data.expiresAt));
-          alert(`Slot temporarily locked for 5 minutes. Please complete booking.`);
+          showAlert(`Slot temporarily locked for 5 minutes. Please complete booking.`, { type: 'success' });
       } catch (err: any) {
           setError(err.response?.data?.message || 'Failed to lock slot. It might be taken.');
           setSelectedDate('');
@@ -99,7 +101,7 @@ function BookSessionContent() {
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!wallet || wallet.balance < fee) {
-      alert(`Insufficient balance. This session costs ₦${fee}. Current balance: ₦${wallet.balance}`);
+      showAlert(`Insufficient balance. This session costs ₦${fee}. Current balance: ₦${wallet.balance}`, { type: 'error' });
       router.push('/wallet');
       return;
     }
@@ -121,7 +123,7 @@ function BookSessionContent() {
         venue: selectedVenue,
         amount: fee
       });
-      alert('Booking confirmed! Payment held in escrow.');
+      showAlert('Booking confirmed! Payment held in escrow.', { type: 'success' });
       router.push('/my-sessions');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to book session');

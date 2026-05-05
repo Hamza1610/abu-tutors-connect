@@ -41,26 +41,18 @@ export default function LandingPage() {
         <div className="container">
           <div className="grid-2">
             <div className="hero-content text-center text-md-left">
-              <span className="badge badge--primary mb-4" style={{ 
-                display: 'inline-block', 
-                background: 'var(--color-primary-light)', 
-                color: 'var(--color-primary)',
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}>
+              <span className="hero-badge mb-4">
                 #1 Peer Tutoring at ABU
               </span>
-              <h1 className="font-extrabold mb-6 leading-tight text-4xl text-4xl-md" style={{ color: 'var(--color-text)' }}>
+              <h1 className="text-responsive-h1 mb-6" style={{ color: 'var(--color-text)' }}>
                 Master Your Courses with <span style={{ color: 'var(--color-primary)' }}>Top ABU Peers.</span>
               </h1>
-              <p className="text-lg mb-8 leading-relaxed mx-auto" style={{ color: 'var(--color-text-secondary)', maxWidth: '500px', marginLeft: '0' }}>
+              <p className="text-responsive-p mb-8 mx-auto mx-md-0" style={{ color: 'var(--color-text-secondary)', maxWidth: '500px' }}>
                 Connect with high-performing students who have aced your courses. Personalized 1-on-1 learning tailored to the ABU curriculum.
               </p>
               
-              <div className="search-wrap mb-8">
-                <form className="search-box mx-auto" onSubmit={handleSearch} style={{ maxWidth: '600px', boxShadow: 'var(--shadow-lg)', border: '1px solid var(--color-border)', marginLeft: '0' }}>
+              <div className="search-wrap-responsive">
+                <form className="search-box" onSubmit={handleSearch}>
                   <input 
                     type="text" 
                     className="search-box__input" 
@@ -69,36 +61,45 @@ export default function LandingPage() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     style={{ border: 'none' }}
                   />
-                  <button type="submit" className="btn btn--primary" style={{ height: '48px', borderRadius: '6px', margin: '4px' }}>Search</button>
+                  <button type="submit" className="btn btn--primary" style={{ height: '48px', borderRadius: '6px' }}>Search</button>
                 </form>
               </div>
 
-              <div className="hero-stats flex-row-center pt-4">
-                <div className="text-center">
-                  <div className="font-bold text-xl">Peer-Led</div>
-                  <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>ABU Support</div>
+              <div className="hero-stats mb-8" style={{ 
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '15px',
+                marginTop: '2.5rem',
+                width: '100%'
+              }}>
+                <div className="text-center" style={{ minWidth: '80px' }}>
+                  <div className="font-extrabold" style={{ fontSize: '16px', color: 'var(--color-primary)' }}>Peer-Led</div>
+                  <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>ABU Support</div>
                 </div>
-                <div className="hidden-mobile" style={{ width: '1px', height: '30px', background: 'var(--color-border)' }}></div>
-                <div className="text-center">
-                  <div className="font-bold text-xl">Verified</div>
-                  <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Student Experts</div>
+                <div style={{ width: '1px', height: '24px', background: 'var(--color-border)' }}></div>
+                <div className="text-center" style={{ minWidth: '80px' }}>
+                  <div className="font-extrabold" style={{ fontSize: '16px', color: 'var(--color-primary)' }}>Verified</div>
+                  <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Student Experts</div>
                 </div>
-                <div className="hidden-mobile" style={{ width: '1px', height: '30px', background: 'var(--color-border)' }}></div>
-                <div className="text-center">
-                  <div className="font-bold text-xl">Secure</div>
-                  <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Escrow Payments</div>
+                <div className="hidden-mobile" style={{ width: '1px', height: '24px', background: 'var(--color-border)' }}></div>
+                <div className="text-center" style={{ minWidth: '80px' }}>
+                  <div className="font-extrabold" style={{ fontSize: '16px', color: 'var(--color-primary)' }}>Secure</div>
+                  <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Escrow Payments</div>
                 </div>
               </div>
             </div>
             
-            <div className="hero-visual hidden-mobile">
-              <div style={{ position: 'relative' }}>
+            <div className="hero-visual-responsive">
+              <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
                 <img 
                   src="/hero_illustration.png" 
                   alt="Tutoring Illustration" 
-                  style={{ width: '100%', height: 'auto', borderRadius: '20px' }}
+                  className="animate-shake-flake"
+                  style={{ width: '100%', height: 'auto', borderRadius: '20px', boxShadow: 'var(--shadow-lg)' }}
                 />
-                <div className="absolute" style={{ bottom: '-20px', left: '-20px', background: 'white', padding: '16px', borderRadius: '12px', boxShadow: 'var(--shadow-xl)', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="absolute hidden-mobile" style={{ bottom: '-10px', left: '-10px', background: 'white', padding: '12px', borderRadius: '12px', boxShadow: 'var(--shadow-xl)', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10 }}>
                   <div style={{ background: '#ecfdf5', padding: '8px', borderRadius: '50%', color: '#059669' }}>✅</div>
                   <div>
                     <div className="font-bold" style={{ fontSize: '14px' }}>Peer Matching</div>
@@ -158,8 +159,8 @@ export default function LandingPage() {
                 fontWeight: 'bold',
                 display: 'inline-block'
               }}>AGENTIC AI POWERED</span>
-              <h2 className="font-bold mb-6 text-4xl">Can't choose? Let our AI match you.</h2>
-              <p className="text-lg mb-8 opacity-90">Our agentic AI analyzes your specific course problems and finds the tutor whose teaching style matches your learning needs perfectly.</p>
+              <h2 className="text-responsive-h2 mb-6">Can't choose? Let our AI match you.</h2>
+              <p className="text-responsive-p mb-8 opacity-90">Our agentic AI analyzes your specific course problems and finds the tutor whose teaching style matches your learning needs perfectly.</p>
               <ul className="mb-8" style={{ listStyle: 'none', padding: 0 }}>
                 <li className="mb-4 flex-row-center" style={{ gap: '10px' }}>✨ Smart Matching Architecture</li>
                 <li className="mb-4 flex-row-center" style={{ gap: '10px' }}>✨ Curriculum-aware recommendations</li>
@@ -167,26 +168,15 @@ export default function LandingPage() {
               </ul>
               <Link href="/ai-match" className="btn btn--white-outline" style={{ background: 'white', color: 'var(--color-secondary)', border: 'none', padding: '12px 24px' }}>Try AI Match Now</Link>
             </div>
-            <div className="hidden-mobile" style={{ display: 'flex', justifyContent: 'center' }}>
-              <div style={{ 
-                width: '400px', height: '400px', 
-                background: 'rgba(255,255,255,0.15)', 
-                borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: '3px dashed rgba(255,255,255,0.4)',
-                position: 'relative',
-                padding: '20px'
-              }}>
+            <div className="hero-visual-responsive">
+              <div className="ai-orb-container">
+                <div className="radiating-circle radiating-circle--1"></div>
+                <div className="radiating-circle radiating-circle--2"></div>
+                <div className="radiating-circle radiating-circle--3"></div>
                 <img 
                   src="/ai_match_orb.png" 
                   alt="AI Match Orb" 
-                  style={{ 
-                    width: '90%', 
-                    height: '90%', 
-                    objectFit: 'contain', 
-                    borderRadius: '50%',
-                    boxShadow: '0 0 40px rgba(255,255,255,0.2)'
-                  }} 
+                  className="ai-orb-image"
                 />
               </div>
             </div>

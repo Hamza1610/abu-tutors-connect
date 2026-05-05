@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionApi, userApi } from '../../services/api';
+import { useAlert } from '../../context/AlertContext';
 import QRModal from '../../components/QRModal';
 import { getImageUrl } from '../../utils/image';
 
@@ -64,6 +65,7 @@ const SessionTimer = ({ session, onSync }: { session: any, onSync: (id: string, 
 };
 
 export default function MySessionsPage() {
+  const { showAlert } = useAlert();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [sessions, setSessions] = useState<any[]>([]);
@@ -149,7 +151,7 @@ export default function MySessionsPage() {
       try {
           if (qrModal.step === 'start') {
               await sessionApi.startSession(qrModal.sessionId, data);
-              alert('Session started! Timer is now active.');
+              showAlert('Session started! Timer is now active.', { type: 'success' });
           } else {
               // Store credentials to use after rating
               const isTutor = currentUser._id === sessions.find(s => s._id === qrModal.sessionId)?.tutorId?._id;
@@ -163,7 +165,7 @@ export default function MySessionsPage() {
           }
           fetchSessions();
       } catch (err: any) {
-          alert(err.response?.data?.message || 'Verification failed');
+          showAlert(err.response?.data?.message || 'Verification failed', { type: 'error' });
       }
   };
 
@@ -174,11 +176,11 @@ export default function MySessionsPage() {
               rating: currentUser.role === 'tutee' ? ratingModal.rating : undefined
           };
           await sessionApi.completeSession(ratingModal.sessionId, payload);
-          alert('Session completed! Funds released.');
+          showAlert('Session completed! Funds released.', { type: 'success' });
           setRatingModal({ ...ratingModal, isOpen: false });
           fetchSessions();
       } catch (err: any) {
-          alert(err.response?.data?.message || 'Completion failed');
+          showAlert(err.response?.data?.message || 'Completion failed', { type: 'error' });
       }
   };
 
@@ -188,14 +190,14 @@ export default function MySessionsPage() {
           await sessionApi.cancelSession(id);
           fetchSessions();
       } catch (err) {
-          alert('Cancellation failed');
+          showAlert('Cancellation failed', { type: 'error' });
       }
   };
 
   const handleRescheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!rescheduleModal.date || !rescheduleModal.time) {
-        alert('Please select both date and time');
+        showAlert('Please select both date and time', { type: 'info' });
         return;
     }
 
@@ -205,11 +207,11 @@ export default function MySessionsPage() {
             date: rescheduleModal.date,
             time: rescheduleModal.time
         });
-        alert('Session rescheduled successfully!');
+        showAlert('Session rescheduled successfully!', { type: 'success' });
         setRescheduleModal({ isOpen: false, sessionId: '', date: '', time: '', submitting: false });
         fetchSessions();
     } catch (err: any) {
-        alert(err.response?.data?.message || 'Rescheduling failed');
+        showAlert(err.response?.data?.message || 'Rescheduling failed', { type: 'error' });
     } finally {
         setRescheduleModal(prev => ({ ...prev, submitting: false }));
     }
@@ -221,7 +223,7 @@ export default function MySessionsPage() {
           await sessionApi.reportNoShow(id);
           fetchSessions();
       } catch (err) {
-          alert('Report failed');
+          showAlert('Report failed', { type: 'error' });
       }
   };
 
