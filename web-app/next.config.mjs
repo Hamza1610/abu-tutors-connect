@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Only use static export for local mobile builds, disable for Vercel
+  output: process.env.VERCEL ? undefined : 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
