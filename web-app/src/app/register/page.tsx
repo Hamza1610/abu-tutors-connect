@@ -11,6 +11,7 @@ export default function Register() {
         registrationNumber: '',
         password: '',
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const [profilePicture, setProfilePicture] = useState<File | null>(null);
     const [error, setError] = useState('');
@@ -145,7 +146,36 @@ export default function Register() {
 
                             <div className="form-group">
                                 <label className="form-label">Password</label>
-                                <input type="password" id="password" className="form-input" placeholder="••••••••" required value={formData.password} onChange={handleChange} />
+                                <div style={{ position: 'relative' }}>
+                                    <input 
+                                        type={showPassword ? "text" : "password"} 
+                                        id="password" 
+                                        className="form-input" 
+                                        placeholder="••••••••" 
+                                        required 
+                                        value={formData.password} 
+                                        onChange={handleChange} 
+                                        style={{ paddingRight: '45px' }}
+                                    />
+                                    <button 
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        style={{
+                                            position: 'absolute',
+                                            right: '10px',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            background: 'none',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            color: '#64748b',
+                                            fontSize: '12px',
+                                            fontWeight: '600'
+                                        }}
+                                    >
+                                        {showPassword ? 'Hide' : 'Show'}
+                                    </button>
+                                </div>
                                 <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                                     Password must be 8+ characters and contain a letter, number, and special character.
                                 </p>

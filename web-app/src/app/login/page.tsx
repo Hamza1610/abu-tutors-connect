@@ -5,6 +5,7 @@ import api from '@/services/api';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,12 +48,12 @@ export default function Login() {
  
                          <form onSubmit={handleLogin}>
                              <div className="form-group">
-                                 <label className="form-label" htmlFor="email">Email or Admission ID</label>
+                                 <label className="form-label" htmlFor="email">Email</label>
                                  <input
                                      type="text"
                                      id="email"
                                      className="form-input"
-                                     placeholder="e.g. U21CO1015 or email@abu.edu.ng"
+                                     placeholder="e.g. email@abu.edu.ng"
                                      required
                                      value={email}
                                      onChange={(e) => setEmail(e.target.value)}
@@ -60,15 +61,36 @@ export default function Login() {
                              </div>
                              <div className="form-group">
                                  <label className="form-label" htmlFor="password">Password</label>
-                                 <input
-                                     type="password"
-                                     id="password"
-                                     className="form-input"
-                                     placeholder="Enter your password"
-                                     required
-                                     value={password}
-                                     onChange={(e) => setPassword(e.target.value)}
-                                 />
+                                 <div style={{ position: 'relative' }}>
+                                     <input
+                                         type={showPassword ? "text" : "password"}
+                                         id="password"
+                                         className="form-input"
+                                         placeholder="Enter your password"
+                                         required
+                                         value={password}
+                                         onChange={(e) => setPassword(e.target.value)}
+                                         style={{ paddingRight: '45px' }}
+                                     />
+                                     <button 
+                                         type="button"
+                                         onClick={() => setShowPassword(!showPassword)}
+                                         style={{
+                                             position: 'absolute',
+                                             right: '10px',
+                                             top: '50%',
+                                             transform: 'translateY(-50%)',
+                                             background: 'none',
+                                             border: 'none',
+                                             cursor: 'pointer',
+                                             color: '#64748b',
+                                             fontSize: '12px',
+                                             fontWeight: '600'
+                                         }}
+                                     >
+                                         {showPassword ? 'Hide' : 'Show'}
+                                     </button>
+                                 </div>
                                  <div style={{ textAlign: 'right', marginTop: '5px' }}>
                                      <a href="/forgot-password" style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-primary)', textDecoration: 'none' }}>Forgot Password?</a>
                                  </div>

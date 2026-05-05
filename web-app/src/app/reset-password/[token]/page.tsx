@@ -10,6 +10,8 @@ export default function ResetPassword() {
     
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
@@ -57,30 +59,72 @@ export default function ResetPassword() {
                              <form onSubmit={handleSubmit}>
                                  <div className="form-group">
                                      <label className="form-label" htmlFor="password">New Password</label>
-                                     <input
-                                         type="password"
-                                         id="password"
-                                         className="form-input"
-                                         placeholder="At least 8 characters"
-                                         required
-                                         value={password}
-                                         onChange={(e) => setPassword(e.target.value)}
-                                     />
+                                     <div style={{ position: 'relative' }}>
+                                         <input
+                                             type={showPassword ? "text" : "password"}
+                                             id="password"
+                                             className="form-input"
+                                             placeholder="At least 8 characters"
+                                             required
+                                             value={password}
+                                             onChange={(e) => setPassword(e.target.value)}
+                                             style={{ paddingRight: '45px' }}
+                                         />
+                                         <button 
+                                             type="button"
+                                             onClick={() => setShowPassword(!showPassword)}
+                                             style={{
+                                                 position: 'absolute',
+                                                 right: '10px',
+                                                 top: '50%',
+                                                 transform: 'translateY(-50%)',
+                                                 background: 'none',
+                                                 border: 'none',
+                                                 cursor: 'pointer',
+                                                 color: '#64748b',
+                                                 fontSize: '12px',
+                                                 fontWeight: '600'
+                                             }}
+                                         >
+                                             {showPassword ? 'Hide' : 'Show'}
+                                         </button>
+                                     </div>
                                      <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                                          Must contain a letter, a number, and a special character.
                                      </p>
                                  </div>
                                  <div className="form-group">
                                      <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
-                                     <input
-                                         type="password"
-                                         id="confirmPassword"
-                                         className="form-input"
-                                         placeholder="Confirm your new password"
-                                         required
-                                         value={confirmPassword}
-                                         onChange={(e) => setConfirmPassword(e.target.value)}
-                                     />
+                                     <div style={{ position: 'relative' }}>
+                                         <input
+                                             type={showConfirmPassword ? "text" : "password"}
+                                             id="confirmPassword"
+                                             className="form-input"
+                                             placeholder="Confirm your new password"
+                                             required
+                                             value={confirmPassword}
+                                             onChange={(e) => setConfirmPassword(e.target.value)}
+                                             style={{ paddingRight: '45px' }}
+                                         />
+                                         <button 
+                                             type="button"
+                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                             style={{
+                                                 position: 'absolute',
+                                                 right: '10px',
+                                                 top: '50%',
+                                                 transform: 'translateY(-50%)',
+                                                 background: 'none',
+                                                 border: 'none',
+                                                 cursor: 'pointer',
+                                                 color: '#64748b',
+                                                 fontSize: '12px',
+                                                 fontWeight: '600'
+                                             }}
+                                         >
+                                             {showConfirmPassword ? 'Hide' : 'Show'}
+                                         </button>
+                                     </div>
                                  </div>
                                  <button type="submit" disabled={loading} className="btn btn--primary" style={{ width: '100%', marginBottom: 'var(--space-4)' }}>
                                      {loading ? 'Resetting Password...' : 'Reset Password'}

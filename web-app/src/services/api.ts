@@ -42,7 +42,17 @@ api.interceptors.response.use(
             // This is a Network Error (server down, CORS, etc.)
             const targetUrl = error.config ? `${error.config.baseURL}${error.config.url}` : 'unknown';
             console.error(`API Network Error - Check if backend is reachable at ${targetUrl}:`, error.message);
-            // Optionally, we could trigger a global alert here
+        } else if (error.response.status === 401) {
+            // Unauthorized - token probably expired or invalid
+            console.warn('Unauthorized request detected. Logging out...');
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                // Avoid infinite redirect loop if already on login page
+                if (!window.location.pathname.includes('/login')) {
+                    window.location.href = '/login?reason=expired';
+                }
+            }
         }
         return Promise.reject(error);
     }

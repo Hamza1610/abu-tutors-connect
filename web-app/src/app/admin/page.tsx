@@ -363,6 +363,7 @@ export default function AdminDashboard() {
                     <thead>
                       <tr style={{ borderBottom: '1px solid #E2E8F0', textAlign: 'left', backgroundColor: '#F8FAFC' }}>
                         <th style={{ padding: 'var(--space-3)' }}>Tutor Profile</th>
+                        <th style={{ padding: 'var(--space-3)' }}>Proposed Courses</th>
                         <th style={{ padding: 'var(--space-3)' }}>Documents</th>
                         <th style={{ padding: 'var(--space-3)' }}>Actions</th>
                       </tr>
@@ -373,6 +374,17 @@ export default function AdminDashboard() {
                           <td style={{ padding: 'var(--space-3)' }}>
                             <div style={{ fontWeight: 'bold' }}>{tutor.name}</div>
                             <div style={{ fontSize: '12px', color: '#64748B' }}>{tutor.registrationNumber} · {tutor.faculty}</div>
+                          </td>
+                          <td style={{ padding: 'var(--space-3)' }}>
+                            <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', maxWidth: '250px' }}>
+                              {tutor.courses && tutor.courses.length > 0 ? (
+                                tutor.courses.map((c: string) => (
+                                  <span key={c} style={{ fontSize: '11px', background: '#E2E8F0', color: '#1E293B', padding: '2px 6px', borderRadius: '4px' }}>{c}</span>
+                                ))
+                              ) : (
+                                <span style={{ fontSize: '11px', color: '#94A3B8' }}>No courses listed</span>
+                              )}
+                            </div>
                           </td>
                           <td style={{ padding: 'var(--space-3)' }}>
                             <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
