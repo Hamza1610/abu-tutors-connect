@@ -243,7 +243,8 @@ export default function ProfilePage() {
           const res = await bankApi.verifyAccount(accountNumber, bankCode);
           setAccountName(res.data.account_name);
       } catch (err: any) {
-          setError('Could not verify account. Please check details.');
+          const msg = err.response?.data?.message || 'Could not verify account. Please check details.';
+          setError(msg);
       } finally {
           setVerifyingAccount(false);
       }
