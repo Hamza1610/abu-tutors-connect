@@ -10,8 +10,10 @@ export default function Register() {
         email: '',
         registrationNumber: '',
         password: '',
+        confirmPassword: '',
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const [profilePicture, setProfilePicture] = useState<File | null>(null);
     const [error, setError] = useState('');
@@ -54,6 +56,11 @@ export default function Register() {
 
         if (!validatePassword(formData.password)) {
             setError("Password must be at least 8 characters and include a letter, a number, and a special character.");
+            return;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            setError("Passwords do not match.");
             return;
         }
 
@@ -179,6 +186,40 @@ export default function Register() {
                                 <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                                     Password must be 8+ characters and contain a letter, number, and special character.
                                 </p>
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Confirm Password</label>
+                                <div style={{ position: 'relative' }}>
+                                    <input 
+                                        type={showConfirmPassword ? "text" : "password"} 
+                                        id="confirmPassword" 
+                                        className="form-input" 
+                                        placeholder="••••••••" 
+                                        required 
+                                        value={formData.confirmPassword} 
+                                        onChange={handleChange} 
+                                        style={{ paddingRight: '45px' }}
+                                    />
+                                    <button 
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        style={{
+                                            position: 'absolute',
+                                            right: '10px',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            background: 'none',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            color: '#64748b',
+                                            fontSize: '12px',
+                                            fontWeight: '600'
+                                        }}
+                                    >
+                                        {showConfirmPassword ? 'Hide' : 'Show'}
+                                    </button>
+                                </div>
                             </div>
 
                             {role === 'tutee' && (
