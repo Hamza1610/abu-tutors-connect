@@ -49,7 +49,7 @@ export default function NotificationsPage() {
 
   const handleCardClick = (n: any) => {
     if (!n.read) handleMarkAsRead(n._id);
-    if (n.type?.includes('session')) router.push('/sessions');
+    if (n.type?.includes('session')) router.push('/my-sessions');
     else if (n.type?.includes('payment') || n.type?.includes('wallet')) router.push('/wallet');
     else if (n.type?.includes('message')) router.push('/messages');
     else if (n.link) router.push(n.link);

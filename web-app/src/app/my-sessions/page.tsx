@@ -6,6 +6,7 @@ import { sessionApi, userApi } from '../../services/api';
 import { useAlert } from '../../context/AlertContext';
 import QRModal from '../../components/QRModal';
 import { getImageUrl } from '../../utils/image';
+import { getSocket } from '../../utils/socket';
 
 // --- Sub-component for Live Timer (Phase 4) ---
 const SessionTimer = ({ session, onSync }: { session: any, onSync: (id: string, data: any) => void }) => {
@@ -88,8 +89,10 @@ export default function MySessionsPage() {
     isOpen: boolean;
     sessionId: string;
     rating: number;
+    reviewText: string;
+    step: 'rating' | 'review';
     verificationData?: { qrData?: string; pin?: string };
-  }>({ isOpen: false, sessionId: '', rating: 5 });
+  }>({ isOpen: false, sessionId: '', rating: 5, reviewText: '', step: 'rating' });
 
   // Reschedule Modal State
   const [rescheduleModal, setRescheduleModal] = useState({
@@ -112,6 +115,35 @@ export default function MySessionsPage() {
     };
     init();
   }, [router]);
+
+  useEffect(() => {
+    if (currentUser) {
+        const socket = getSocket(currentUser._id);
+        if (socket) {
+            socket.on('session_update', (data: any) => {
+                console.log('Real-time session update received:', data);
+                // Auto-close QR Modal if it's the tutee showing the QR
+                if (qrModal.isOpen && (data.status === 'active' || data.status === 'completed')) {
+                    setQrModal(prev => ({ ...prev, isOpen: false }));
+                    
+                    if (data.status === 'completed' && currentUser.role === 'tutee') {
+                        setRatingModal({
+                            isOpen: true,
+                            sessionId: data._id,
+                            rating: 5,
+                            reviewText: '',
+                            step: 'rating'
+                        });
+                    }
+                }
+                fetchSessions();
+            });
+        }
+        return () => {
+            socket?.off('session_update');
+        };
+    }
+  }, [currentUser, qrModal.isOpen]);
 
   const fetchSessions = async () => {
     try {
@@ -160,7 +192,9 @@ export default function MySessionsPage() {
                   isOpen: true, 
                   sessionId: qrModal.sessionId, 
                   rating: 5,
-                  verificationData: data // STORE THE DATA HERE
+                  reviewText: '',
+                  step: 'rating',
+                  verificationData: data
               });
           }
           fetchSessions();
@@ -173,14 +207,26 @@ export default function MySessionsPage() {
       try {
           const payload = {
               ...ratingModal.verificationData,
-              rating: currentUser.role === 'tutee' ? ratingModal.rating : undefined
+              rating: currentUser.role === 'tutee' ? ratingModal.rating : undefined,
+              reviewText: currentUser.role === 'tutee' ? ratingModal.reviewText : undefined
           };
-          await sessionApi.completeSession(ratingModal.sessionId, payload);
-          showAlert('Session completed! Funds released.', { type: 'success' });
+          
+          if (ratingModal.verificationData) {
+              // This was triggered by a physical scan/PIN entry on this device (PIN flow)
+              await sessionApi.completeSession(ratingModal.sessionId, payload);
+          } else {
+              // This was triggered after a socket update (QR scan on partner device)
+              await sessionApi.reviewSession(ratingModal.sessionId, {
+                  rating: ratingModal.rating,
+                  reviewText: ratingModal.reviewText
+              });
+          }
+          
+          showAlert('Thank you for your feedback!', { type: 'success' });
           setRatingModal({ ...ratingModal, isOpen: false });
           fetchSessions();
       } catch (err: any) {
-          showAlert(err.response?.data?.message || 'Completion failed', { type: 'error' });
+          showAlert(err.response?.data?.message || 'Submission failed', { type: 'error' });
       }
   };
 
@@ -371,31 +417,66 @@ export default function MySessionsPage() {
         onPinSubmit={(pin) => handleVerificationSuccess({ pin })}
       />
 
-      {/* Rating Modal */}
+      {/* Rating & Review Modal */}
       {ratingModal.isOpen && (
-        <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100 }}>
-            <div className="card" style={{ maxWidth: '400px', width: '90%' }}>
-                <div className="card__body" style={{ textAlign: 'center' }}>
-                    <h2 className="section-header__title">{currentUser.role === 'tutee' ? 'Rate the Session' : 'Finalize Session'}</h2>
-                    <p className="text-muted">{currentUser.role === 'tutee' ? 'How was your session? This helps the tutor get verified!' : 'Confirm session completion to release funds.'}</p>
-                    
-                    {currentUser.role === 'tutee' && (
-                        <div style={{ fontSize: '32px', margin: '20px 0', display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                            {[1,2,3,4,5].map(star => (
-                                <span 
-                                    key={star} 
-                                    style={{ cursor: 'pointer', color: star <= ratingModal.rating ? '#FBBF24' : '#E2E8F0' }}
-                                    onClick={() => setRatingModal({ ...ratingModal, rating: star })}
-                                >
-                                    ★
-                                </span>
-                            ))}
-                        </div>
+        <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, backdropFilter: 'blur(4px)' }}>
+            <div className="card" style={{ maxWidth: '440px', width: '90%', borderRadius: '24px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+                <div className="card__body" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
+                    {ratingModal.step === 'rating' ? (
+                        <>
+                            <div style={{ width: '64px', height: '64px', background: 'var(--color-primary-light)', color: 'var(--color-primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', margin: '0 auto 24px' }}>🏆</div>
+                            <h2 className="section-header__title" style={{ fontSize: '24px', marginBottom: '12px' }}>{currentUser.role === 'tutee' ? 'Rate your Tutor' : 'Session Complete'}</h2>
+                            <p style={{ color: 'var(--color-text-secondary)', marginBottom: '32px', lineHeight: '1.6' }}>
+                                {currentUser.role === 'tutee' 
+                                    ? 'How would you rate your learning experience with this tutor?' 
+                                    : 'The session has been successfully verified and completed.'}
+                            </p>
+                            
+                            {currentUser.role === 'tutee' && (
+                                <>
+                                    <div style={{ fontSize: '40px', margin: '0 0 32px', display: 'flex', justifyContent: 'center', gap: '12px' }}>
+                                        {[1,2,3,4,5].map(star => (
+                                            <span 
+                                                key={star} 
+                                                style={{ cursor: 'pointer', color: star <= ratingModal.rating ? '#FBBF24' : '#E2E8F0', transition: 'transform 0.2s' }}
+                                                onClick={() => setRatingModal({ ...ratingModal, rating: star })}
+                                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <button className="btn btn--primary btn--block" style={{ height: '52px', fontSize: '16px' }} onClick={() => setRatingModal({ ...ratingModal, step: 'review' })}>
+                                        Next: Write Review
+                                    </button>
+                                </>
+                            )}
+                            
+                            {currentUser.role !== 'tutee' && (
+                                <button className="btn btn--primary btn--block" style={{ height: '52px', fontSize: '16px' }} onClick={() => setRatingModal({ ...ratingModal, isOpen: false })}>
+                                    Back to Dashboard
+                                </button>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <h2 className="section-header__title" style={{ fontSize: '24px', marginBottom: '12px' }}>Write a Review</h2>
+                            <p style={{ color: 'var(--color-text-secondary)', marginBottom: '24px' }}>What did you like about the teaching? (Optional)</p>
+                            <textarea 
+                                className="form-input" 
+                                rows={4} 
+                                placeholder="e.g. Explained complex concepts very clearly..."
+                                style={{ width: '100%', marginBottom: '24px', padding: '16px', borderRadius: '12px', border: '1px solid var(--color-border)' }}
+                                value={ratingModal.reviewText}
+                                onChange={(e) => setRatingModal({ ...ratingModal, reviewText: e.target.value })}
+                            />
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <button className="btn btn--secondary" style={{ flex: 1, height: '52px' }} onClick={() => setRatingModal({ ...ratingModal, step: 'rating' })}>Back</button>
+                                <button className="btn btn--primary" style={{ flex: 2, height: '52px' }} onClick={submitCompletion}>Finish & Submit</button>
+                            </div>
+                        </>
                     )}
-                    
-                    <button className="btn btn--primary btn--block" onClick={submitCompletion}>
-                        {currentUser.role === 'tutee' ? 'Finish & Rate' : 'Complete & Release Payout'}
-                    </button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import './globals.css'
 import ClientHeader from '../components/ClientHeader'
+import Footer from '../components/Footer'
 import { AlertProvider } from '../context/AlertContext'
 
 export const metadata = {
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <AlertProvider>
                     <ClientHeader />
                     {children}
+                    <Footer />
                 </AlertProvider>
             </body>
         </html>

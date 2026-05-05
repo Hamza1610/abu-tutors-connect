@@ -105,6 +105,9 @@ export const sessionApi = {
     // Complete session (tutor scans tutee QR OR enters PIN)
     completeSession: (id: string, data: { qrData?: string; pin?: string; rating?: number }) => api.post(`/sessions/${id}/complete`, data),
 
+    // Submit a review (Tutee -> Tutor)
+    reviewSession: (id: string, data: { rating: number; reviewText: string }) => api.post(`/sessions/${id}/review`, data),
+
     // Sync active session (Phase 4)
     syncSession: (id: string, deviceTime: string) => api.post(`/sessions/${id}/sync`, { deviceTime }),
 

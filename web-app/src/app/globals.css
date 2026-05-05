@@ -216,6 +216,18 @@ textarea {
   }
 }
 
+.grid-2-responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .grid-2-responsive {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
 /* Page Header */
 .page-header {
   margin-bottom: var(--space-6);

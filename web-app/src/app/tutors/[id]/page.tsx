@@ -97,11 +97,50 @@ export default function TutorProfilePage() {
 
                 {/* Area of Strength */}
                 {tutor.areaOfStrength && (
-                  <div style={{ marginBottom: '10px' }}>
+                  <div style={{ marginBottom: '28px' }}>
                     <h2 className="section-header__title" style={{ fontSize: '20px', marginBottom: '8px' }}>Area of Strength</h2>
                     <p style={{ fontSize: '15px', color: 'var(--color-primary)', fontWeight: '500' }}>{tutor.areaOfStrength}</p>
                   </div>
                 )}
+
+                {/* Reviews Section */}
+                <div style={{ marginTop: '40px' }}>
+                  <h2 className="section-header__title" style={{ fontSize: '20px', marginBottom: '20px' }}>Student Reviews</h2>
+                  {!tutor.reviews || tutor.reviews.length === 0 ? (
+                    <p style={{ color: '#94A3B8', fontSize: '14px' }}>No reviews yet. Be the first to book a session!</p>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      {tutor.reviews.map((review: any, idx: number) => (
+                        <div key={idx} className="card" style={{ boxShadow: 'none', border: '1px solid #E2E8F0', borderRadius: '12px' }}>
+                          <div className="card__body" style={{ padding: '20px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                                  {review.tuteeId?.documents?.profilePicture ? (
+                                    <img src={getImageUrl(review.tuteeId.documents.profilePicture)} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                  ) : (
+                                    <span style={{ fontWeight: 'bold', color: '#64748B' }}>{review.tuteeId?.name?.charAt(0)}</span>
+                                  )}
+                                </div>
+                                <div>
+                                  <p style={{ fontWeight: 'bold', margin: 0 }}>{review.tuteeId?.name || 'Anonymous Student'}</p>
+                                  <p style={{ fontSize: '12px', color: '#94A3B8', margin: 0 }}>{new Date(review.createdAt).toLocaleDateString()}</p>
+                                </div>
+                              </div>
+                              <div className="tutor-card__rating">
+                                <span className="star">★</span>
+                                <span>{review.tuteeRating}</span>
+                              </div>
+                            </div>
+                            <p style={{ margin: 0, color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
+                              {review.tuteeReview || 'No written feedback provided.'}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </section>

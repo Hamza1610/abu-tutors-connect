@@ -139,7 +139,7 @@ function BookSessionContent() {
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <h1 className="page-header__title" style={{ marginBottom: 'var(--space-6)' }}>Schedule Your Session</h1>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 'var(--space-6)' }}>
+        <div className="grid-2-responsive">
           {/* Left: Availability Matrix & Selection */}
           <div className="card">
             <div className="card__body">

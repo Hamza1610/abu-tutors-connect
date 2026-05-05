@@ -285,7 +285,7 @@ export const startSession = async (req: Request, res: Response): Promise<void> =
 export const completeSession = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const { qrData, pin, rating } = req.body;
+        const { qrData, pin, rating, reviewText } = req.body;
 
         const session = await Session.findById(id);
         if (!session) {
@@ -316,6 +316,8 @@ export const completeSession = async (req: Request, res: Response): Promise<void
         session.status = 'completed';
         session.escrowStatus = 'released';
         session.actualEndTime = new Date();
+        if (reviewText) session.tuteeReview = reviewText;
+        if (rating) session.tuteeRating = rating;
         await session.save();
 
         // 2. Release Escrow with 10% Commission
