@@ -20,9 +20,31 @@ export const getBanks = async (req: Request, res: Response): Promise<void> => {
 
         res.json(uniqueBanks);
     } catch (error: any) {
-        logger.warn(`Paystack Bank Fetch Warning: ${error.message}. Returning empty bank list.`);
-        // Return empty array instead of 500 to prevent crashing the whole Admin Dashboard
-        res.json([]);
+        logger.warn(`Paystack Bank Fetch Warning: ${error.message}. Returning fallback bank list.`);
+        
+        // Provide a fallback list of major Nigerian banks to prevent UI failure
+        const fallbackBanks = [
+            { name: 'Access Bank', code: '044' },
+            { name: 'Fidelity Bank', code: '070' },
+            { name: 'First Bank of Nigeria', code: '011' },
+            { name: 'First City Monument Bank', code: '214' },
+            { name: 'Guaranty Trust Bank', code: '058' },
+            { name: 'Heritage Bank', code: '030' },
+            { name: 'Keystone Bank', code: '082' },
+            { name: 'Stanbic IBTC Bank', code: '039' },
+            { name: 'Standard Chartered Bank', code: '068' },
+            { name: 'Sterling Bank', code: '232' },
+            { name: 'Union Bank of Nigeria', code: '032' },
+            { name: 'United Bank for Africa', code: '033' },
+            { name: 'Unity Bank', code: '215' },
+            { name: 'Wema Bank', code: '035' },
+            { name: 'Zenith Bank', code: '057' },
+            { name: 'OPay Digital Services', code: '999992' },
+            { name: 'PalmPay', code: '999991' },
+            { name: 'Kuda Bank', code: '50211' }
+        ];
+        
+        res.json(fallbackBanks);
     }
 };
 
@@ -37,13 +59,35 @@ export const verifyAccount = async (req: Request, res: Response): Promise<void> 
             return;
         }
 
-        const response = await axios.get(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, {
-            headers: { Authorization: `Bearer ${PAYSTACK_SECRET}` }
-        });
+        // 1. Log the attempt
+        logger.info(`Attempting bank verification for: ${accountNumber} (Bank: ${bankCode})`);
 
-        res.json(response.data.data);
+        try {
+            const response = await axios.get(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, {
+                headers: { Authorization: `Bearer ${PAYSTACK_SECRET}` }
+            });
+
+            res.json(response.data.data);
+        } catch (paystackError: any) {
+            // 2. Handle Paystack failure
+            const errorDetail = paystackError.response?.data?.message || paystackError.message;
+            logger.warn(`Paystack Resolve Error: ${errorDetail}`);
+
+            // 3. Fallback for Test Mode: If using sk_test, allow any account number to succeed for development
+            if (PAYSTACK_SECRET.startsWith('sk_test')) {
+                logger.info('Test Mode detected: Providing mock success for bank verification.');
+                res.json({
+                    account_number: accountNumber as string,
+                    account_name: 'TEST ACCOUNT (SUCCESS)',
+                    bank_id: 1
+                });
+                return;
+            }
+
+            res.status(400).json({ message: `Bank verification failed: ${errorDetail}` });
+        }
     } catch (error: any) {
-        logger.error(`Verify Account Error: ${error.message}`);
-        res.status(400).json({ message: 'Could not verify account. Please check the details.' });
+        logger.error(`Verify Account System Error: ${error.message}`);
+        res.status(500).json({ message: 'Internal server error during bank verification.' });
     }
 };

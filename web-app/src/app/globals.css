@@ -1184,9 +1184,26 @@ textarea {
 }
 
 @media (max-width: 767px) {
-  .marketing-section { padding: 40px 0; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .hidden-mobile { display: none; }
+  .marketing-section { 
+    padding: 40px 0; 
+    overflow-x: hidden; 
+    width: 100%;
+  }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 20px; }
+  .hidden-mobile { display: none !important; }
+  
+  .hero-stats {
+    gap: 10px !important;
+  }
+  
+  .hero-stats > div {
+    flex: 1 1 40%;
+  }
+}
+
+.flex-row-center {
+  display: flex;
+  align-items: center;
 }
 
 /* Feature Cards */

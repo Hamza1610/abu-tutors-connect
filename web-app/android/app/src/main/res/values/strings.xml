@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ABUTutorsConnect</string>
+    <string name="title_activity_main">ABUTutorsConnect</string>
+    <string name="package_name">com.abututors.connect</string>
+    <string name="custom_url_scheme">com.abututors.connect</string>
+</resources>

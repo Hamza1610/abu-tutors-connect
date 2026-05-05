@@ -4,7 +4,7 @@
     "slug": "abututors",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "abutc",
     "userInterfaceStyle": "light",
     "newArchEnabled": false,
@@ -16,7 +16,7 @@
       "package": "ng.edu.abu.tutorsconnect",
       "adaptiveIcon": {
         "backgroundColor": "#00703C",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundImage": "./assets/images/android-icon-background.png"
       },
       "edgeToEdgeEnabled": true

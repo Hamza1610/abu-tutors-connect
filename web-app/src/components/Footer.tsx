@@ -38,7 +38,7 @@ export default function Footer() {
             <ul className="app-footer__links" style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
               <li>📍 ABU Main Campus, Samaru, Zaria</li>
               <li>📧 support@abututors.edu.ng</li>
-              <li>📞 +234 800 000 0000</li>
+              <li>📞 +234 902 688 0099</li>
             </ul>
           </div>
         </div>

@@ -131,6 +131,7 @@ export default function ClientHeader() {
                       />
                   )}
                 </Link>
+                <button onClick={handleLogout} className="btn btn--outline btn--sm hidden-mobile" style={{ padding: '4px 10px', fontSize: '12px' }}>Logout</button>
                 <button onClick={() => setIsMenuOpen(true)} className="menu-toggle" aria-label="Open Menu">
                   <span></span>
                   <span></span>

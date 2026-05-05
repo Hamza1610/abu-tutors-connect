@@ -5,6 +5,7 @@ import Wallet from '../models/Wallet';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v2 as cloudinary } from 'cloudinary'; // Keep if needed for other v2 features, but usually helper is enough
+import Settings from '../models/Settings';
 import logger from '../utils/logger';
 import crypto from 'crypto';
 import { sendEmail } from '../utils/emailService';
@@ -53,14 +54,21 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         // Extract profile picture from multer file if provided
         let profilePicturePath = '';
         if (req.file) {
-            profilePicturePath = await uploadToCloudinary(req.file.path, 'profiles');
+            try {
+                profilePicturePath = await uploadToCloudinary(req.file.path, 'profiles');
+            } catch (uploadErr: any) {
+                logger.error(`Registration Image Upload Failed: ${uploadErr.message}`);
+                res.status(400).json({ message: "Failed to upload profile picture. Please try a smaller image or skip for now." });
+                return;
+            }
         }
 
-        // Optional: Validate ABU registration number regex
+        // Optional: Validate ABU registration number format (More flexible)
         if (role === 'tutor' || role === 'verified_tutor') {
-            const regNumRegex = /^U\d{2}[A-Z]{2}\d{4}$/; // e.g., U21CO1015
+            // Flexible regex: Allows U21CO1015 or U21/CO/1015 or U22CS1001
+            const regNumRegex = /^U\d{2}[\/]?[A-Z]{2}[\/]?\d{4}$/; 
             if (finalizedRegNum && !regNumRegex.test(finalizedRegNum)) {
-                res.status(400).json({ message: "Invalid ABU Registration Number format. Expected format: U21COxxxx" });
+                res.status(400).json({ message: "Invalid Registration Number format. Example: U21CO1015" });
                 return;
             }
         }
@@ -83,7 +91,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Check global settings for registration fee status
-        const Settings = mongoose.model('Settings');
         const settings = await Settings.findOne() as any;
         const isFree = settings?.isRegistrationFree || false;
 
