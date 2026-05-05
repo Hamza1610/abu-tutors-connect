@@ -54,13 +54,13 @@ app.use("/api/stats", statsRoutes_1.default);
 app.use("/api/admin", adminRoutes_1.default);
 app.use("/api/payment", paymentRoutes_1.default);
 app.use("/api/messages", messageRoutes_1.default);
+app.get('/', (req, res) => {
+    res.send('ABUTutors Backend API is running');
+});
 // Catch-all 404 for debugging
 app.use((req, res) => {
     console.log(`404 at ${req.method} ${req.originalUrl}`);
     res.status(404).send(`Route ${req.originalUrl} not found`);
-});
-app.get('/', (req, res) => {
-    res.send('ABUTutors Backend API is running');
 });
 // Database connection
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/abututors";
@@ -71,4 +71,5 @@ mongoose_1.default.connect(MONGODB_URI)
     server.listen(PORT, () => logger_1.default.info(`Backend server running on port ${PORT}`));
 })
     .catch((err) => logger_1.default.error("Could not connect to MongoDB:", err));
+exports.default = server;
 //# sourceMappingURL=server.js.map

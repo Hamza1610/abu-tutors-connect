@@ -8,7 +8,7 @@ const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const cloudinary_1 = require("cloudinary");
-const multer_storage_cloudinary_1 = require("multer-storage-cloudinary");
+const multer_storage_cloudinary_v2_1 = require("multer-storage-cloudinary-v2");
 // Ensure uploads directory exists for local fallback
 const uploadDir = 'uploads';
 if (!fs_1.default.existsSync(uploadDir)) {
@@ -18,7 +18,7 @@ if (!fs_1.default.existsSync(uploadDir)) {
 let storage;
 if (process.env.CLOUDINARY_CLOUD_NAME && process.env.NODE_ENV === 'production') {
     console.log('[UPLOAD] Using Cloudinary Storage for Production');
-    storage = new multer_storage_cloudinary_1.CloudinaryStorage({
+    storage = new multer_storage_cloudinary_v2_1.CloudinaryStorage({
         cloudinary: cloudinary_1.v2,
         params: async (req, file) => {
             const folder = file.fieldname === 'profilePicture' ? 'profiles' : 'documents';
