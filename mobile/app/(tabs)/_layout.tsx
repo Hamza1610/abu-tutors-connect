@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Tabs, router, useSegments, useRootNavigationState } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, Image } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 import { Colors } from '../../constants/Colors';
 
@@ -27,8 +27,28 @@ export default function TabLayout() {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.background }}>
-        <ActivityIndicator size="large" color={Colors.primary} />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.primary }}>
+        <View style={{ 
+          width: 120, 
+          height: 120, 
+          backgroundColor: '#fff', 
+          borderRadius: 60, 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          marginBottom: 20,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 8,
+          elevation: 5
+        }}>
+          <Image 
+            source={require('../../assets/images/logo.png')} 
+            style={{ width: 80, height: 80 }} 
+            resizeMode="contain" 
+          />
+        </View>
+        <ActivityIndicator size="large" color="#fff" />
       </View>
     );
   }

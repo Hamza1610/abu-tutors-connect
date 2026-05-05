@@ -21,7 +21,7 @@ const format = winston.format.combine(
 
 // Instantiate the Logger
 const logger = winston.createLogger({
-    level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
+    level: 'debug',
     levels: {
         error: 0,
         warn: 1,

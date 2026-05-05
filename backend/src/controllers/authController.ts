@@ -4,10 +4,11 @@ import User, { IUser } from '../models/User';
 import Wallet from '../models/Wallet';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary'; // Keep if needed for other v2 features, but usually helper is enough
 import logger from '../utils/logger';
 import crypto from 'crypto';
 import { sendEmail } from '../utils/emailService';
+import { uploadToCloudinary } from '../utils/cloudinaryHelper';
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_development";
 
@@ -52,10 +53,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         // Extract profile picture from multer file if provided
         let profilePicturePath = '';
         if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'abu_tutors/profiles'
-            });
-            profilePicturePath = result.secure_url;
+            profilePicturePath = await uploadToCloudinary(req.file.path, 'profiles');
         }
 
         // Optional: Validate ABU registration number regex
@@ -89,11 +87,15 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         const settings = await Settings.findOne() as any;
         const isFree = settings?.isRegistrationFree || false;
 
+        // Sanitize role: Only 'tutee' or 'tutor' allowed during public registration
+        const allowedRoles = ['tutee', 'tutor'];
+        const sanitizedRole = allowedRoles.includes(role) ? role : 'tutee';
+
         const user: IUser = new User({
             name, 
             email: email.toLowerCase(), 
             password: hashedPassword, 
-            role: role || "tutee",
+            role: sanitizedRole,
             registrationNumber: finalizedRegNum,
             faculty, 
             department, 
@@ -152,12 +154,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user || user.password === undefined) {
+            logger.warn(`Failed login attempt: User not found or no password - ${email}`);
             res.status(400).json({ message: "Invalid credentials" });
             return;
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
+            logger.warn(`Failed login attempt: Incorrect password for ${email}`);
             res.status(400).json({ message: "Invalid credentials" });
             return;
         }

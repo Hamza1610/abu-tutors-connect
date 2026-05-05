@@ -6,6 +6,7 @@ import Session from '../models/Session';
 import Wallet from '../models/Wallet';
 import Escrow from '../models/Escrow';
 import AdminLog from '../models/AdminLog';
+import Message from '../models/Message';
 import logger from '../utils/logger';
 
 interface Request extends ExpressRequest {
@@ -19,11 +20,10 @@ export const getPendingTutors = async (req: Request, res: Response): Promise<voi
     try {
         const tutors = await User.find({ 
             role: { $in: ['tutor', 'verified_tutor'] }, 
-            $or: [
-                { isApproved: false },
-                { applicationStatus: { $in: ['pending', 'needs_revision'] } }
-            ]
-        }).select('-password');
+            isApproved: false,
+            isProfileComplete: true, // Only show those who finished the wizard
+            applicationStatus: 'pending'
+        }).select('-password').sort({ updatedAt: -1 });
         res.json(tutors);
     } catch (error: any) {
         console.error(`[ADMIN_ERROR] Get Pending Tutors:`, error);
@@ -48,44 +48,70 @@ export const approveTutor = async (req: Request, res: Response): Promise<void> =
         if (status === 'approve') {
             user.isApproved = true;
             user.applicationStatus = 'approved';
+            user.isProfileComplete = true; // Ensure they can see their profile
             user.adminFeedback = '';
+            
+            // ENSURE: Newly approved tutors start as 'tutor', not 'verified_tutor'
+            if (user.role === 'verified_tutor' && user.sessionsCompleted === 0) {
+                user.role = 'tutor';
+            } else if (user.role === 'tutee') {
+                // If they were a tutee applying to be a tutor
+                user.role = 'tutor';
+            }
+            
             await AdminLog.create({
                 adminId: req.user.id,
                 action: 'APPROVE_TUTOR',
                 targetId: user._id.toString(),
                 details: `Approved tutor ${user.email}`
             });
+
+            // Automated Welcome Message
+            await Message.create({
+                senderId: req.user.id,
+                receiverId: user._id,
+                content: `Congratulations ${user.name}! Your tutor application has been approved. You can now set your availability and start accepting sessions.`
+            });
+
             logger.info(`Tutor ${user.email} approved by admin`);
-        } else if (status === 'needs_revision') {
-            user.isApproved = false;
-            user.applicationStatus = 'needs_revision';
-            user.adminFeedback = feedback || 'Please review your documents.';
-            user.isProfileComplete = false; // Allow them to edit again
-            await AdminLog.create({
-                adminId: req.user.id,
-                action: 'REQUEST_REVISION',
-                targetId: user._id.toString(),
-                details: `Revision requested for ${user.email}: ${feedback}`
-            });
-            logger.info(`Revision requested for tutor ${user.email}`);
         } else {
+            // Distinguish between 'reject' and 'needs_revision'
             user.isApproved = false;
-            user.applicationStatus = 'rejected';
-            user.adminFeedback = feedback || 'Application rejected.';
-            user.isProfileComplete = false; // Reset profile completion
+            user.applicationStatus = status === 'reject' ? 'rejected' : 'needs_revision';
+            user.adminFeedback = feedback || (status === 'reject' ? 'Your application has been declined.' : 'Please review your application details.');
+            user.isProfileComplete = status === 'needs_revision' ? false : true; // Keep true for rejected so they don't see wizard again
+            
             await AdminLog.create({
                 adminId: req.user.id,
-                action: 'REJECT_TUTOR',
+                action: status === 'reject' ? 'REJECT_TUTOR' : 'REQUEST_REVISION',
                 targetId: user._id.toString(),
-                details: `Rejected tutor ${user.email}: ${feedback}`
+                details: `${status === 'reject' ? 'Rejection' : 'Revision requested'} for ${user.email}: ${feedback}`
             });
-            logger.info(`Tutor ${user.email} rejected by admin`);
+
+            // Automated Message
+            await Message.create({
+                senderId: req.user.id,
+                receiverId: user._id,
+                content: status === 'reject' 
+                    ? `Hello ${user.name}, we regret to inform you that your tutor application has been declined. Admin Feedback: ${user.adminFeedback}`
+                    : `Hello ${user.name}, your tutor application needs some changes. Admin Feedback: ${user.adminFeedback}. Please update your profile and resubmit for approval.`
+            });
+
+            logger.info(`${status === 'reject' ? 'Rejection' : 'Revision'} for tutor ${user.email}`);
         }
 
-        await user.save();
-        res.json({ message: `Tutor ${status.replace('_', ' ')} successfully`, user });
+        logger.info(`[ADMIN_ACTION] User: ${user.email}, Target Status: ${status}, Current AppStatus: ${user.applicationStatus}`);
+        
+        try {
+            await user.save();
+            logger.info(`[ADMIN_ACTION] SAVE SUCCESS - User: ${user.email}, New AppStatus: ${user.applicationStatus}, isApproved: ${user.isApproved}`);
+            res.json({ message: `Tutor ${status.replace('_', ' ')}d successfully`, user });
+        } catch (saveError: any) {
+            logger.error(`[ADMIN_SAVE_ERROR] Failed to save user ${user.email}: ${saveError.message}`);
+            res.status(400).json({ message: "Update failed: " + saveError.message });
+        }
     } catch (error: any) {
-        logger.error(`Approve Tutor Error: ${error.message}`);
+        logger.error(`[ADMIN_FATAL_ERROR] ${error.message}`);
         res.status(500).json({ message: "Server error during tutor approval" });
     }
 };

@@ -224,11 +224,17 @@ export default function ProfileScreen() {
   const handlePayRegistration = async () => {
     setSaving(true);
     try {
-      await walletApi.payRegistrationFromWallet();
-      Alert.alert('Success', 'Registration fee paid! Your profile is being reviewed.');
+      if (user.registrationPaymentStatus === 'pending' && !adminSettings?.isRegistrationFree) {
+        await walletApi.payRegistrationFromWallet();
+        Alert.alert('Success', 'Registration fee paid! Your profile is being reviewed.');
+      } else {
+        // Just resubmitting for review
+        await userApi.updateProfile({ step: 4, resubmit: true });
+        Alert.alert('Success', 'Your profile has been resubmitted for review.');
+      }
       await refreshUser();
     } catch (err: any) {
-      Alert.alert('Payment Failed', err.response?.data?.message || 'Ensure your wallet is funded.');
+      Alert.alert('Failed', err.response?.data?.message || 'Action failed.');
     } finally {
       setSaving(false);
     }
@@ -307,13 +313,26 @@ export default function ProfileScreen() {
   if (!user) return null;
 
   // Render Wizard
-  if ((user.role === 'tutor' || user.role === 'verified_tutor') && !user.isProfileComplete && user.registrationPaymentStatus === 'pending') {
-    const progressPercent = (currentStep / 4) * 100;
+  const isRevision = user.applicationStatus === 'needs_revision';
+  const showWizard = (user.role === 'tutor' || user.role === 'verified_tutor') && !user.isApproved && (!user.isProfileComplete || isRevision);
+  
+  if (showWizard) {
+    const displayStep = Math.min(currentStep, 4);
+    const progressPercent = (displayStep / 4) * 100;
     return (
       <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#fff' }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView style={styles.wizardContainer} contentContainerStyle={{ padding: Spacing.lg }} keyboardShouldPersistTaps="handled">
-          <Text style={styles.wizardTitle}>Complete Tutor Profile</Text>
-        <Text style={styles.wizardSub}>Step {currentStep} of 4</Text>
+          {isRevision && (
+            <View style={styles.revisionCard}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <Ionicons name="alert-circle" size={20} color={Colors.danger} />
+                <Text style={styles.revisionTitle}>Application Feedback</Text>
+              </View>
+              <Text style={styles.revisionText}>{user.adminFeedback || 'Please review your application details.'}</Text>
+            </View>
+          )}
+          <Text style={styles.wizardTitle}>{isRevision ? 'Update Your Profile' : 'Complete Tutor Profile'}</Text>
+        <Text style={styles.wizardSub}>Step {displayStep} of 4</Text>
         <View style={styles.progressBar}>
           <View style={[styles.progressFill, { width: `${progressPercent}%` }]} />
         </View>
@@ -429,7 +448,13 @@ export default function ProfileScreen() {
           <View style={styles.wizardStep}>
             <Text style={styles.stepTitle}>Registration {adminSettings?.isRegistrationFree ? 'Status' : 'Payment'}</Text>
             
-            {adminSettings?.isRegistrationFree ? (
+            {user.registrationPaymentStatus === 'completed' ? (
+              <View style={[styles.paymentCard, { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' }]}>
+                <Ionicons name="checkmark-circle" size={48} color={Colors.success} style={{ marginBottom: 10 }} />
+                <Text style={[styles.paymentLabel, { color: '#166534' }]}>Payment Verified</Text>
+                <Text style={styles.paymentSub}>You have already completed the registration payment.</Text>
+              </View>
+            ) : adminSettings?.isRegistrationFree ? (
               <View style={[styles.paymentCard, { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' }]}>
                 <Text style={[styles.paymentLabel, { color: '#166534' }]}>Registration is Currently FREE!</Text>
                 <Text style={styles.paymentSub}>The administrative fee has been waived by the admin.</Text>
@@ -453,11 +478,11 @@ export default function ProfileScreen() {
             )}
 
             <TouchableOpacity 
-              style={[styles.payBtn, (saving || (!adminSettings?.isRegistrationFree && wallet?.balance < (adminSettings?.registrationFee || 5000))) && { backgroundColor: Colors.border }]} 
+              style={[styles.payBtn, (saving || (user.registrationPaymentStatus === 'pending' && !adminSettings?.isRegistrationFree && wallet?.balance < (adminSettings?.registrationFee || 5000))) && { backgroundColor: Colors.border }]} 
               onPress={handlePayRegistration} 
-              disabled={saving || (!adminSettings?.isRegistrationFree && wallet?.balance < (adminSettings?.registrationFee || 5000))}
+              disabled={saving || (user.registrationPaymentStatus === 'pending' && !adminSettings?.isRegistrationFree && wallet?.balance < (adminSettings?.registrationFee || 5000))}
             >
-              {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.payBtnText}>{adminSettings?.isRegistrationFree ? 'Complete Registration' : 'Pay & Submit Profile'}</Text>}
+              {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.payBtnText}>{user.applicationStatus === 'pending' ? (adminSettings?.isRegistrationFree ? 'Complete Registration' : 'Pay & Submit Profile') : 'Resubmit for Approval'}</Text>}
             </TouchableOpacity>
           </View>
         )}
@@ -539,6 +564,11 @@ export default function ProfileScreen() {
           {user.role === 'admin' ? 'System Administrator' : user.role === 'tutee' ? 'Student' : user.role === 'verified_tutor' ? 'Verified Tutor' : 'Tutor'}
           {user.registrationNumber ? ` · ${user.registrationNumber}` : ''}
         </Text>
+        {!user.isApproved && (user.role === 'tutor' || user.role === 'verified_tutor') && user.isProfileComplete && (
+          <View style={{ backgroundColor: '#E0F2FE', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 12, marginTop: 8 }}>
+            <Text style={{ color: '#0369A1', fontSize: 12, fontWeight: '700' }}>Pending Approval</Text>
+          </View>
+        )}
       </View>
 
       {/* Info Card */}
@@ -798,6 +828,24 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff', margin: 16, borderRadius: Radius.lg,
     padding: 20, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 10, elevation: 3,
+  },
+  revisionCard: {
+    backgroundColor: '#FFF5F5',
+    borderWidth: 1,
+    borderColor: '#FEB2B2',
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    marginBottom: Spacing.lg,
+  },
+  revisionTitle: {
+    color: Colors.danger,
+    fontWeight: '800',
+    fontSize: FontSize.md,
+  },
+  revisionText: {
+    color: '#742A2A',
+    fontSize: FontSize.sm,
+    lineHeight: 20,
   },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   cardHeaderTitle: { fontSize: 18, fontWeight: '800', color: Colors.textPrimary },

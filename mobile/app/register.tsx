@@ -125,15 +125,20 @@ export default function RegisterScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </TouchableOpacity>
-          <View style={styles.logoCircle}>
-            <Text style={styles.logoText}>ABU</Text>
+          <View style={styles.logoWrapper}>
+            <Image 
+              source={require('../assets/images/logo.png')} 
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.appName}>Create Account</Text>
           <Text style={styles.tagline}>Join ABUTutorsConnect today</Text>
@@ -297,7 +302,7 @@ export default function RegisterScreen() {
               {acceptedTerms && <Text style={styles.checkmark}>✓</Text>}
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.termsText}>
+              <Text style={styles.termsLabelText}>
                 I agree to the{' '}
                 <Text style={styles.termsLink} onPress={() => setShowTerms(true)}>Terms and Conditions</Text>
                 {' '}of ABUTutorsConnect
@@ -327,47 +332,115 @@ export default function RegisterScreen() {
         <Text style={styles.footer}>Ahmadu Bello University · Zaria</Text>
       </ScrollView>
 
-      {/* Terms Modal */}
-      <Modal visible={showTerms} animationType="slide" transparent>
+    </KeyboardAvoidingView>
+
+      <Modal 
+        visible={showTerms} 
+        animationType="slide" 
+        transparent={true} 
+        statusBarTranslucent={true}
+        onRequestClose={() => setShowTerms(false)}
+      >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Terms & Conditions</Text>
-              <TouchableOpacity onPress={() => setShowTerms(false)}>
-                <Ionicons name="close" size={24} color={Colors.textPrimary} />
+              <TouchableOpacity onPress={() => setShowTerms(false)} hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
+                <Ionicons name="close-circle" size={32} color={Colors.primary} />
               </TouchableOpacity>
             </View>
-            <ScrollView style={styles.termsBody}>
+            
+            <ScrollView 
+              style={styles.termsScroll} 
+              contentContainerStyle={{ paddingBottom: 40 }}
+              showsVerticalScrollIndicator={true}
+              nestedScrollEnabled={true}
+            >
+              <Text style={styles.termsText}>
+                Welcome to our Tutoring Platform. By registering and using our services, you agree to the following terms and conditions:
+              </Text>
+
               <Text style={styles.termsH3}>1. Eligibility</Text>
-              <Text style={styles.termsP}>You must provide accurate information. Users must be registered ABU students or verified tutors.</Text>
-              
+              <Text style={styles.termsText}>
+                • You must provide accurate and truthful information during registration.{"\n"}
+                • Users must be a registered student (tutee) or verified tutor.{"\n"}
+                • Tutors must pay the registration fee unless waived by Admin.
+              </Text>
+
               <Text style={styles.termsH3}>2. Account Responsibilities</Text>
-              <Text style={styles.termsP}>Keep your login credentials secure. You are responsible for all activity on your account.</Text>
-              
-              <Text style={styles.termsH3}>3. Profile Completion</Text>
-              <Text style={styles.termsP}>Tutors must complete their profile and submit required documents for verification.</Text>
-              
+              <Text style={styles.termsText}>
+                • Keep your login credentials secure.{"\n"}
+                • You are responsible for all activity on your account.{"\n"}
+                • Users may register as both tutor and tutee using the same email.
+              </Text>
+
+              <Text style={styles.termsH3}>3. Profile Completion & Verification</Text>
+              <Text style={styles.termsText}>
+                • Tutors must complete their profile and submit required documents.{"\n"}
+                • Admin will review profiles before granting access to the system.{"\n"}
+                • Verified tutors may set their hourly charge.
+              </Text>
+
               <Text style={styles.termsH3}>4. Session Rules</Text>
-              <Text style={styles.termsP}>Sessions must start and end using QR codes/secure PINs. Professional conduct is mandatory.</Text>
+              <Text style={styles.termsText}>
+                • Sessions must start and end using QR codes or secure PINs.{"\n"}
+                • Once started, sessions are tracked using device clock/local timer, even if offline.{"\n"}
+                • Tutors and tutees must follow professional conduct.
+              </Text>
 
               <Text style={styles.termsH3}>5. Payment & Escrow</Text>
-              <Text style={styles.termsP}>Fees are deducted from tutee wallet and held in Escrow until session completion.</Text>
+              <Text style={styles.termsText}>
+                • Session fees are deducted from the tutee’s wallet and held in Escrow.{"\n"}
+                • Escrow is released to the tutor only after a session ends successfully.{"\n"}
+                • No commission will be taken from tutors after a session; the full agreed amount is released.{"\n"}
+                • Refunds or reschedules are allowed according to No-Show or dispute policies.
+              </Text>
 
-              <Text style={styles.termsH3}>6. Disputes</Text>
-              <Text style={styles.termsP}>Users may flag disputes. Escrow remains frozen until Admin resolution.</Text>
+              <Text style={styles.termsH3}>6. Ratings and Feedback</Text>
+              <Text style={styles.termsText}>
+                • Both tutors and tutees must submit honest ratings and reviews.{"\n"}
+                • Ratings contribute to tutor verification and system trust.
+              </Text>
 
-              <Text style={styles.termsH3}>7. User Conduct</Text>
-              <Text style={styles.termsP}>Harassment, abuse, or fraud result in immediate suspension.</Text>
-              
-              <View style={{ height: 20 }} />
+              <Text style={styles.termsH3}>7. Disputes</Text>
+              <Text style={styles.termsText}>
+                • Users may flag disputes if issues arise.{"\n"}
+                • Escrow funds remain frozen until Admin resolves the issue.
+              </Text>
+
+              <Text style={styles.termsH3}>8. User Conduct</Text>
+              <Text style={styles.termsText}>
+                • Users must treat each other professionally and respectfully.{"\n"}
+                • Harassment, abuse, or fraudulent activity may result in account suspension or removal.
+              </Text>
+
+              <Text style={styles.termsH3}>9. Admin Authority</Text>
+              <Text style={styles.termsText}>
+                • Admin may update these terms at any time.{"\n"}
+                • Users are required to agree to the latest terms to continue using the platform.{"\n"}
+                • Admin manages registration fees (which may be free at admin's discretion), session monitoring, disputes, and Escrow resolution.
+              </Text>
+
+              <Text style={styles.termsH3}>10. Limitation of Liability</Text>
+              <Text style={styles.termsText}>
+                • The administrators will not be held liable for any recklessness from either tutor or tutee.{"\n"}
+                • The platform is not liable for personal disputes between tutors and tutees.{"\n"}
+                • The platform is not responsible for technical issues such as internet outages or device failures.
+              </Text>
+
+              <Text style={styles.termsH3}>11. Acceptance</Text>
+              <Text style={styles.termsText}>
+                • By continuing to use the platform, you confirm that you accept these terms and conditions and will abide by them.
+              </Text>
             </ScrollView>
+            
             <TouchableOpacity style={styles.closeModalBtn} onPress={() => { setShowTerms(false); setAcceptedTerms(true); }}>
               <Text style={styles.closeModalBtnText}>I Agree & Continue</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-    </KeyboardAvoidingView>
+    </>
   );
 }
 
@@ -387,14 +460,25 @@ const styles = StyleSheet.create({
     left: 0,
     top: Spacing.xxl,
   },
-  logoCircle: {
-    width: 64, height: 64, borderRadius: 16,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center', justifyContent: 'center',
+  logoWrapper: {
+    width: 90,
+    height: 90,
+    backgroundColor: '#fff',
+    borderRadius: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: Spacing.sm,
-    borderWidth: 2, borderColor: 'rgba(255,255,255,0.4)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
-  logoText: { color: '#fff', fontSize: FontSize.xxl, fontWeight: '900' },
+  logoImage: {
+    width: 60,
+    height: 60,
+  },
+
   appName: { color: '#fff', fontSize: FontSize.xxxl, fontWeight: '800' },
   tagline: { color: 'rgba(255,255,255,0.8)', fontSize: FontSize.base, marginTop: 4 },
   card: {
@@ -472,7 +556,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
   },
   checkmark: { color: '#fff', fontSize: 14, fontWeight: '900' },
-  termsText: {
+  termsLabelText: {
     fontSize: FontSize.sm,
     color: Colors.textSecondary, lineHeight: 20,
   },
@@ -486,14 +570,46 @@ const styles = StyleSheet.create({
   btnDisabled: { opacity: 0.6 },
   btnText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
   
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', padding: 20 },
-  modalContent: { backgroundColor: '#fff', borderRadius: Radius.xl, padding: 20, maxHeight: '80%' },
-  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  modalOverlay: { 
+    flex: 1, 
+    backgroundColor: 'rgba(0,0,0,0.7)', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    padding: 10, // Reduced padding to allow more space
+    zIndex: 999,
+  },
+  modalContent: { 
+    backgroundColor: '#fff', 
+    borderRadius: Radius.xl, 
+    padding: 24, 
+    width: '95%',
+    maxHeight: '85%',
+    minHeight: 300, // ENSURE it doesn't collapse
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 10,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  modalHeader: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F5F9',
+    paddingBottom: 15,
+  },
   modalTitle: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.textPrimary },
-  termsBody: { flex: 1 },
-  termsH3: { fontSize: 16, fontWeight: '700', color: Colors.textPrimary, marginTop: 15, marginBottom: 5 },
-  termsP: { fontSize: 14, color: Colors.textSecondary, lineHeight: 22 },
-  closeModalBtn: { backgroundColor: Colors.primary, padding: 16, borderRadius: Radius.md, alignItems: 'center', marginTop: 20 },
+  termsScroll: { 
+    flex: 1, // Take up all available space
+    marginVertical: 10,
+  },
+  termsH3: { fontSize: 16, fontWeight: '800', color: Colors.textPrimary, marginTop: 16, marginBottom: 8 },
+  termsText: { fontSize: 14, color: Colors.textSecondary, lineHeight: 22, marginBottom: 8 },
+  closeModalBtn: { backgroundColor: Colors.primary, padding: 18, borderRadius: Radius.md, alignItems: 'center', marginTop: 10 },
   closeModalBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
 
   footer: {

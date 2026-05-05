@@ -61,8 +61,7 @@ export default function ClientHeader() {
     <header className="app-header">
       <div className="app-header__inner container">
         <Link href="/" className="logo">
-          <span className="logo__icon">A</span>
-          <span>ABUTutors</span>
+          <img src="/logo.png" alt="ABUTutors" style={{ height: '40px', width: 'auto' }} />
         </Link>
         <nav className="app-header__nav">
           {(!isLoggedIn || user?.role !== 'admin') && (

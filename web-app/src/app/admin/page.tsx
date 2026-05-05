@@ -139,7 +139,12 @@ export default function AdminDashboard() {
     try {
       await adminApi.approveTutor(id, status, feedback);
       alert(`Tutor ${status.replace('_', ' ')}d successfully`);
-      fetchData();
+      
+      // Instant UI update: Remove from local pending list
+      setPendingTutors(prev => prev.filter(t => t._id !== id));
+      
+      // Background refresh to keep everything in sync
+      setTimeout(() => fetchData(), 500);
     } catch (err) {
       alert('Action failed');
     }
@@ -201,6 +206,24 @@ export default function AdminDashboard() {
       fetchData();
     } catch (err) {
       alert('Delete failed');
+    }
+  };
+
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!msgUser || !msgContent.trim()) return;
+
+    setSendingMsg(true);
+    try {
+      await adminApi.sendMessageToUser(msgUser._id, msgContent);
+      alert('Message sent successfully');
+      setMsgContent('');
+      setShowMsgModal(false);
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'Failed to send message');
+    } finally {
+      setSendingMsg(false);
     }
   };
 
@@ -290,22 +313,6 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!msgContent.trim()) return;
-    setSendingMsg(true);
-    try {
-      await adminApi.sendMessageToUser(msgUser._id, msgContent);
-      alert(`Message sent to ${msgUser.name}`);
-      setShowMsgModal(false);
-      setMsgContent('');
-    } catch (err: any) {
-      alert(err.response?.data?.message || 'Failed to send message');
-    } finally {
-      setSendingMsg(false);
-    }
-  };
-
   if (!isAdmin || loading) {
     return <div className="container" style={{ textAlign: 'center', marginTop: '50px' }}>Loading Admin Dashboard...</div>;
   }
@@ -384,18 +391,7 @@ export default function AdminDashboard() {
                           <td style={{ padding: 'var(--space-3)' }}>
                             <div style={{ display: 'flex', gap: '8px' }}>
                               <button onClick={() => handleApprove(tutor._id, 'approve')} className="btn btn--primary btn--sm" style={{ backgroundColor: 'var(--success-green)', color: 'white' }}>Approve</button>
-                              <button onClick={() => handleApprove(tutor._id, 'needs_revision')} className="btn btn--secondary btn--sm" style={{ color: 'var(--primary-color)' }}>Revision</button>
                               <button onClick={() => handleApprove(tutor._id, 'reject')} className="btn btn--secondary btn--sm" style={{ color: '#DC2626' }}>Reject</button>
-                              <button 
-                                onClick={() => {
-                                  setMsgUser(tutor);
-                                  setShowMsgModal(true);
-                                }}
-                                className="btn btn--secondary btn--sm"
-                                style={{ color: 'var(--primary-color)' }}
-                              >
-                                ✉️ Msg
-                              </button>
                             </div>
                           </td>
                         </tr>
@@ -576,7 +572,13 @@ export default function AdminDashboard() {
                           {u.isApproved ? (
                             <span style={{ color: 'var(--success-green)', fontSize: '14px' }}>● Active</span>
                           ) : (
-                            <span style={{ color: '#DC2626', fontSize: '14px' }}>● Pending</span>
+                            <span style={{ 
+                                color: u.applicationStatus === 'needs_revision' ? '#D4AF37' : u.applicationStatus === 'rejected' ? '#DC2626' : '#94A3B8', 
+                                fontSize: '14px',
+                                textTransform: 'capitalize'
+                            }}>
+                                ● {u.applicationStatus || 'Pending'}
+                            </span>
                           )}
                         </td>
                         <td style={{ padding: 'var(--space-3)' }}>
@@ -665,8 +667,18 @@ export default function AdminDashboard() {
                           <div style={{ fontSize: '12px', color: '#64748B' }}>{new Date(s.date).toLocaleDateString()} · {s.time}</div>
                         </td>
                         <td style={{ padding: 'var(--space-3)' }}>
-                          <div style={{ fontSize: '14px' }}><strong>Tutor:</strong> {s.tutorId?.name || 'Unknown'}</div>
-                          <div style={{ fontSize: '14px' }}><strong>Tutee:</strong> {s.tuteeId?.name || 'Unknown'}</div>
+                          <div style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <strong>Tutor:</strong> {s.tutorId?.name || 'Unknown'}
+                            {s.tutorId && (
+                              <button onClick={() => { setMsgUser(s.tutorId); setShowMsgModal(true); }} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>✉️</button>
+                            )}
+                          </div>
+                          <div style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <strong>Tutee:</strong> {s.tuteeId?.name || 'Unknown'}
+                            {s.tuteeId && (
+                              <button onClick={() => { setMsgUser(s.tuteeId); setShowMsgModal(true); }} style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>✉️</button>
+                            )}
+                          </div>
                         </td>
                         <td style={{ padding: 'var(--space-3)' }}>
                           <span className={`tutor-card__badge ${s.status === 'active' ? 'tutor-card__badge--green' : s.status === 'pending' ? 'tutor-card__badge--orange' : ''}`}>

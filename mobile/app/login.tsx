@@ -39,8 +39,12 @@ export default function LoginScreen() {
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         {/* Header */}
         <View style={styles.header}>
-          <View style={styles.logoCircle}>
-            <Text style={styles.logoText}>ABU</Text>
+          <View style={styles.logoWrapper}>
+            <Image 
+              source={require('../assets/images/logo.png')} 
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.appName}>ABUTutorsConnect</Text>
           <Text style={styles.tagline}>Find your perfect tutor today</Text>
@@ -87,6 +91,14 @@ export default function LoginScreen() {
                 />
               </TouchableOpacity>
             </View>
+            <TouchableOpacity 
+              onPress={() => router.push('/forgot-password')}
+              style={{ alignSelf: 'flex-end', marginTop: 4 }}
+            >
+              <Text style={{ color: Colors.primary, fontSize: FontSize.xs, fontWeight: '700' }}>
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
@@ -134,23 +146,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: Spacing.xl,
   },
-  logoCircle: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+  logoWrapper: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#fff',
+    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.sm,
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.4)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
-  logoText: {
-    color: '#fff',
-    fontSize: FontSize.xl,
-    fontWeight: '900',
-    letterSpacing: 1,
+  logoImage: {
+    width: 70,
+    height: 70,
   },
+
   appName: {
     color: '#fff',
     fontSize: FontSize.xxl,

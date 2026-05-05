@@ -1,15 +1,10 @@
 import axios from 'axios';
 import { storage } from '../utils/storage';
 
-import { Platform } from 'react-native';
+import { Config } from '../constants/Config';
 
 // ─── Base URL ─────────────────────────────────────────────────────────────────
-// Web: backend is on same machine → use localhost
-// Native (phone): backend is on PC on local network → // Current IP: 10.171.77.38
-const NATIVE_URL = 'http://10.171.77.38:5001/api'; // your PC's local IP
-const WEB_URL = 'http://localhost:5001/api';
-
-export const BASE_URL = Platform.OS === 'web' ? WEB_URL : NATIVE_URL;
+export const BASE_URL = Config.BASE_URL;
 
 const api = axios.create({
   baseURL: BASE_URL,

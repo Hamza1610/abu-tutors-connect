@@ -45,9 +45,15 @@ export default function NotificationsScreen() {
     if (item.type?.includes('session')) {
       router.push('/(tabs)/sessions');
     } else if (item.type?.includes('payment') || item.type?.includes('wallet')) {
-      router.push('/wallet');
+      router.push('/(tabs)/wallet');
     } else if (item.type?.includes('message')) {
-      router.push('/(tabs)/messages');
+      // Extract partnerId from link if present (e.g. /messages?partnerId=...)
+      const partnerIdMatch = item.link?.match(/partnerId=([^&]+)/);
+      if (partnerIdMatch && partnerIdMatch[1]) {
+          router.push(`/chat/${partnerIdMatch[1]}`);
+      } else {
+          router.push('/(tabs)/messages');
+      }
     }
   };
 

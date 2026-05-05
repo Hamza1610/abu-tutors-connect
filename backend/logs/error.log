@@ -242,6 +242,8 @@ Please retry in 34.187821144s. [{"@type":"type.googleapis.com/google.rpc.Help","
 2026-05-03 14:19:02:192 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 11 modifiedPaths "availability"
 2026-05-03 14:34:55:3455 [ERROR]: Failed to restore tutor availability: No matching document found for id "69c27157721d60f066767ce6" version 13 modifiedPaths "availability"
 2026-05-03 15:25:41:2541 [ERROR]: Token verification failed
-2026-05-04 14:49:07:497 [ERROR]: Could not connect to MongoDB: connect ECONNREFUSED 127.0.0.1:27017
-2026-05-04 14:51:09:519 [ERROR]: Could not connect to MongoDB: connect ECONNREFUSED 127.0.0.1:27017
-2026-05-04 15:06:37:637 [ERROR]: Could not connect to MongoDB: bad auth : authentication failed
+2026-05-04 22:43:44:4344 [ERROR]: Token verification failed
+2026-05-04 23:20:59:2059 [ERROR]: Paystack Init Error: Invalid Email Address Passed
+2026-05-04 23:21:04:214 [ERROR]: Paystack Init Error: Invalid Email Address Passed
+2026-05-04 23:21:18:2118 [ERROR]: Paystack Init Error: Invalid Email Address Passed
+2026-05-04 23:21:22:2122 [ERROR]: Paystack Init Error: Invalid Email Address Passed

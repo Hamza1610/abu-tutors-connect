@@ -9,6 +9,7 @@ import Wallet from './models/Wallet';
 import AdminLog from './models/AdminLog';
 import NotificationModel from './models/Notification';
 import SlotLock from './models/SlotLock';
+import Message from './models/Message';
 import logger from './utils/logger';
 
 dotenv.config();
@@ -40,10 +41,11 @@ async function resetSystem() {
         await AdminLog.deleteMany({});
         console.log('Cleared all admin activity logs.');
 
-        // 4. Clear notifications
-        console.log('Clearing all notifications...');
+        // 4. Clear notifications and messages
+        console.log('Clearing all notifications and messages...');
         await NotificationModel.deleteMany({});
-        console.log('Cleared all notifications.');
+        await Message.deleteMany({});
+        console.log('Cleared all notifications and messages.');
 
         // 5. Cleanup uploads directory
         console.log('Cleaning up uploaded documents...');
