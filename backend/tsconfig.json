@@ -6,10 +6,9 @@
     "outDir": "./dist",
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "node16", /* Specify what module code is generated. */
-    "moduleResolution": "node16", /* Specify how TypeScript looks up a file from a given module specifier. */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "esnext",
-    "types": [],
     "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     // For nodejs:
     // "lib": ["esnext"],

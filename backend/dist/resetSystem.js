@@ -14,6 +14,7 @@ const Wallet_1 = __importDefault(require("./models/Wallet"));
 const AdminLog_1 = __importDefault(require("./models/AdminLog"));
 const Notification_1 = __importDefault(require("./models/Notification"));
 const SlotLock_1 = __importDefault(require("./models/SlotLock"));
+const Message_1 = __importDefault(require("./models/Message"));
 dotenv_1.default.config();
 const RESET_PASSWORD = process.env.RESET_PASSWORD || 'ABUTutorsReset2026';
 async function resetSystem() {
@@ -37,10 +38,11 @@ async function resetSystem() {
         console.log('Clearing admin activity logs...');
         await AdminLog_1.default.deleteMany({});
         console.log('Cleared all admin activity logs.');
-        // 4. Clear notifications
-        console.log('Clearing all notifications...');
+        // 4. Clear notifications and messages
+        console.log('Clearing all notifications and messages...');
         await Notification_1.default.deleteMany({});
-        console.log('Cleared all notifications.');
+        await Message_1.default.deleteMany({});
+        console.log('Cleared all notifications and messages.');
         // 5. Cleanup uploads directory
         console.log('Cleaning up uploaded documents...');
         const uploadsDir = path_1.default.join(__dirname, '../uploads');

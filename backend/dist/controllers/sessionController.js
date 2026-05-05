@@ -32,13 +32,18 @@ const createSession = async (req, res) => {
             res.status(404).json({ message: 'Tutor not found' });
             return;
         }
-        // 1.5 Check if slot is already taken or locked by someone else
+        // 1.5 Check if slot is in the past
+        const bookingDate = new Date(`${date}T${time}`);
+        if (bookingDate < new Date()) {
+            res.status(400).json({ message: 'Cannot book a session for a time that has already passed' });
+            return;
+        }
         const slotTime = `${date}T${time}`;
         const existingSession = await Session_1.default.findOne({
             tutorId,
             date: new Date(date),
             time,
-            status: { $in: ['pending', 'active', 'completed'] }
+            status: { $in: ['pending', 'active'] } // 'completed' sessions should not block future bookings
         });
         if (existingSession) {
             res.status(400).json({ message: 'Tutor is already booked for this slot' });

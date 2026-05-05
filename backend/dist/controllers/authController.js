@@ -9,10 +9,10 @@ const User_1 = __importDefault(require("../models/User"));
 const Wallet_1 = __importDefault(require("../models/Wallet"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const cloudinary_1 = require("cloudinary");
 const logger_1 = __importDefault(require("../utils/logger"));
 const crypto_1 = __importDefault(require("crypto"));
 const emailService_1 = require("../utils/emailService");
+const cloudinaryHelper_1 = require("../utils/cloudinaryHelper");
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_development";
 const validatePassword = (password) => {
     if (password.length < 8) {
@@ -46,10 +46,7 @@ const register = async (req, res) => {
         // Extract profile picture from multer file if provided
         let profilePicturePath = '';
         if (req.file) {
-            const result = await cloudinary_1.v2.uploader.upload(req.file.path, {
-                folder: 'abu_tutors/profiles'
-            });
-            profilePicturePath = result.secure_url;
+            profilePicturePath = await (0, cloudinaryHelper_1.uploadToCloudinary)(req.file.path, 'profiles');
         }
         // Optional: Validate ABU registration number regex
         if (role === 'tutor' || role === 'verified_tutor') {
@@ -77,11 +74,14 @@ const register = async (req, res) => {
         const Settings = mongoose_1.default.model('Settings');
         const settings = await Settings.findOne();
         const isFree = settings?.isRegistrationFree || false;
+        // Sanitize role: Only 'tutee' or 'tutor' allowed during public registration
+        const allowedRoles = ['tutee', 'tutor'];
+        const sanitizedRole = allowedRoles.includes(role) ? role : 'tutee';
         const user = new User_1.default({
             name,
             email: email.toLowerCase(),
             password: hashedPassword,
-            role: role || "tutee",
+            role: sanitizedRole,
             registrationNumber: finalizedRegNum,
             faculty,
             department,
@@ -136,11 +136,13 @@ const login = async (req, res) => {
         const { email, password } = req.body;
         const user = await User_1.default.findOne({ email: email.toLowerCase() });
         if (!user || user.password === undefined) {
+            logger_1.default.warn(`Failed login attempt: User not found or no password - ${email}`);
             res.status(400).json({ message: "Invalid credentials" });
             return;
         }
         const isMatch = await bcryptjs_1.default.compare(password, user.password);
         if (!isMatch) {
+            logger_1.default.warn(`Failed login attempt: Incorrect password for ${email}`);
             res.status(400).json({ message: "Invalid credentials" });
             return;
         }

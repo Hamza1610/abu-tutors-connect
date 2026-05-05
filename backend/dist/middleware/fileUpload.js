@@ -7,20 +7,41 @@ exports.validateFileSize = exports.upload = void 0;
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-// Ensure uploads directory exists
+const cloudinary_1 = require("cloudinary");
+const multer_storage_cloudinary_v2_1 = require("multer-storage-cloudinary-v2");
+// Ensure uploads directory exists for local fallback
 const uploadDir = 'uploads';
 if (!fs_1.default.existsSync(uploadDir)) {
     fs_1.default.mkdirSync(uploadDir);
 }
-const storage = multer_1.default.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path_1.default.extname(file.originalname));
-    }
-});
+// ─── Storage Engine Logic ───────────────────────────────────────────────────
+let storage;
+if (process.env.CLOUDINARY_CLOUD_NAME && process.env.NODE_ENV === 'production') {
+    console.log('[UPLOAD] Using Cloudinary Storage for Production');
+    storage = new multer_storage_cloudinary_v2_1.CloudinaryStorage({
+        cloudinary: cloudinary_1.v2,
+        params: async (req, file) => {
+            const folder = file.fieldname === 'profilePicture' ? 'profiles' : 'documents';
+            return {
+                folder: `abututors/${folder}`,
+                public_id: `${file.fieldname}-${Date.now()}`,
+                resource_type: 'auto'
+            };
+        },
+    });
+}
+else {
+    console.log('[UPLOAD] Using Local Disk Storage');
+    storage = multer_1.default.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, uploadDir);
+        },
+        filename: (req, file, cb) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+            cb(null, file.fieldname + '-' + uniqueSuffix + path_1.default.extname(file.originalname));
+        }
+    });
+}
 const fileFilter = (req, file, cb) => {
     if (file.fieldname === 'profilePicture') {
         if (file.mimetype.startsWith('image/')) {
