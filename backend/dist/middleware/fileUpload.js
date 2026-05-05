@@ -31,11 +31,12 @@ const fileFilter = (req, file, cb) => {
         }
     }
     else if (file.fieldname === 'admissionLetter' || file.fieldname === 'transcript') {
-        if (file.mimetype === 'application/pdf') {
+        const allowedMimeTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+        if (allowedMimeTypes.includes(file.mimetype)) {
             cb(null, true);
         }
         else {
-            cb(new Error('Documents must be in PDF format'));
+            cb(new Error('Documents must be PDF or JPG/PNG image format'));
         }
     }
     else {
@@ -46,7 +47,7 @@ exports.upload = (0, multer_1.default)({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 500 * 1024 // Default 500kb, we'll check specific limits in controller/middleware
+        fileSize: 5 * 1024 * 1024 // 5MB limit to handle modern photos
     }
 });
 // Specific middleware for different limits if needed, or check in the controller
@@ -55,8 +56,8 @@ const validateFileSize = (req, res, next) => {
         return next();
     const files = req.files;
     const profPic = files.profilePicture;
-    if (profPic && profPic[0] && profPic[0].size > 100 * 1024) {
-        return res.status(400).json({ message: 'Profile picture must be less than 100KB' });
+    if (profPic && profPic[0] && profPic[0].size > 1024 * 1024) {
+        return res.status(400).json({ message: 'Profile picture must be less than 1MB' });
     }
     const admLetter = files.admissionLetter;
     if (admLetter && admLetter[0] && admLetter[0].size > 500 * 1024) {
