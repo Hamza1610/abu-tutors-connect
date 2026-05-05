@@ -89,6 +89,6 @@ export const verifyAccount = async (req: Request, res: Response): Promise<void> 
         }
     } catch (error: any) {
         logger.error(`Verify Account System Error: ${error.message}`);
-        res.status(500).json({ message: 'Internal server error during bank verification.' });
+        res.status(500).json({ message: `System Error: ${error.message}` });
     }
 };
