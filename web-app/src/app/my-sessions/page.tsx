@@ -121,21 +121,28 @@ export default function MySessionsPage() {
         const socket = getSocket(currentUser._id);
         if (socket) {
             socket.on('session_update', (data: any) => {
-                console.log('Real-time session update received:', data);
-                // Auto-close QR Modal if it's the tutee showing the QR
-                if (qrModal.isOpen && (data.status === 'active' || data.status === 'completed')) {
-                    setQrModal(prev => ({ ...prev, isOpen: false }));
-                    
-                    if (data.status === 'completed' && currentUser.role === 'tutee') {
-                        setRatingModal({
-                            isOpen: true,
-                            sessionId: data._id,
-                            rating: 5,
-                            reviewText: '',
-                            step: 'rating'
-                        });
+                console.log('Real-time session update received:', data.status);
+                
+                // 1. Auto-close QR Modal if it's open
+                setQrModal(prev => {
+                    if (prev.isOpen && prev.sessionId === data._id) {
+                        return { ...prev, isOpen: false };
                     }
+                    return prev;
+                });
+
+                // 2. If completed and I am the tutee, show rating modal
+                if (data.status === 'completed' && currentUser.role === 'tutee') {
+                    setRatingModal({
+                        isOpen: true,
+                        sessionId: data._id,
+                        rating: 5,
+                        reviewText: '',
+                        step: 'rating'
+                    });
                 }
+
+                // 3. Refresh the session list
                 fetchSessions();
             });
         }
@@ -143,7 +150,7 @@ export default function MySessionsPage() {
             socket?.off('session_update');
         };
     }
-  }, [currentUser, qrModal.isOpen]);
+  }, [currentUser]); // Removed qrModal.isOpen from dependencies to avoid listener re-attachment
 
   const fetchSessions = async () => {
     try {
@@ -478,7 +485,10 @@ export default function MySessionsPage() {
                             )}
                             
                             {currentUser.role !== 'tutee' && (
-                                <button className="btn btn--primary btn--block" style={{ height: '52px', fontSize: '16px' }} onClick={() => setRatingModal({ ...ratingModal, isOpen: false })}>
+                                <button className="btn btn--primary btn--block" style={{ height: '52px', fontSize: '16px' }} onClick={() => {
+                                    setRatingModal({ ...ratingModal, isOpen: false });
+                                    fetchSessions();
+                                }}>
                                     Back to Dashboard
                                 </button>
                             )}
