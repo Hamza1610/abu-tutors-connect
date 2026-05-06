@@ -191,10 +191,13 @@ export default function MySessionsPage() {
           if (qrModal.step === 'start') {
               await sessionApi.startSession(qrModal.sessionId, data);
               showAlert('Session started! Timer is now active.', { type: 'success' });
+              // Close modal immediately for the scanner
+              setQrModal(prev => ({ ...prev, isOpen: false }));
           } else {
               // Store credentials to use after rating
               const isTutor = currentUser._id === sessions.find(s => s._id === qrModal.sessionId)?.tutorId?._id;
               
+              setQrModal(prev => ({ ...prev, isOpen: false })); // Close modal before showing rating
               setRatingModal({ 
                   isOpen: true, 
                   sessionId: qrModal.sessionId, 
