@@ -143,43 +143,37 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
             link: '/tutor-dashboard'
         });
 
-        // 7.1 Send Email Notification to Tutor
+        // 7.1 Send Email Notification to Tutor (Non-blocking)
         if (tutor.notificationPreferences?.bookingRequests !== false) {
-            try {
-                logger.info(`Attempting to send booking email to tutor: ${tutor.email}`);
-                await sendEmail({
-                    email: tutor.email,
-                    subject: '🚀 New Session Booking - ABUTutorsConnect',
-                    message: `Hello ${tutor.name},\n\nYou have a new session booking on ABUTutorsConnect!\n\nTopic: ${topic}\nDate: ${new Date(date).toDateString()}\nTime: ${time}\nVenue: ${venue || 'To be decided'}\n\nPlease log in to your dashboard to view more details and prepare for the session.\n\nHappy Tutoring!\nThe ABUTutorsConnect Team`,
-                    html: `
-                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
-                            <div style="background-color: #0d8abc; color: white; padding: 20px; text-align: center;">
-                                <h2 style="margin: 0;">New Session Booking!</h2>
+            // We do NOT await this to prevent blocking the response if SMTP is slow
+            sendEmail({
+                email: tutor.email,
+                subject: '🚀 New Session Booking - ABUTutorsConnect',
+                message: `Hello ${tutor.name},\n\nYou have a new session booking on ABUTutorsConnect!\n\nTopic: ${topic}\nDate: ${new Date(date).toDateString()}\nTime: ${time}\nVenue: ${venue || 'To be decided'}\n\nPlease log in to your dashboard to view more details and prepare for the session.\n\nHappy Tutoring!\nThe ABUTutorsConnect Team`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
+                        <div style="background-color: #0d8abc; color: white; padding: 20px; text-align: center;">
+                            <h2 style="margin: 0;">New Session Booking!</h2>
+                        </div>
+                        <div style="padding: 20px; color: #333;">
+                            <p>Hello <strong>${tutor.name}</strong>,</p>
+                            <p>Great news! You have a new booking for a tutoring session.</p>
+                            <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                                <p><strong>Topic:</strong> ${topic}</p>
+                                <p><strong>Date:</strong> ${new Date(date).toDateString()}</p>
+                                <p><strong>Time:</strong> ${time}</p>
+                                <p><strong>Venue:</strong> ${venue || 'To be decided'}</p>
                             </div>
-                            <div style="padding: 20px; color: #333;">
-                                <p>Hello <strong>${tutor.name}</strong>,</p>
-                                <p>Great news! You have a new booking for a tutoring session.</p>
-                                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                                    <p><strong>Topic:</strong> ${topic}</p>
-                                    <p><strong>Date:</strong> ${new Date(date).toDateString()}</p>
-                                    <p><strong>Time:</strong> ${time}</p>
-                                    <p><strong>Venue:</strong> ${venue || 'To be decided'}</p>
-                                </div>
-                                <p>Please log in to your dashboard to manage this session.</p>
-                                <div style="text-align: center; margin-top: 25px;">
-                                    <a href="${process.env.FRONTEND_URL}/tutor-dashboard" style="background-color: #0d8abc; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Dashboard</a>
-                                </div>
+                            <p>Please log in to your dashboard to manage this session.</p>
+                            <div style="text-align: center; margin-top: 25px;">
+                                <a href="${process.env.FRONTEND_URL}/tutor-dashboard" style="background-color: #0d8abc; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Dashboard</a>
                             </div>
                         </div>
-                    `
-                });
-                logger.info(`Booking email successfully queued for ${tutor.email}`);
-            } catch (emailErr: any) {
-                logger.error(`FAILED to send booking email to ${tutor.email}: ${emailErr.message}`);
-                // Booking still succeeds even if email fails
-            }
-        } else {
-            logger.info(`Skipping booking email for ${tutor.email} per user preferences.`);
+                    </div>
+                `
+            }).catch(err => {
+                logger.error(`Background email FAILED for ${tutor.email}: ${err.message}`);
+            });
         }
 
         // 7.5 Removed: Slots are no longer deleted from availability matrix to allow recurring weekly bookings.

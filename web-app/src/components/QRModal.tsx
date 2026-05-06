@@ -23,12 +23,12 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
     let scanner: Html5QrcodeScanner | null = null;
     
     if (isOpen && mode === 'scan') {
-      setTimeout(() => {
+      const initScanner = () => {
         const scannerElement = document.getElementById(scannerId);
         if (scannerElement) {
           scanner = new Html5QrcodeScanner(
             scannerId,
-            { fps: 10, qrbox: { width: 250, height: 250 } },
+            { fps: 10, qrbox: { width: 250, height: 250 }, rememberLastUsedCamera: true },
             /* verbose= */ false
           );
 
@@ -40,15 +40,24 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
                 onClose();
               }
             },
-            () => {}
+            (error) => {
+              // Only log permission errors once
+              if (error?.includes('Permission denied')) {
+                console.error("Camera permission denied");
+              }
+            }
           );
         }
-      }, 500);
+      };
+
+      // Delay to ensure DOM is ready
+      const timer = setTimeout(initScanner, 300);
+      return () => clearTimeout(timer);
     }
 
     return () => {
       if (scanner) {
-        scanner.clear().catch(err => console.error("Failed to clear scanner", err));
+        scanner.clear().catch(err => console.warn("Scanner cleanup warning:", err));
       }
     };
   }, [isOpen, mode, scannerId, onScanSuccess, onClose]);
