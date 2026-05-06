@@ -18,11 +18,13 @@ interface QRModalProps {
 export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSuccess, onPinSubmit, title }: QRModalProps) {
   const [scannerId] = useState(`qr-reader-${Math.random().toString(36).substr(2, 9)}`);
   const [inputPin, setInputPin] = useState('');
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const [isCameraStarted, setIsCameraStarted] = useState(false);
 
   useEffect(() => {
     let scanner: Html5QrcodeScanner | null = null;
     
-    if (isOpen && mode === 'scan') {
+    if (isOpen && mode === 'scan' && isCameraStarted) {
       const initScanner = () => {
         const scannerElement = document.getElementById(scannerId);
         if (scannerElement) {
@@ -41,18 +43,16 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
               }
             },
             (error) => {
-              // Only log permission errors once
-              if (error?.includes('Permission denied')) {
-                console.error("Camera permission denied");
+              if (error?.includes('NotAllowedError') || error?.includes('Permission denied')) {
+                setCameraError('Camera access denied. Please enable camera permissions in your browser settings.');
+                setIsCameraStarted(false);
               }
             }
           );
         }
       };
 
-      // Delay to ensure DOM is ready
-      const timer = setTimeout(initScanner, 300);
-      return () => clearTimeout(timer);
+      initScanner();
     }
 
     return () => {
@@ -60,7 +60,7 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
         scanner.clear().catch(err => console.warn("Scanner cleanup warning:", err));
       }
     };
-  }, [isOpen, mode, scannerId, onScanSuccess, onClose]);
+  }, [isOpen, mode, scannerId, onScanSuccess, onClose, isCameraStarted]);
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,7 +83,11 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
       <div className="card" style={{ maxWidth: '450px', width: '100%', position: 'relative', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
         <div className="card__body" style={{ textAlign: 'center', padding: 'var(--space-6)' }}>
           <button 
-            onClick={onClose} 
+            onClick={() => {
+                setIsCameraStarted(false);
+                setCameraError(null);
+                onClose();
+            }} 
             style={{ position: 'absolute', right: '20px', top: '20px', background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#64748B' }}
           >
             ×
@@ -120,7 +124,27 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
           
           {mode === 'scan' && (
             <div>
-              <div id={scannerId} style={{ width: '100%', borderRadius: '12px', overflow: 'hidden' }}></div>
+              {!isCameraStarted ? (
+                <div style={{ padding: '40px 20px', background: '#F8FAFC', borderRadius: '12px', border: '2px dashed #E2E8F0' }}>
+                  {cameraError ? (
+                    <p style={{ color: '#EF4444', marginBottom: '20px', fontSize: '14px' }}>{cameraError}</p>
+                  ) : (
+                    <p style={{ color: '#64748B', marginBottom: '20px', fontSize: '14px' }}>Camera access is required to scan QR codes.</p>
+                  )}
+                  <button 
+                    className="btn btn--primary" 
+                    onClick={() => {
+                        setCameraError(null);
+                        setIsCameraStarted(true);
+                    }}
+                  >
+                    Enable Camera & Scan
+                  </button>
+                </div>
+              ) : (
+                <div id={scannerId} style={{ width: '100%', borderRadius: '12px', overflow: 'hidden' }}></div>
+              )}
+
               <p style={{ margin: 'var(--space-4) 0 var(--space-2) 0', color: '#64748B', fontSize: '14px' }}>
                 Scan the student's QR code OR enter their PIN below
               </p>
@@ -148,7 +172,11 @@ export default function QRModal({ isOpen, onClose, mode, qrData, pin, onScanSucc
           )}
           
           <div style={{ marginTop: 'var(--space-6)' }}>
-            <button className="btn btn--outline btn--block" onClick={onClose}>Cancel</button>
+            <button className="btn btn--outline btn--block" onClick={() => {
+                setIsCameraStarted(false);
+                setCameraError(null);
+                onClose();
+            }}>Cancel</button>
           </div>
         </div>
       </div>
