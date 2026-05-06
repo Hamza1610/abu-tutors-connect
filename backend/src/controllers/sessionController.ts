@@ -8,6 +8,7 @@ import logger from '../utils/logger';
 import mongoose from 'mongoose';
 import { emitSessionUpdate } from '../utils/socketManager';
 import Settings from '../models/Settings';
+import { sendEmail } from '../utils/emailService';
 import { checkTutorUpgrade } from './adminController';
 import { IUser } from '../models/User';
 import SlotLock from '../models/SlotLock';
@@ -141,6 +142,40 @@ export const createSession = async (req: Request, res: Response): Promise<void> 
             type: 'session',
             link: '/tutor-dashboard'
         });
+
+        // 7.1 Send Email Notification to Tutor
+        try {
+            await sendEmail({
+                email: tutor.email,
+                subject: '🚀 New Session Booking - ABUTutorsConnect',
+                message: `Hello ${tutor.name},\n\nYou have a new session booking on ABUTutorsConnect!\n\nTopic: ${topic}\nDate: ${new Date(date).toLocaleDateString()}\nTime: ${time}\nVenue: ${venue || 'To be decided'}\n\nPlease log in to your dashboard to view more details and prepare for the session.\n\nHappy Tutoring!\nThe ABUTutorsConnect Team`,
+                html: `
+                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div style="background-color: #0d8abc; color: white; padding: 24px; text-align: center;">
+                            <h1 style="margin: 0; font-size: 24px;">New Session Booking!</h1>
+                        </div>
+                        <div style="padding: 24px; color: #4a5568; line-height: 1.6;">
+                            <p>Hello <strong>${tutor.name}</strong>,</p>
+                            <p>You have been booked for a new tutoring session. Here are the details:</p>
+                            <div style="background-color: #f7fafc; border-radius: 8px; padding: 16px; margin: 24px 0;">
+                                <p style="margin: 0;"><strong>Topic:</strong> ${topic}</p>
+                                <p style="margin: 8px 0;"><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</p>
+                                <p style="margin: 8px 0;"><strong>Time:</strong> ${time}</p>
+                                <p style="margin: 0;"><strong>Venue:</strong> ${venue || 'To be decided'}</p>
+                            </div>
+                            <p>Please ensure you are available and prepared for the session at the scheduled time.</p>
+                            <a href="${process.env.FRONTEND_URL}/tutor-dashboard" style="display: inline-block; background-color: #0d8abc; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 16px;">View Dashboard</a>
+                        </div>
+                        <div style="background-color: #f7fafc; padding: 16px; text-align: center; font-size: 12px; color: #a0aec0;">
+                            &copy; ${new Date().getFullYear()} ABUTutorsConnect. All rights reserved.
+                        </div>
+                    </div>
+                `
+            });
+        } catch (emailErr: any) {
+            logger.warn(`Failed to send booking email to tutor: ${emailErr.message}`);
+            // We don't fail the whole booking if email fails
+        }
 
         // 7.5 Removed: Slots are no longer deleted from availability matrix to allow recurring weekly bookings.
         // Conflicts for the same specific date are already handled by the existingSession check above.
