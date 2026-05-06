@@ -191,21 +191,37 @@ export default function MySessionsPage() {
           if (qrModal.step === 'start') {
               await sessionApi.startSession(qrModal.sessionId, data);
               showAlert('Session started! Timer is now active.', { type: 'success' });
-              // Close modal immediately for the scanner
               setQrModal(prev => ({ ...prev, isOpen: false }));
           } else {
-              // Store credentials to use after rating
-              const isTutor = currentUser._id === sessions.find(s => s._id === qrModal.sessionId)?.tutorId?._id;
+              // FOR COMPLETION:
+              const session = sessions.find(s => s._id === qrModal.sessionId);
+              const isTutor = currentUser._id === session?.tutorId?._id;
               
-              setQrModal(prev => ({ ...prev, isOpen: false })); // Close modal before showing rating
-              setRatingModal({ 
-                  isOpen: true, 
-                  sessionId: qrModal.sessionId, 
-                  rating: 5,
-                  reviewText: '',
-                  step: 'rating',
-                  verificationData: data
-              });
+              setQrModal(prev => ({ ...prev, isOpen: false }));
+
+              if (isTutor) {
+                  // If I'm the tutor, complete it immediately
+                  await sessionApi.completeSession(qrModal.sessionId, data);
+                  showAlert('Session completed and payment released!', { type: 'success' });
+                  // Show the "Success" modal but it's already finalized in backend
+                  setRatingModal({ 
+                      isOpen: true, 
+                      sessionId: qrModal.sessionId, 
+                      rating: 5,
+                      reviewText: '',
+                      step: 'rating'
+                  });
+              } else {
+                  // If I'm the tutee (showing QR, but maybe entered PIN), store for the rating flow
+                  setRatingModal({ 
+                      isOpen: true, 
+                      sessionId: qrModal.sessionId, 
+                      rating: 5,
+                      reviewText: '',
+                      step: 'rating',
+                      verificationData: data
+                  });
+              }
           }
           fetchSessions();
       } catch (err: any) {
